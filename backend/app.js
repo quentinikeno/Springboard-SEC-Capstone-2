@@ -4,12 +4,13 @@ const express = require("express");
 const app = express();
 const ExpressError = require("./expressError");
 const morgan = require("morgan");
+const userRoutes = require("./routes/user");
 
 app.use(express.json());
 app.use(morgan("dev"));
 
 //** Routes */
-const userRoutes = require("./routes/user");
+app.use("/user", userRoutes);
 
 /** 404 handler */
 app.use((req, res, next) => {
