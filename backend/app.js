@@ -12,7 +12,6 @@ app.use(morgan("dev"));
 const userRoutes = require("./routes/user");
 
 /** 404 handler */
-
 app.use((req, res, next) => {
 	const error = new ExpressError("Not Found", 404);
 	return next(error);
