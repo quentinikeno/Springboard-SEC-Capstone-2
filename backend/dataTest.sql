@@ -41,6 +41,6 @@ CREATE TABLE "user_games" (
 CREATE TABLE "friends_challenges" (
     "id" serial PRIMARY KEY,
     "friends_id" int NOT NULL REFERENCES "friends" ("id") ON DELETE CASCADE,
-    "game_id" int NOT NULL,
+    "game_id" int NOT NULL REFERENCES "games" ("id") ON DELETE CASCADE,
     "score_to_beat" int NOT NULL
 );
