@@ -3,66 +3,44 @@
 
 \c math_games_test
 
-DROP TABLE IF EXISTS "Friends_Challenges";
-DROP TABLE IF EXISTS "Friends";
-DROP TABLE IF EXISTS "User_Games";
-DROP TABLE IF EXISTS "Games";
-DROP TABLE IF EXISTS "User";
+DROP TABLE IF EXISTS "friends_challenges";
+DROP TABLE IF EXISTS "friends";
+DROP TABLE IF EXISTS "user_games";
+DROP TABLE IF EXISTS "games";
+DROP TABLE IF EXISTS "user";
 
-CREATE TABLE "User" (
-    "ID" serial PRIMARY KEY,
-    "Username" varchar(25) UNIQUE NOT NULL,
-    "Password" text NOT NULL,
-    "Email" varchar(50) UNIQUE NOT NULL
+CREATE TABLE "user" (
+    "id" serial PRIMARY KEY,
+    "username" varchar(25) UNIQUE NOT NULL,
+    "password" text NOT NULL,
+    "email" varchar(50) UNIQUE NOT NULL,
+    "join_at" timestamp without time zone NOT NULL,
+    "last_login_at" timestamp with time zone
 );
 
-CREATE TABLE "Friends" (
-    "User_1_ID" int NOT NULL,
-    "User_2_ID" int NOT NULL,
-    "Accepted" boolean NOT NULL,
-    "Blocked" boolean NOT NULL,
-    PRIMARY KEY ("User_1_ID","User_2_ID"),
-    CONSTRAINT "fk_Friends_User_1_ID" 
-        FOREIGN KEY("User_1_ID")
-            REFERENCES "User" ("ID") 
-            ON DELETE CASCADE,
-    CONSTRAINT "fk_Friends_User_2_ID"
-        FOREIGN KEY("User_2_ID")
-            REFERENCES "User" ("ID") 
-            ON DELETE CASCADE
+CREATE TABLE "friends" (
+    "id" serial PRIMARY KEY,
+    "user_1_id" int NOT NULL REFERENCES "user" ("id") ON DELETE CASCADE,
+    "user_2_id" int NOT NULL REFERENCES "user" ("id") ON DELETE CASCADE,
+    "accepted" boolean NOT NULL,
+    "blocked" boolean NOT NULL,
+    UNIQUE ("user_1_id","user_2_id")
 );
 
-CREATE TABLE "Games" (
-    "ID" serial PRIMARY KEY,
-    "Name" text UNIQUE NOT NULL
+CREATE TABLE "games" (
+    "id" serial PRIMARY KEY,
+    "name" text UNIQUE NOT NULL
 );
 
-CREATE TABLE "User_Games" (
-    "Game_ID" int   NOT NULL,
-    "User_ID" int   NOT NULL,
-    "High_Score" int   NOT NULL,
-    CONSTRAINT "fk_User_Games_Game_ID" 
-        FOREIGN KEY("Game_ID")
-            REFERENCES "Games" ("ID") 
-            ON DELETE CASCADE,
-    CONSTRAINT "fk_User_Games_User_ID" 
-        FOREIGN KEY("User_ID")
-            REFERENCES "User" ("ID") 
-            ON DELETE CASCADE
+CREATE TABLE "user_games" (
+    "game_id" int NOT NULL REFERENCES "games" ("id") ON DELETE CASCADE,
+    "user_id" int NOT NULL REFERENCES "user" ("id") ON DELETE CASCADE,
+    "high_score" int NOT NULL
 );
 
-CREATE TABLE "Friends_Challenges" (
-    "ID" serial PRIMARY KEY,
-    "User_1_ID" int NOT NULL,
-    "User_2_ID" int NOT NULL,
-    "Game_ID" int NOT NULL,
-    "Score_To_Beat" int,
-    CONSTRAINT "fk_Friends_Challenges_User_1_ID_User_2_ID" 
-        FOREIGN KEY("User_1_ID", "User_2_ID")
-            REFERENCES "Friends" ("User_1_ID", "User_2_ID") 
-            ON DELETE CASCADE,
-    CONSTRAINT "fk_Friends_Challenges_Game_ID" 
-        FOREIGN KEY("Game_ID")
-            REFERENCES "Games" ("ID")
-            ON DELETE CASCADE
+CREATE TABLE "friends_challenges" (
+    "id" serial PRIMARY KEY,
+    "friends_id" int NOT NULL REFERENCES "friends" ("id") ON DELETE CASCADE,
+    "game_id" int NOT NULL,
+    "score_to_beat" int NOT NULL
 );
