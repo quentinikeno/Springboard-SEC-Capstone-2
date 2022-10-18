@@ -6,7 +6,7 @@ const User = require("../models/user");
 describe("Test User class", function () {
 	beforeEach(async function () {
 		await db.query("DELETE FROM users");
-		const testUser = await User.register({
+		let testUser = await User.register({
 			username: "test",
 			password: "password",
 			email: "test@example.com",
@@ -21,6 +21,18 @@ describe("Test User class", function () {
 		});
 
 		expect(u.username).toBe("ken");
+	});
+
+	it("can get all users", async () => {
+		const all = await User.getAllUsers();
+		expect(all).toEqual([
+			{
+				id: expect.any(Number),
+				username: "test",
+				lastLoginAt: expect.any(Date),
+				joinAt: expect.any(Date),
+			},
+		]);
 	});
 });
 
