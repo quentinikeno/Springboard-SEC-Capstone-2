@@ -7,9 +7,9 @@ DROP TABLE IF EXISTS "friends_challenges";
 DROP TABLE IF EXISTS "friends";
 DROP TABLE IF EXISTS "user_games";
 DROP TABLE IF EXISTS "games";
-DROP TABLE IF EXISTS "user";
+DROP TABLE IF EXISTS "users";
 
-CREATE TABLE "user" (
+CREATE TABLE "users" (
     "id" serial PRIMARY KEY,
     "username" varchar(25) UNIQUE NOT NULL,
     "password" text NOT NULL,
@@ -20,8 +20,8 @@ CREATE TABLE "user" (
 
 CREATE TABLE "friends" (
     "id" serial PRIMARY KEY,
-    "user_1_id" int NOT NULL REFERENCES "user" ("id") ON DELETE CASCADE,
-    "user_2_id" int NOT NULL REFERENCES "user" ("id") ON DELETE CASCADE,
+    "user_1_id" int NOT NULL REFERENCES "users" ("id") ON DELETE CASCADE,
+    "user_2_id" int NOT NULL REFERENCES "users" ("id") ON DELETE CASCADE,
     "accepted" boolean NOT NULL,
     "blocked" boolean NOT NULL,
     UNIQUE ("user_1_id","user_2_id")
@@ -34,7 +34,7 @@ CREATE TABLE "games" (
 
 CREATE TABLE "user_games" (
     "game_id" int NOT NULL REFERENCES "games" ("id") ON DELETE CASCADE,
-    "user_id" int NOT NULL REFERENCES "user" ("id") ON DELETE CASCADE,
+    "user_id" int NOT NULL REFERENCES "users" ("id") ON DELETE CASCADE,
     "high_score" int NOT NULL
 );
 
