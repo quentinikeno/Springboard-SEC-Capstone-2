@@ -84,7 +84,7 @@ class User {
 					// return the user without the password
 					delete user.password;
 					const authedUser = new User(user);
-					await authedUser.updateLoginTimestamp();
+					await authedUser.updateLoginTimeStamp();
 					return authedUser;
 				}
 			}
@@ -181,9 +181,11 @@ class User {
 		}
 	}
 
-	async updateLoginTimestamp() {
+	/** Update the login timestamp to be the current time */
+
+	async updateLoginTimeStamp() {
 		try {
-			await db.query(
+			const newLoginTime = await db.query(
 				`
 			UPDATE users
 			SET last_login_at=current_timestamp
@@ -191,6 +193,8 @@ class User {
 			RETURNING last_login_at`,
 				[this.username]
 			);
+
+			this.lastLoginAt = newLoginTime;
 		} catch (error) {
 			throw error;
 		}
