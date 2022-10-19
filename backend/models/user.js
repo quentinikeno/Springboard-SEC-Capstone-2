@@ -185,7 +185,7 @@ class User {
 
 	async updateLoginTimeStamp() {
 		try {
-			const newLoginTime = await db.query(
+			const result = await db.query(
 				`
 			UPDATE users
 			SET last_login_at=current_timestamp
@@ -193,6 +193,8 @@ class User {
 			RETURNING last_login_at`,
 				[this.username]
 			);
+
+			const newLoginTime = result.rows[0].last_login_at;
 
 			this.lastLoginAt = newLoginTime;
 		} catch (error) {
