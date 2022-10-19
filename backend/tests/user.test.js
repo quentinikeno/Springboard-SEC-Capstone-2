@@ -103,6 +103,19 @@ describe("Test User class", function () {
 			expect(updatedUser.username).toBe("betterUsername");
 		});
 	});
+
+	describe("test delete method", () => {
+		it("should delete a user", async () => {
+			const user = await loginTestUser();
+			const updatedUser = await user.delete();
+
+			expect(updatedUser).toEqual(undefined);
+
+			async () => {
+				await expect(User.get("test")).toThrow();
+			};
+		});
+	});
 });
 
 afterAll(async function () {

@@ -148,10 +148,34 @@ class User {
 			const user = result.rows[0];
 
 			if (!user)
-				throw new NotFoundError(`No user found with ${username}.`, 404);
+				throw new ExpressError(`No user found with ${username}.`, 404);
 
 			delete user.password;
 			return new User(user);
+		} catch (error) {
+			throw error;
+		}
+	}
+
+	/** Delete a user.  Make sure they are authenticated first.
+	 * returns undefined. */
+
+	async delete() {
+		try {
+			const result = await db.query(
+				`
+				DELETE
+			   FROM users
+			   WHERE username = $1
+			   RETURNING username
+			   `,
+				[this.username]
+			);
+
+			const user = result.rows[0];
+
+			if (!user)
+				throw new ExpressError(`No user found with ${username}.`, 404);
 		} catch (error) {
 			throw error;
 		}
