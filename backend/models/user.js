@@ -98,6 +98,27 @@ class User {
 		}
 	}
 
+	/** Get info on a specific user given a username
+	 * returns an instance of User for the found user
+	 */
+	static async get(username) {
+		const results = await db.query(
+			`
+		SELECT id, username, join_at AS "joinAt", last_login_at AS "lastLoginAt"
+		FROM users 
+		WHERE username=$1
+		`,
+			[username]
+		);
+
+		const user = results.rows[0];
+
+		if (!user)
+			throw new ExpressError(`No user found with ${username}.`, 404);
+
+		return new User(user);
+	}
+
 	async updateLoginTimestamp() {
 		try {
 			await db.query(

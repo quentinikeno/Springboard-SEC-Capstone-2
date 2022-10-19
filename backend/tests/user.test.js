@@ -42,6 +42,7 @@ describe("Test User class", function () {
 	describe("test the authenticate method", () => {
 		it("can authenticate a user", async () => {
 			const user = await User.authenticate("test", "password");
+
 			expect(user).toEqual(expect.any(User));
 			expect(user.id).toEqual(expect.any(Number));
 			expect(user.username).toBe("test");
@@ -63,6 +64,24 @@ describe("Test User class", function () {
 			};
 			async () => {
 				await expect(User.authenticate()).toThrow();
+			};
+		});
+	});
+
+	describe("test get method", () => {
+		it("should return a user given a username", async () => {
+			const user = await User.get("test");
+
+			expect(user).toEqual(expect.any(User));
+			expect(user.id).toEqual(expect.any(Number));
+			expect(user.username).toBe("test");
+			expect(user.lastLoginAt).toEqual(expect.any(Date));
+			expect(user.joinAt).toEqual(expect.any(Date));
+		});
+
+		it("should throw an error if the user is not found", async () => {
+			async () => {
+				await expect(User.get("notThere")).toThrow();
 			};
 		});
 	});
