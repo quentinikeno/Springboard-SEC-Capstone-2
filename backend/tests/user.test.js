@@ -20,19 +20,18 @@ describe("Test User class", function () {
 			email: "test@test.com",
 		});
 
+		expect(u).toEqual(expect.any(User));
 		expect(u.username).toBe("ken");
 	});
 
 	it("can get all users", async () => {
 		const all = await User.getAllUsers();
-		expect(all).toEqual([
-			{
-				id: expect.any(Number),
-				username: "test",
-				lastLoginAt: expect.any(Date),
-				joinAt: expect.any(Date),
-			},
-		]);
+		const [user] = all;
+		expect(all).toEqual([expect.any(User)]);
+		expect(user.id).toEqual(expect.any(Number));
+		expect(user.username).toBe("test");
+		expect(user.lastLoginAt).toEqual(expect.any(Date));
+		expect(user.joinAt).toEqual(expect.any(Date));
 	});
 });
 

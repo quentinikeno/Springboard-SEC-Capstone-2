@@ -27,7 +27,7 @@ class User {
         RETURNING id, username, join_at AS "joinAt", last_login_at AS "lastLoginAt"`,
 			[username, hashedPassword, email]
 		);
-		return results.rows[0];
+		return new User(results.rows[0]);
 	}
 
 	/** get all users
