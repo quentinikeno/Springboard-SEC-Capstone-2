@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const ExpressError = require("../expressError");
 const db = require("../db");
 const { BCRYPT_WORK_FACTOR } = require("../config");
+const { sqlForPartialUpdate } = require("./helpers/sqlForUpdate");
 
 class User {
 	constructor({ id, username, joinAt, lastLoginAt }) {
@@ -117,6 +118,43 @@ class User {
 			throw new ExpressError(`No user found with ${username}.`, 404);
 
 		return new User(user);
+	}
+
+	/** Update user data
+	 * returns new user instance
+	 * data can include {username, email, password}
+	 * not all fields are required
+	 * make sure to call authenticate before updating
+	 */
+
+	async update(data) {
+		try {
+			// hash new password if applicable
+			if (data.password) {
+				data.password = await bcrypt.hash(
+					data.password,
+					BCRYPT_WORK_FACTOR
+				);
+			}
+
+			const { setCols, values } = sqlForPartialUpdate(data);
+			const usernameVarIdx = "$" + (values.length + 1);
+
+			const querySql = `UPDATE users 
+						  SET ${setCols} 
+						  WHERE username = ${usernameVarIdx} 
+						  RETURNING id, username, join_at AS "joinAt", last_login_at AS "lastLoginAt"`;
+			const result = await db.query(querySql, [...values, this.username]);
+			const user = result.rows[0];
+
+			if (!user)
+				throw new NotFoundError(`No user found with ${username}.`, 404);
+
+			delete user.password;
+			return new User(user);
+		} catch (error) {
+			throw error;
+		}
 	}
 
 	async updateLoginTimestamp() {

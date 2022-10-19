@@ -4,6 +4,10 @@ const db = require("../db");
 const User = require("../models/user");
 const expressError = require("../expressError");
 
+const loginTestUser = async () => {
+	return await User.authenticate("test", "password");
+};
+
 describe("Test User class", function () {
 	beforeEach(async function () {
 		await db.query("DELETE FROM users");
@@ -83,6 +87,20 @@ describe("Test User class", function () {
 			async () => {
 				await expect(User.get("notThere")).toThrow();
 			};
+		});
+	});
+
+	describe("test update method", () => {
+		it("should update email, password, and username", async () => {
+			const user = await loginTestUser();
+			const updatedUser = await user.update({
+				email: "wow@mail.com",
+				password: "superSecret",
+				username: "betterUsername",
+			});
+			expect(updatedUser).toEqual(expect.any(User));
+			expect(updatedUser.id).toEqual(user.id);
+			expect(updatedUser.username).toBe("betterUsername");
 		});
 	});
 });
