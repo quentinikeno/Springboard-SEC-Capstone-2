@@ -14,25 +14,29 @@ describe("Test User class", function () {
 		});
 	});
 
-	it("can register a new user", async () => {
-		const u = await User.register({
-			username: "ken",
-			password: "password123",
-			email: "test@test.com",
-		});
+	describe("test register method", () => {
+		it("can register a new user", async () => {
+			const u = await User.register({
+				username: "ken",
+				password: "password123",
+				email: "test@test.com",
+			});
 
-		expect(u).toEqual(expect.any(User));
-		expect(u.username).toBe("ken");
+			expect(u).toEqual(expect.any(User));
+			expect(u.username).toBe("ken");
+		});
 	});
 
-	it("can get all users", async () => {
-		const all = await User.getAllUsers();
-		const [user] = all;
-		expect(all).toEqual([expect.any(User)]);
-		expect(user.id).toEqual(expect.any(Number));
-		expect(user.username).toBe("test");
-		expect(user.lastLoginAt).toEqual(expect.any(Date));
-		expect(user.joinAt).toEqual(expect.any(Date));
+	describe("test get all method", () => {
+		it("can get all users", async () => {
+			const all = await User.getAllUsers();
+			const [user] = all;
+			expect(all).toEqual([expect.any(User)]);
+			expect(user.id).toEqual(expect.any(Number));
+			expect(user.username).toBe("test");
+			expect(user.lastLoginAt).toEqual(expect.any(Date));
+			expect(user.joinAt).toEqual(expect.any(Date));
+		});
 	});
 
 	describe("test the authenticate method", () => {
