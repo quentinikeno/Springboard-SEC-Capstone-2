@@ -1,4 +1,4 @@
-const ExpressError = require("../../expressError");
+const ExpressError = require("../expressError");
 
 /** Create an object with the cols to set and values to update in a SQL Update query.
  *
