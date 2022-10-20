@@ -1,7 +1,7 @@
 /** User class*/
 
 const bcrypt = require("bcrypt");
-const ExpressError = require("../expressError");
+const { NotFoundError404, BadRequestError400 } = require("../expressError");
 const db = require("../db");
 const { BCRYPT_WORK_FACTOR } = require("../config");
 const { sqlForPartialUpdate } = require("./helpers/sqlForUpdate");
@@ -59,9 +59,8 @@ class User {
 	static async authenticate(username, password) {
 		try {
 			if (!username || !password) {
-				throw new ExpressError(
-					"Username and password are required.",
-					400
+				throw new BadRequestError400(
+					"Username and password are required."
 				);
 			}
 
@@ -89,9 +88,8 @@ class User {
 				}
 			}
 
-			throw new ExpressError(
-				"Could not authenticate.  Please make sure your username and password are correct.",
-				400
+			throw new BadRequestError400(
+				"Could not authenticate.  Please make sure your username and password are correct."
 			);
 		} catch (error) {
 			console.log(error);
@@ -115,7 +113,7 @@ class User {
 		const user = results.rows[0];
 
 		if (!user)
-			throw new ExpressError(`No user found with ${username}.`, 404);
+			throw new NotFoundError404(`No user found with ${username}.`, 404);
 
 		return new User(user);
 	}
@@ -148,7 +146,10 @@ class User {
 			const user = result.rows[0];
 
 			if (!user)
-				throw new ExpressError(`No user found with ${username}.`, 404);
+				throw new NotFoundError404(
+					`No user found with ${username}.`,
+					404
+				);
 
 			delete user.password;
 			return new User(user);
@@ -175,7 +176,7 @@ class User {
 			const user = result.rows[0];
 
 			if (!user)
-				throw new ExpressError(`No user found with ${username}.`, 404);
+				throw new NotFoundError404(`No user found with ${username}.`);
 		} catch (error) {
 			throw error;
 		}
