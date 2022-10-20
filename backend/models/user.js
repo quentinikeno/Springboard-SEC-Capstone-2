@@ -20,7 +20,6 @@ class User {
 
 	static async register({ username, email, password }) {
 		try {
-			//Add json Schema later
 			const hashedPassword = await bcrypt.hash(
 				password,
 				BCRYPT_WORK_FACTOR
