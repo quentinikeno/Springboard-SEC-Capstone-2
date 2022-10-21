@@ -31,3 +31,33 @@ describe("Tests for POST /auth/register", () => {
 		});
 	});
 });
+
+/** Tests for /auth/login */
+
+describe("Tests for POST /auth/login", () => {
+	it("authenticates a user", async () => {
+		const resp = await request(app).post("/auth/login").send({
+			username: "user1",
+			password: "password1",
+		});
+		expect(resp.body).toEqual({
+			token: expect.any(String),
+		});
+	});
+
+	it("throws an error if the user is not found", async () => {
+		const resp = await request(app).post("/auth/login").send({
+			username: "notFound",
+			password: "password1",
+		});
+		expect(resp.statusCode).toEqual(404);
+	});
+
+	it("throws an error if the password is incorrect", async () => {
+		const resp = await request(app).post("/auth/login").send({
+			username: "user1",
+			password: "wrongPassword",
+		});
+		expect(resp.statusCode).toEqual(400);
+	});
+});

@@ -2,7 +2,7 @@
 
 const express = require("express");
 const app = express();
-const ExpressError = require("./expressError");
+const { NotFoundError404 } = require("./expressError");
 const morgan = require("morgan");
 const helmet = require("helmet");
 
@@ -20,7 +20,7 @@ app.use("/auth", authRoutes);
 
 /** 404 handler */
 app.use((req, res, next) => {
-	const error = new ExpressError("Not Found", 404);
+	const error = new NotFoundError404();
 	return next(error);
 });
 
