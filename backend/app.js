@@ -15,6 +15,9 @@ app.use(helmet());
 const userRoutes = require("./routes/user");
 app.use("/user", userRoutes);
 
+const userRoutes = require("./routes/auth");
+app.use("/auth", userRoutes);
+
 /** 404 handler */
 app.use((req, res, next) => {
 	const error = new ExpressError("Not Found", 404);
