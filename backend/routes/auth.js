@@ -3,7 +3,7 @@
 const User = require("../models/user");
 const express = require("express");
 const router = new express.Router();
-const { createToken } = require("../helpers/createToken");
+const createToken = require("../helpers/createToken");
 const { BadRequestError400 } = require("../expressError");
 
 /** POST /auth/register { username, email, password }
@@ -12,11 +12,10 @@ const { BadRequestError400 } = require("../expressError");
 
 router.post("/register", async (req, res, next) => {
 	try {
-		const { username, password, email } = req.body;
-		const user = await User.register({ username, password, email });
+		const user = await User.register(req.body);
 		const token = createToken(user);
 
-		return res.json({ token });
+		return res.status(201).json({ token });
 	} catch (error) {
 		return next(error);
 	}
