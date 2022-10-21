@@ -85,14 +85,18 @@ class User {
 					await authedUser.updateLoginTimeStamp();
 					return authedUser;
 				}
+
+				// throw error if password invalid
+				throw new BadRequestError400(
+					"Could not authenticate.  Please make sure your username and password are correct."
+				);
 			}
 
-			throw new BadRequestError400(
-				"Could not authenticate.  Please make sure your username and password are correct."
+			throw new NotFoundError404(
+				"We couldn't find a user with that username.  Please make sure your username is correct or sign up for an account."
 			);
 		} catch (error) {
-			console.log(error);
-			error;
+			throw error;
 		}
 	}
 
