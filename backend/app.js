@@ -15,8 +15,8 @@ app.use(helmet());
 const userRoutes = require("./routes/user");
 app.use("/user", userRoutes);
 
-const userRoutes = require("./routes/auth");
-app.use("/auth", userRoutes);
+const authRoutes = require("./routes/auth");
+app.use("/auth", authRoutes);
 
 /** 404 handler */
 app.use((req, res, next) => {
