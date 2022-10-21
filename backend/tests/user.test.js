@@ -1,8 +1,17 @@
 /** Tests for the user model */
 
-const db = require("../db");
 const User = require("../models/user");
-const expressError = require("../expressError");
+const {
+	commonBeforeAll,
+	commonBeforeEach,
+	commonAfterEach,
+	commonAfterAll,
+} = require("./_testCommon");
+
+beforeAll(commonBeforeAll);
+beforeEach(commonBeforeEach);
+afterEach(commonAfterEach);
+afterAll(commonAfterAll);
 
 const loginTestUser = async () => {
 	return await User.authenticate("test", "password");
@@ -10,8 +19,7 @@ const loginTestUser = async () => {
 
 describe("Test User class", function () {
 	beforeEach(async function () {
-		await db.query("DELETE FROM users");
-		let testUser = await User.register({
+		await User.register({
 			username: "test",
 			password: "password",
 			email: "test@example.com",
@@ -116,8 +124,4 @@ describe("Test User class", function () {
 			};
 		});
 	});
-});
-
-afterAll(async function () {
-	await db.end();
 });
