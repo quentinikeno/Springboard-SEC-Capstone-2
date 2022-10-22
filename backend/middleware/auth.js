@@ -21,7 +21,7 @@ function authenticateJWT(req, res, next) {
 		}
 		return next();
 	} catch (error) {
-		return next();
+		return next(error);
 	}
 }
 
