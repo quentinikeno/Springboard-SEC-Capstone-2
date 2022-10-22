@@ -4,6 +4,8 @@ const User = require("../models/user");
 const express = require("express");
 const router = new express.Router();
 const createToken = require("../helpers/createToken");
+const validateSchema = require("../helpers/validateSchema");
+const userLoginSchema = require("../schemas/userLogin.json");
 const { BadRequestError400 } = require("../expressError");
 
 /** POST /auth/register { username, email, password }
@@ -27,6 +29,7 @@ router.post("/register", async (req, res, next) => {
 
 router.post("/login", async (req, res, next) => {
 	try {
+		validateSchema(req, userLoginSchema);
 		const { username, password } = req.body;
 		const user = await User.authenticate(username, password);
 		const token = createToken(user);

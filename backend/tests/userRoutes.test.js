@@ -60,4 +60,19 @@ describe("Tests for POST /auth/login", () => {
 		});
 		expect(resp.statusCode).toEqual(400);
 	});
+
+	it("throws an error for bad request with missing data", async () => {
+		const resp = await request(app).post("/auth/login").send({
+			username: "user1",
+		});
+		expect(resp.statusCode).toEqual(400);
+	});
+
+	it("throws an error for bad request with invalid number usernames", async () => {
+		const resp = await request(app).post("/auth/login").send({
+			username: 123,
+			password: "password1",
+		});
+		expect(resp.statusCode).toEqual(400);
+	});
 });
