@@ -30,6 +30,24 @@ describe("Tests for POST /auth/register", () => {
 			token: expect.any(String),
 		});
 	});
+
+	it("should throw an error for bad request with missing data", async () => {
+		const resp = await request(app).post("/auth/register").send({
+			email: "registerMe@email.com",
+		});
+
+		expect(resp.statusCode).toEqual(400);
+	});
+
+	it("should throw an error for bad request with invalid data", async () => {
+		const resp = await request(app).post("/auth/register").send({
+			username: 2,
+			email: "bogus.email",
+			password: 99,
+		});
+
+		expect(resp.statusCode).toEqual(400);
+	});
 });
 
 /** Tests for /auth/login */

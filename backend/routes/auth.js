@@ -6,7 +6,7 @@ const router = new express.Router();
 const createToken = require("../helpers/createToken");
 const validateSchema = require("../helpers/validateSchema");
 const userLoginSchema = require("../schemas/userLogin.json");
-const { BadRequestError400 } = require("../expressError");
+const userRegisterSchema = require("../schemas/userRegister.json");
 
 /** POST /auth/register { username, email, password }
  * returns JWT {token}
@@ -14,6 +14,7 @@ const { BadRequestError400 } = require("../expressError");
 
 router.post("/register", async (req, res, next) => {
 	try {
+		validateSchema(req, userRegisterSchema);
 		const user = await User.register(req.body);
 		const token = createToken(user);
 
