@@ -5,25 +5,41 @@ const User = require("../models/user");
 
 /** queries and functions to be run before all tests */
 async function commonBeforeAll() {
-	await db.query("DELETE FROM users");
+	try {
+		await db.query("DELETE FROM users");
 
-	await User.register({
-		username: "user1",
-		email: "user1@test.com",
-		password: "password1",
-	});
+		await User.register({
+			username: "user1",
+			email: "user1@test.com",
+			password: "password1",
+		});
+	} catch (error) {
+		console.error(error);
+	}
 }
 
 async function commonBeforeEach() {
-	await db.query("BEGIN");
+	try {
+		await db.query("BEGIN");
+	} catch (error) {
+		console.error(error);
+	}
 }
 
 async function commonAfterEach() {
-	await db.query("ROLLBACK");
+	try {
+		await db.query("ROLLBACK");
+	} catch (error) {
+		console.error(error);
+	}
 }
 
 async function commonAfterAll() {
-	await db.end();
+	try {
+		await db.end();
+	} catch (error) {
+		console.error(error);
+	}
 }
 
 module.exports = {
