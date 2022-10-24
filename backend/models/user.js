@@ -183,6 +183,8 @@ class User {
 
 			if (!user)
 				throw new NotFoundError404(`No user found with ${username}.`);
+
+			return user;
 		} catch (error) {
 			throw error;
 		}
