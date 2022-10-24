@@ -23,7 +23,6 @@ CREATE TABLE "friends" (
     "user_1_id" int NOT NULL REFERENCES "users" ("id") ON DELETE CASCADE,
     "user_2_id" int NOT NULL REFERENCES "users" ("id") ON DELETE CASCADE,
     "accepted" boolean NOT NULL,
-    "blocked" boolean NOT NULL,
     UNIQUE ("user_1_id","user_2_id")
 );
 
