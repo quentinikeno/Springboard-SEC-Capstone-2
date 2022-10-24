@@ -1,4 +1,4 @@
-/** User class*/
+/** User model*/
 
 const bcrypt = require("bcrypt");
 const { NotFoundError404, BadRequestError400 } = require("../expressError");
