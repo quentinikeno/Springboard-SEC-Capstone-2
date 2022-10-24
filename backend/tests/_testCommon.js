@@ -13,6 +13,12 @@ async function commonBeforeAll() {
 			email: "user1@test.com",
 			password: "password1",
 		});
+
+		await User.register({
+			username: "user2",
+			email: "user2@test.com",
+			password: "password2",
+		});
 	} catch (error) {
 		console.error(error);
 	}
