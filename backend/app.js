@@ -2,20 +2,23 @@
 
 const express = require("express");
 const app = express();
-const { NotFoundError404 } = require("./expressError");
 const morgan = require("morgan");
 const helmet = require("helmet");
+
+const { NotFoundError404 } = require("./expressError");
+const { authenticateJWT } = require("./middleware/auth");
+
+const userRoutes = require("./routes/user");
+const authRoutes = require("./routes/auth");
 
 /** Middleware */
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(helmet());
+app.use(authenticateJWT);
 
 //** Routes */
-const userRoutes = require("./routes/user");
 app.use("/user", userRoutes);
-
-const authRoutes = require("./routes/auth");
 app.use("/auth", authRoutes);
 
 /** 404 handler */
