@@ -131,12 +131,15 @@ class User {
 	async update(data) {
 		try {
 			// hash new password if applicable
-			if (data.password) {
+			if (data.newPassword) {
 				data.password = await bcrypt.hash(
-					data.password,
+					data.newPassword,
 					BCRYPT_WORK_FACTOR
 				);
+				delete data.newPassword;
 			}
+
+			delete data.oldPassword; // delete old password used for auth
 
 			const { setCols, values } = sqlForPartialUpdate(data);
 			const usernameVarIdx = "$" + (values.length + 1);

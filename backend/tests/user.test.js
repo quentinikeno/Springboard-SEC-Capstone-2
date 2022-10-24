@@ -90,7 +90,7 @@ describe("test update method", () => {
 		const user = await loginTestUser();
 		const updatedUser = await user.update({
 			email: "wow@mail.com",
-			password: "superSecret",
+			newPassword: "superSecret",
 			username: "betterUsername",
 		});
 		expect(updatedUser).toEqual(expect.any(User));
