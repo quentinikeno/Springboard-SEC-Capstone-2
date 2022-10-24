@@ -1,4 +1,4 @@
-/** Tests for user routes. */
+/** Tests for auth routes. */
 
 const request = require("supertest");
 const app = require("../app");
