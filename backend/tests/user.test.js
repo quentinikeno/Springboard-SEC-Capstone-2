@@ -104,7 +104,7 @@ describe("test delete method", () => {
 		const user = await loginTestUser();
 		const updatedUser = await user.delete();
 
-		expect(updatedUser).toEqual(undefined);
+		expect(updatedUser).toEqual({ username: "user1" });
 
 		async () => {
 			await expect(User.get("user1")).toThrow();
