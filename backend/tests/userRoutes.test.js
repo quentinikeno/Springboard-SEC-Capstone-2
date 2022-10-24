@@ -8,6 +8,7 @@ const {
 	commonBeforeEach,
 	commonAfterEach,
 	commonAfterAll,
+	getUserToken,
 } = require("./_testCommon");
 
 beforeAll(commonBeforeAll);
@@ -15,19 +16,11 @@ beforeEach(commonBeforeEach);
 afterEach(commonAfterEach);
 afterAll(commonAfterAll);
 
-const GetUserToken = async (username = "user1", password = "password1") => {
-	const res = await request(app).post("/auth/login").send({
-		username,
-		password,
-	});
-	return res.body.token;
-};
-
 /** Test User routes */
 
 describe("test GET /user/[username]", () => {
 	it("can get info on a certain user", async () => {
-		const u1Token = await GetUserToken();
+		const u1Token = await getUserToken();
 		const resp = await request(app)
 			.get("/user/user1")
 			.set("authorization", `Bearer ${u1Token}`);
@@ -42,7 +35,7 @@ describe("test GET /user/[username]", () => {
 	});
 
 	it("thows a 404 status code if the user doesn't exist", async () => {
-		const u1Token = await GetUserToken();
+		const u1Token = await getUserToken();
 		const resp = await request(app)
 			.get("/user/nonexistant")
 			.set("authorization", `Bearer ${u1Token}`);
@@ -53,7 +46,7 @@ describe("test GET /user/[username]", () => {
 
 describe("test PATCH /user/[username]", () => {
 	it("can update info on a certain user", async () => {
-		const u1Token = await GetUserToken();
+		const u1Token = await getUserToken();
 		const resp = await request(app)
 			.patch("/user/user1")
 			.set("authorization", `Bearer ${u1Token}`)
@@ -73,7 +66,7 @@ describe("test PATCH /user/[username]", () => {
 		});
 
 		// check that we can access the get route with the new username
-		const updatedU1Token = await GetUserToken(
+		const updatedU1Token = await getUserToken(
 			"betterUsername",
 			"superSecret"
 		);
@@ -90,7 +83,7 @@ describe("test PATCH /user/[username]", () => {
 	});
 
 	it("can update part of a user's data", async () => {
-		const u1Token = await GetUserToken();
+		const u1Token = await getUserToken();
 		const resp = await request(app)
 			.patch("/user/user1")
 			.set("authorization", `Bearer ${u1Token}`)
@@ -109,7 +102,7 @@ describe("test PATCH /user/[username]", () => {
 	});
 
 	it("throws an error if the password is wrong or not included", async () => {
-		const u1Token = await GetUserToken();
+		const u1Token = await getUserToken();
 		const resp = await request(app)
 			.patch("/user/user1")
 			.set("authorization", `Bearer ${u1Token}`)
@@ -133,7 +126,7 @@ describe("test PATCH /user/[username]", () => {
 	});
 
 	it("throws an error when updating another user's info", async () => {
-		const u1Token = await GetUserToken();
+		const u1Token = await getUserToken();
 		const resp = await request(app)
 			.patch("/user/user2")
 			.set("authorization", `Bearer ${u1Token}`)
@@ -150,7 +143,7 @@ describe("test PATCH /user/[username]", () => {
 
 describe("test DELETE /user/[username]", () => {
 	it("can delete a certain user", async () => {
-		const u1Token = await GetUserToken();
+		const u1Token = await getUserToken();
 		const resp = await request(app)
 			.delete("/user/user1")
 			.set("authorization", `Bearer ${u1Token}`)
@@ -172,7 +165,7 @@ describe("test DELETE /user/[username]", () => {
 	});
 
 	it("throws an error if a user tries to delete another user's account", async () => {
-		const u1Token = await GetUserToken();
+		const u1Token = await getUserToken();
 		const resp = await request(app)
 			.delete("/user/user2")
 			.set("authorization", `Bearer ${u1Token}`)
@@ -184,7 +177,7 @@ describe("test DELETE /user/[username]", () => {
 	});
 
 	it("throws an error if the password provided is wrong or not provided", async () => {
-		const u1Token = await GetUserToken();
+		const u1Token = await getUserToken();
 		const resp = await request(app)
 			.delete("/user/user1")
 			.set("authorization", `Bearer ${u1Token}`)

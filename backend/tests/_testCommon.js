@@ -1,6 +1,8 @@
 "use strict";
 
 const db = require("../db.js");
+const request = require("supertest");
+const app = require("../app");
 const User = require("../models/user");
 
 /** queries and functions to be run before all tests */
@@ -48,9 +50,18 @@ async function commonAfterAll() {
 	}
 }
 
+async function getUserToken(username = "user1", password = "password1") {
+	const res = await request(app).post("/auth/login").send({
+		username,
+		password,
+	});
+	return res.body.token;
+}
+
 module.exports = {
 	commonBeforeAll,
 	commonBeforeEach,
 	commonAfterEach,
 	commonAfterAll,
+	getUserToken,
 };
