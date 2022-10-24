@@ -182,4 +182,21 @@ describe("test DELETE /user/[username]", () => {
 
 		expect(resp.statusCode).toBe(403);
 	});
+
+	it("throws an error if the password provided is wrong or not provided", async () => {
+		const u1Token = await GetUserToken();
+		const resp = await request(app)
+			.delete("/user/user1")
+			.set("authorization", `Bearer ${u1Token}`)
+			.send({
+				password: "password2",
+			});
+		const resp2 = await request(app)
+			.delete("/user/user1")
+			.set("authorization", `Bearer ${u1Token}`)
+			.send({});
+
+		expect(resp.statusCode).toBe(400);
+		expect(resp2.statusCode).toBe(400);
+	});
 });
