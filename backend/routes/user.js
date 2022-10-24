@@ -51,4 +51,34 @@ router.patch(
 	}
 );
 
+/** DELETE user/[username]
+ * returns { deleted: username }
+ * authorization: logged in and permitted user
+ */
+
+router.delete(
+	"/:username",
+	ensureLoggedIn,
+	ensurePermittedUser,
+	async (req, res, next) => {
+		try {
+			const { username } = req.params;
+			const { password } = req.body;
+			if (!username)
+				throw new BadRequestError400("A username must be provided.");
+			if (!password)
+				throw new BadRequestError400(
+					"Your account's password is required."
+				);
+
+			const user = await User.authenticate(username, password);
+			const { username: deleted } = await user.delete(req.body); // deleted user's username
+
+			return res.json({ deleted });
+		} catch (error) {
+			return next(error);
+		}
+	}
+);
+
 module.exports = router;

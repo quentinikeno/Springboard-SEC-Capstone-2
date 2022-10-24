@@ -32,6 +32,7 @@ describe("test GET /user/[username]", () => {
 			.get("/user/user1")
 			.set("authorization", `Bearer ${u1Token}`);
 
+		expect(resp.statusCode).toBe(200);
 		expect(resp.body).toEqual({
 			id: expect.any(Number),
 			username: "user1",
@@ -63,6 +64,7 @@ describe("test PATCH /user/[username]", () => {
 				username: "betterUsername",
 			});
 
+		expect(resp.statusCode).toBe(200);
 		expect(resp.body).toEqual({
 			id: expect.any(Number),
 			username: "betterUsername",
@@ -97,6 +99,7 @@ describe("test PATCH /user/[username]", () => {
 				oldPassword: "password1",
 			});
 
+		expect(resp.statusCode).toBe(200);
 		expect(resp.body).toEqual({
 			id: expect.any(Number),
 			username: "user1",
@@ -139,6 +142,42 @@ describe("test PATCH /user/[username]", () => {
 				newPassword: "superSecret",
 				oldPassword: "password1",
 				username: "betterUsername",
+			});
+
+		expect(resp.statusCode).toBe(403);
+	});
+});
+
+describe("test DELETE /user/[username]", () => {
+	it("can delete a certain user", async () => {
+		const u1Token = await GetUserToken();
+		const resp = await request(app)
+			.delete("/user/user1")
+			.set("authorization", `Bearer ${u1Token}`)
+			.send({
+				password: "password1",
+			});
+
+		expect(resp.statusCode).toBe(200);
+		expect(resp.body).toEqual({
+			deleted: "user1",
+		});
+
+		// check that the user no longer exists
+		const resp2 = await request(app)
+			.get("/user/user1")
+			.set("authorization", `Bearer ${u1Token}`);
+
+		expect(resp2.statusCode).toBe(404);
+	});
+
+	it("throws an error if a user tries to delete another user's account", async () => {
+		const u1Token = await GetUserToken();
+		const resp = await request(app)
+			.delete("/user/user2")
+			.set("authorization", `Bearer ${u1Token}`)
+			.send({
+				password: "password2",
 			});
 
 		expect(resp.statusCode).toBe(403);
