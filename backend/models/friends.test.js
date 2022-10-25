@@ -23,17 +23,17 @@ const getTestUser = async (user = "user1") => {
 const requestFriends = async (username1 = "user1", username2 = "user2") => {
 	const user1 = await getTestUser(username1);
 	const user2 = await getTestUser(username2);
-	const friends = await Friends.add(user1.id, user2.id);
-	return { user1, user2, friends };
+	const request = await Friends.add(user1.id, user2.id);
+	return { user1, user2, request };
 };
 /** Test Friends model */
 
 describe("test add method", () => {
 	it("can add a friend request for two users to db", async () => {
-		const { user1, user2, friends } = await requestFriends();
+		const { user1, user2, request } = await requestFriends();
 
-		expect(friends).toEqual(expect.any(Friends));
-		expect(friends).toEqual({
+		expect(request).toEqual(expect.any(Friends));
+		expect(request).toEqual({
 			id: expect.any(Number),
 			user_1_id: user1.id,
 			user_2_id: user2.id,
@@ -54,15 +54,48 @@ describe("test add method", () => {
 
 describe("test accept method", () => {
 	it("can accept a user's friend request", async () => {
-		const { user1, user2, friends } = await requestFriends();
-		const accepted = await friends.accept();
+		const { user1, user2, request } = await requestFriends();
+		const accepted = await request.accept();
 
 		expect(accepted).toBe(true);
-		expect(friends).toEqual({
+		expect(request).toEqual({
 			id: expect.any(Number),
 			user_1_id: user1.id,
 			user_2_id: user2.id,
 			accepted: true,
 		});
+	});
+});
+
+describe("test getFriends method", () => {
+	it("can get all of a users pending friend requests", async () => {
+		const { user1, user2 } = await requestFriends();
+		const friends = await Friends.getFriends(user1.id, false);
+
+		expect(friends).toEqual([expect.any(Friends)]);
+		expect(friends).toEqual([
+			{
+				id: expect.any(Number),
+				user_1_id: user1.id,
+				user_2_id: user2.id,
+				accepted: false,
+			},
+		]);
+	});
+
+	it("can get all of a users accepted friends", async () => {
+		const { user1, user2, request } = await requestFriends();
+		await request.accept();
+		const friends = await Friends.getFriends(user1.id, true);
+
+		expect(friends).toEqual([expect.any(Friends)]);
+		expect(friends).toEqual([
+			{
+				id: expect.any(Number),
+				user_1_id: user1.id,
+				user_2_id: user2.id,
+				accepted: true,
+			},
+		]);
 	});
 });

@@ -47,6 +47,7 @@ class Friends {
 	/** accepts a friend request and sets accepted to True
 	 * returns true if accepted
 	 */
+
 	async accept() {
 		try {
 			const results = await db.query(
@@ -63,6 +64,32 @@ class Friends {
 			this.accepted = accepted;
 
 			return accepted;
+		} catch (error) {
+			throw error;
+		}
+	}
+
+	/** Given an user's ID, get all of their accepted or pending friends.  The accepted status is a boolean.
+	 * returns array of instances of Friends class [{id, user_1_id, user_2_id, accepted}, ...]
+	 * returns an empty array if nothing found
+	 * the user's ID can be either user_1_id or user_2_id
+	 */
+
+	static async getFriends(user_id, accepted) {
+		try {
+			const results = await db.query(
+				`
+            SELECT id, user_1_id, user_2_id, accepted
+            FROM friends 
+            WHERE (user_1_id = $1 OR user_2_id = $1) AND accepted = $2
+            `,
+				[user_id, accepted]
+			);
+
+			// create array of friends instances
+			const friends = results.rows.map((row) => new Friends(row));
+
+			return friends;
 		} catch (error) {
 			throw error;
 		}
