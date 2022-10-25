@@ -11,7 +11,7 @@ class Friends {
 		this.accepted = accepted;
 	}
 
-	/** add friends
+	/** add friends and send them a request
 	 * returns instance of Friends class ({id, user_1_id, user_2_id, accepted})
 	 */
 
@@ -39,6 +39,30 @@ class Friends {
 			);
 
 			return new Friends(results.rows[0]);
+		} catch (error) {
+			throw error;
+		}
+	}
+
+	/** accepts a friend request and sets accepted to True
+	 * returns true if accepted
+	 */
+	async accept() {
+		try {
+			const results = await db.query(
+				`
+			UPDATE friends
+			SET accepted=$1
+			WHERE id=$2
+			RETURNING accepted
+			`,
+				[true, this.id]
+			);
+
+			const { accepted } = results.rows[0];
+			this.accepted = accepted;
+
+			return accepted;
 		} catch (error) {
 			throw error;
 		}
