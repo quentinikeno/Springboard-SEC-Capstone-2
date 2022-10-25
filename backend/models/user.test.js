@@ -1,12 +1,12 @@
 /** Tests for the user model */
 
-const User = require("../models/user");
+const User = require("./user");
 const {
 	commonBeforeAll,
 	commonBeforeEach,
 	commonAfterEach,
 	commonAfterAll,
-} = require("./_testCommon");
+} = require("../tests/_testCommon");
 
 beforeAll(commonBeforeAll);
 beforeEach(commonBeforeEach);

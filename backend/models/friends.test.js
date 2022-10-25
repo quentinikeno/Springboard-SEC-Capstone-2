@@ -1,6 +1,6 @@
 /** Tests for the friends model */
 
-const Friends = require("../models/friends");
+const Friends = require("./friends");
 const {
 	commonBeforeAll,
 	commonBeforeEach,
@@ -8,7 +8,7 @@ const {
 	commonAfterAll,
 	user1,
 	user2,
-} = require("./_testCommon");
+} = require("../tests/_testCommon");
 
 beforeAll(commonBeforeAll);
 beforeEach(commonBeforeEach);

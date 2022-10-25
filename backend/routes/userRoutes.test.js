@@ -9,7 +9,7 @@ const {
 	commonAfterEach,
 	commonAfterAll,
 	getUserToken,
-} = require("./_testCommon");
+} = require("../tests/_testCommon");
 
 beforeAll(commonBeforeAll);
 beforeEach(commonBeforeEach);
