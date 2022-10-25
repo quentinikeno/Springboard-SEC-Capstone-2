@@ -2,10 +2,13 @@
 
 require("dotenv").config();
 
+// connection string with db username and password
+const CONNECTION_STRING = process.env.CONNECTION_STRING || "";
+
 const DB_URI =
 	process.env.NODE_ENV === "test"
-		? "postgresql:///math_games_test"
-		: "postgresql:///math_games";
+		? `postgresql://${CONNECTION_STRING}/math_games_test`
+		: `postgresql://${CONNECTION_STRING}/math_games`;
 
 const SECRET_KEY = process.env.SECRET_KEY || "secret";
 
