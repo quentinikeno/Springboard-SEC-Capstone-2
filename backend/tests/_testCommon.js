@@ -5,21 +5,18 @@ const request = require("supertest");
 const app = require("../app");
 const User = require("../models/user");
 
-let user1;
-let user2;
-
 /** queries and functions to be run before all tests */
 async function commonBeforeAll() {
 	try {
 		await db.query("DELETE FROM users");
 
-		user1 = await User.register({
+		await User.register({
 			username: "user1",
 			email: "user1@test.com",
 			password: "password1",
 		});
 
-		user2 = await User.register({
+		await User.register({
 			username: "user2",
 			email: "user2@test.com",
 			password: "password2",
@@ -67,6 +64,4 @@ module.exports = {
 	commonAfterEach,
 	commonAfterAll,
 	getUserToken,
-	user1,
-	user2,
 };
