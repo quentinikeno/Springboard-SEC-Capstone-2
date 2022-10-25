@@ -55,9 +55,9 @@ describe("test add method", () => {
 describe("test accept method", () => {
 	it("can accept a user's friend request", async () => {
 		const { user1, user2, friends } = await requestFriends();
-		const accepted = friends.accept();
+		const accepted = await friends.accept();
 
-		expect(accepted).toEqual(true);
+		expect(accepted).toBe(true);
 		expect(friends).toEqual({
 			id: expect.any(Number),
 			user_1_id: user1.id,
