@@ -219,7 +219,20 @@ class User {
 
 	async getFriends(accepted) {
 		try {
-			return Friends.getFriends(this.id, accepted);
+			// subquery in from statement selects the friends' user ids from the friends table
+			const results = await db.query(
+				`
+			SELECT users.id, users.username, users.join_at AS "joinAt", users.last_login_at AS "lastLoginAt"
+			FROM (SELECT (CASE WHEN user_1_id <> $1 THEN user_1_id ELSE user_2_id END) AS friend_user_id FROM friends WHERE $1 IN (user_1_id , user_2_id) AND accepted = $2) AS friends_ids
+			INNER JOIN users ON users.id = friends_ids.friend_user_id
+			`,
+				[this.id, accepted]
+			);
+
+			// create array of users instances
+			const friends = results.rows.map((row) => new User(row));
+
+			return friends;
 		} catch (error) {
 			throw error;
 		}
