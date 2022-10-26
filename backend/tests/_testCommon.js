@@ -4,10 +4,7 @@ const db = require("../db.js");
 const request = require("supertest");
 const app = require("../app");
 const User = require("../models/user");
-
-async function clearTable(table) {
-	await db.query("DELETE FROM $1", [table]);
-}
+const Friends = require("../models/friends");
 
 /** queries and functions to be run before all tests */
 
@@ -63,11 +60,34 @@ async function commonAfterAll() {
 }
 
 async function getUserToken(username = "user1", password = "password1") {
-	const res = await request(app).post("/auth/login").send({
-		username,
-		password,
-	});
-	return res.body.token;
+	try {
+		const res = await request(app).post("/auth/login").send({
+			username,
+			password,
+		});
+		return res.body.token;
+	} catch (error) {
+		console.error(error);
+	}
+}
+
+async function getTestUser(user = "user1") {
+	try {
+		return await User.get(user);
+	} catch (error) {
+		console.error(error);
+	}
+}
+
+async function requestFriends(username1 = "user1", username2 = "user2") {
+	try {
+		const user1 = await getTestUser(username1);
+		const user2 = await getTestUser(username2);
+		const request = await Friends.add(user1.id, user2.id);
+		return { user1, user2, request };
+	} catch (error) {
+		console.error(error);
+	}
 }
 
 module.exports = {
@@ -76,4 +96,6 @@ module.exports = {
 	commonAfterEach,
 	commonAfterAll,
 	getUserToken,
+	getTestUser,
+	requestFriends,
 };

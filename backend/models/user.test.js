@@ -7,6 +7,7 @@ const {
 	commonBeforeEach,
 	commonAfterEach,
 	commonAfterAll,
+	requestFriends,
 } = require("../tests/_testCommon");
 
 beforeAll(commonBeforeAll);
@@ -16,17 +17,6 @@ afterAll(commonAfterAll);
 
 const loginTestUser = async () => {
 	return await User.authenticate("user1", "password1");
-};
-
-const getTestUser = async (user = "user1") => {
-	return await User.get(user);
-};
-
-const requestFriends = async (username1 = "user1", username2 = "user2") => {
-	const user1 = await getTestUser(username1);
-	const user2 = await getTestUser(username2);
-	const request = await Friends.add(user1.id, user2.id);
-	return { user1, user2, request };
 };
 
 /** Test User model */
