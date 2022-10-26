@@ -116,7 +116,10 @@ class User {
 		const user = results.rows[0];
 
 		if (!user)
-			throw new NotFoundError404(`No user found with ${username}.`, 404);
+			throw new NotFoundError404(
+				`No user found with username: ${username}.`,
+				404
+			);
 
 		return new User(user);
 	}
@@ -153,7 +156,7 @@ class User {
 
 			if (!user)
 				throw new NotFoundError404(
-					`No user found with ${username}.`,
+					`No user found with username: ${username}.`,
 					404
 				);
 
@@ -182,7 +185,9 @@ class User {
 			const user = result.rows[0];
 
 			if (!user)
-				throw new NotFoundError404(`No user found with ${username}.`);
+				throw new NotFoundError404(
+					`No user found with username: ${username}.`
+				);
 
 			return user;
 		} catch (error) {
