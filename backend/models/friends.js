@@ -1,6 +1,6 @@
 /** Friends model */
 
-const { NotFoundError404, BadRequestError400 } = require("../expressError");
+const { BadRequestError400 } = require("../expressError");
 const db = require("../db");
 
 class Friends {
