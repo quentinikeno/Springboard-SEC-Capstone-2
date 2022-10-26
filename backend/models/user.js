@@ -5,7 +5,6 @@ const { NotFoundError404, BadRequestError400 } = require("../expressError");
 const db = require("../db");
 const { BCRYPT_WORK_FACTOR } = require("../config");
 const { sqlForPartialUpdate } = require(".././helpers/sqlForUpdate");
-const Friends = require("./friends");
 
 class User {
 	constructor({ id, username, joinAt, lastLoginAt }) {
