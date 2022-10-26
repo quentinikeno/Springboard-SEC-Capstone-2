@@ -7,8 +7,6 @@ const {
 	commonBeforeEach,
 	commonAfterEach,
 	commonAfterAll,
-	user1,
-	user2,
 } = require("../tests/_testCommon");
 
 beforeAll(commonBeforeAll);
@@ -68,34 +66,18 @@ describe("test accept method", () => {
 });
 
 describe("test getFriends method", () => {
-	it("can get all of a users pending friend requests", async () => {
+	it("can get all of a users pending friend users", async () => {
 		const { user1, user2 } = await requestFriends();
 		const friends = await Friends.getFriends(user1.id, false);
 
-		expect(friends).toEqual([expect.any(Friends)]);
-		expect(friends).toEqual([
-			{
-				id: expect.any(Number),
-				user_1_id: user1.id,
-				user_2_id: user2.id,
-				accepted: false,
-			},
-		]);
+		expect(friends).toEqual([user2]);
 	});
 
-	it("can get all of a users accepted friends", async () => {
+	it("can get all of a users accepted friend users", async () => {
 		const { user1, user2, request } = await requestFriends();
 		await request.accept();
 		const friends = await Friends.getFriends(user1.id, true);
 
-		expect(friends).toEqual([expect.any(Friends)]);
-		expect(friends).toEqual([
-			{
-				id: expect.any(Number),
-				user_1_id: user1.id,
-				user_2_id: user2.id,
-				accepted: true,
-			},
-		]);
+		expect(friends).toEqual([user2]);
 	});
 });
