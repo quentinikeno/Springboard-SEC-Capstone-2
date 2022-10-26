@@ -8,6 +8,7 @@ const User = require("../models/user");
 /** queries and functions to be run before all tests */
 async function commonBeforeAll() {
 	try {
+		await db.query("DELETE FROM friends");
 		await db.query("DELETE FROM users");
 
 		await User.register({
@@ -20,6 +21,12 @@ async function commonBeforeAll() {
 			username: "user2",
 			email: "user2@test.com",
 			password: "password2",
+		});
+
+		await User.register({
+			username: "user3",
+			email: "user3@test.com",
+			password: "password3",
 		});
 	} catch (error) {
 		console.error(error);
