@@ -1,6 +1,7 @@
 /** Tests for the user model */
 
 const User = require("./user");
+const Friends = require("./friends");
 const {
 	commonBeforeAll,
 	commonBeforeEach,
@@ -15,6 +16,17 @@ afterAll(commonAfterAll);
 
 const loginTestUser = async () => {
 	return await User.authenticate("user1", "password1");
+};
+
+const getTestUser = async (user = "user1") => {
+	return await User.get(user);
+};
+
+const requestFriends = async (username1 = "user1", username2 = "user2") => {
+	const user1 = await getTestUser(username1);
+	const user2 = await getTestUser(username2);
+	const request = await Friends.add(user1.id, user2.id);
+	return { user1, user2, request };
 };
 
 /** Test User model */
@@ -109,5 +121,22 @@ describe("test delete method", () => {
 		async () => {
 			await expect(User.get("user1")).toThrow();
 		};
+	});
+});
+
+describe("test getFriends method", () => {
+	it("can get all of a users pending friend users", async () => {
+		const { user1, user2 } = await requestFriends();
+		const friends = await user1.getFriends(false);
+
+		expect(friends).toEqual([user2]);
+	});
+
+	it("can get all of a users accepted friend users", async () => {
+		const { user1, user2, request } = await requestFriends();
+		await request.accept();
+		const friends = await user1.getFriends(true);
+
+		expect(friends).toEqual([user2]);
 	});
 });

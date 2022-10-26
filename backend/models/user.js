@@ -5,6 +5,7 @@ const { NotFoundError404, BadRequestError400 } = require("../expressError");
 const db = require("../db");
 const { BCRYPT_WORK_FACTOR } = require("../config");
 const { sqlForPartialUpdate } = require(".././helpers/sqlForUpdate");
+const Friends = require("./friends");
 
 class User {
 	constructor({ id, username, joinAt, lastLoginAt }) {
@@ -206,6 +207,19 @@ class User {
 			const newLoginTime = result.rows[0].last_login_at;
 
 			this.lastLoginAt = newLoginTime;
+		} catch (error) {
+			throw error;
+		}
+	}
+
+	/** Get all of a users accepted or pending friends.  The accepted status is a boolean.
+	 * returns array of instances of Users class for each friend [{id, user_1_id, user_2_id, accepted}, ...]
+	 * returns an empty array if nothing found
+	 */
+
+	async getFriends(accepted) {
+		try {
+			return Friends.getFriends(this.id, accepted);
 		} catch (error) {
 			throw error;
 		}
