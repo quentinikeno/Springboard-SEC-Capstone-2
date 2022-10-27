@@ -8,31 +8,26 @@ const Friends = require("../models/friends");
 
 /** queries and functions to be run before all tests */
 
-function commonBeforeAll() {
-	new Promise(() => db.query("DELETE FROM friends"))
-		.then(() => db.query("DELETE FROM users"))
-		.then(() =>
-			User.register({
-				username: "user1",
-				email: "user1@test.com",
-				password: "password1",
-			})
-		)
-		.then(() =>
-			User.register({
-				username: "user2",
-				email: "user2@test.com",
-				password: "password2",
-			})
-		)
-		.then(() =>
-			User.register({
-				username: "user3",
-				email: "user3@test.com",
-				password: "password3",
-			})
-		)
-		.catch((err) => console.error(err));
+async function commonBeforeAll() {
+	await Promise.allSettled([
+		db.query("DELETE FROM friends"),
+		db.query("DELETE FROM users"),
+		User.register({
+			username: "user1",
+			email: "user1@test.com",
+			password: "password1",
+		}),
+		User.register({
+			username: "user2",
+			email: "user2@test.com",
+			password: "password2",
+		}),
+		User.register({
+			username: "user3",
+			email: "user3@test.com",
+			password: "password3",
+		}),
+	]);
 }
 
 async function commonBeforeEach() {
