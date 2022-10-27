@@ -109,6 +109,9 @@ describe("test update method", () => {
 		expect(updatedUser).toEqual(expect.any(User));
 		expect(updatedUser.id).toEqual(user.id);
 		expect(updatedUser.username).toBe("betterUsername");
+
+		const betterUsername = await User.get("betterUsername");
+		expect(betterUsername).toEqual(updatedUser);
 	});
 });
 
