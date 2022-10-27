@@ -1,7 +1,6 @@
 /** Tests for the user model */
 
 const User = require("./user");
-const Friends = require("./friends");
 const {
 	commonBeforeAll,
 	commonBeforeEach,
@@ -23,14 +22,22 @@ const loginTestUser = async () => {
 
 describe("test register method", () => {
 	it("can register a new user", async () => {
-		const u = await User.register({
+		const user = await User.register({
 			username: "ken",
 			password: "password123",
 			email: "test@test.com",
 		});
 
-		expect(u).toEqual(expect.any(User));
-		expect(u.username).toBe("ken");
+		expect(user).toEqual(expect.any(User));
+		expect(user).toEqual({
+			id: expect.any(Number),
+			username: "ken",
+			lastLoginAt: expect.any(Date),
+			joinAt: expect.any(Date),
+		});
+
+		const kenLoggedIn = await User.get("ken");
+		expect(kenLoggedIn).toEqual(user);
 	});
 });
 
@@ -47,10 +54,12 @@ describe("test the authenticate method", () => {
 		const user = await User.authenticate("user1", "password1");
 
 		expect(user).toEqual(expect.any(User));
-		expect(user.id).toEqual(expect.any(Number));
-		expect(user.username).toBe("user1");
-		expect(user.lastLoginAt).toEqual(expect.any(Date));
-		expect(user.joinAt).toEqual(expect.any(Date));
+		expect(user).toEqual({
+			id: expect.any(Number),
+			username: "user1",
+			lastLoginAt: expect.any(Date),
+			joinAt: expect.any(Date),
+		});
 	});
 
 	it("will throw an error with wrong password", async () => {
@@ -74,10 +83,12 @@ describe("test get method", () => {
 		const user = await User.get("user1");
 
 		expect(user).toEqual(expect.any(User));
-		expect(user.id).toEqual(expect.any(Number));
-		expect(user.username).toBe("user1");
-		expect(user.lastLoginAt).toEqual(expect.any(Date));
-		expect(user.joinAt).toEqual(expect.any(Date));
+		expect(user).toEqual({
+			id: expect.any(Number),
+			username: "user1",
+			lastLoginAt: expect.any(Date),
+			joinAt: expect.any(Date),
+		});
 	});
 
 	it("should throw an error if the user is not found", async () => {
