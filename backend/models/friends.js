@@ -18,6 +18,9 @@ class Friends {
 
 	static async add(user_1_id, user_2_id) {
 		try {
+			if (user_1_id === user_2_id)
+				throw new BadRequestError400("Both users's IDs' are the same.");
+
 			// check if users are already friends
 			const friendsResults = await db.query(
 				`

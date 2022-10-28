@@ -39,6 +39,16 @@ describe("test add method", () => {
 			await expect(requestFriends("user2", "user1")).toThrow();
 		};
 	});
+
+	it("will throw an error if both users are the same", async () => {
+		await requestFriends();
+		async () => {
+			await expect(requestFriends()).toThrow();
+		};
+		async () => {
+			await expect(requestFriends("user1", "user1")).toThrow();
+		};
+	});
 });
 
 describe("test accept method", () => {
