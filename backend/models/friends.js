@@ -81,7 +81,7 @@ class Friends {
 			// subquery in from statement selects the friends' user ids from the friends table
 			const results = await db.query(
 				`
-			SELECT users.id, users.username, users.join_at AS "joinAt", users.last_login_at AS "lastLoginAt"
+			SELECT users.id, users.username, users.join_at AS "joinAt", users.last_login_at AS "lastLoginAt", users.is_admin AS "isAdmin"
 			FROM (SELECT (CASE WHEN user_1_id <> $1 THEN user_1_id ELSE user_2_id END) AS friend_user_id FROM friends WHERE $1 IN (user_1_id , user_2_id) AND accepted = $2) AS friends_ids
 			INNER JOIN users ON users.id = friends_ids.friend_user_id
 			`,
