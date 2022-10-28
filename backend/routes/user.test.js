@@ -31,6 +31,7 @@ describe("test GET /user/[username]", () => {
 			username: "user1",
 			lastLoginAt: expect.any(String),
 			joinAt: expect.any(String),
+			isAdmin: false,
 		});
 	});
 
@@ -63,6 +64,7 @@ describe("test PATCH /user/[username]", () => {
 			username: "betterUsername",
 			lastLoginAt: expect.any(String),
 			joinAt: expect.any(String),
+			isAdmin: false,
 		});
 
 		// check that we can access the get route with the new username
@@ -79,6 +81,7 @@ describe("test PATCH /user/[username]", () => {
 			username: "betterUsername",
 			lastLoginAt: expect.any(String),
 			joinAt: expect.any(String),
+			isAdmin: false,
 		});
 	});
 
@@ -98,6 +101,7 @@ describe("test PATCH /user/[username]", () => {
 			username: "user1",
 			lastLoginAt: expect.any(String),
 			joinAt: expect.any(String),
+			isAdmin: false,
 		});
 	});
 
