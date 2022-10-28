@@ -34,6 +34,7 @@ describe("test register method", () => {
 			username: "ken",
 			lastLoginAt: expect.any(Date),
 			joinAt: expect.any(Date),
+			isAdmin: false,
 		});
 
 		const kenLoggedIn = await User.get("ken");
@@ -59,6 +60,7 @@ describe("test the authenticate method", () => {
 			username: "user1",
 			lastLoginAt: expect.any(Date),
 			joinAt: expect.any(Date),
+			isAdmin: false,
 		});
 	});
 
@@ -88,6 +90,7 @@ describe("test get method", () => {
 			username: "user1",
 			lastLoginAt: expect.any(Date),
 			joinAt: expect.any(Date),
+			isAdmin: false,
 		});
 	});
 
