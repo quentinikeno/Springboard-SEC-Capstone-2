@@ -48,8 +48,20 @@ function ensurePermittedUser(req, res, next) {
 	}
 }
 
+/** Check if a user's is an admin. */
+
+function ensureAdmin(req, res, next) {
+	try {
+		if (!res.locals.isAdmin) throw new ForbiddenError403();
+		return next();
+	} catch (error) {
+		return next(error);
+	}
+}
+
 module.exports = {
 	authenticateJWT,
 	ensureLoggedIn,
 	ensurePermittedUser,
+	ensureAdmin,
 };
