@@ -15,7 +15,8 @@ CREATE TABLE "users" (
     "password" text NOT NULL,
     "email" varchar(50) UNIQUE NOT NULL,
     "join_at" timestamp without time zone NOT NULL,
-    "last_login_at" timestamp with time zone
+    "last_login_at" timestamp with time zone,
+    "is_admin" boolean NOT NULL
 );
 
 CREATE TABLE "friends" (
