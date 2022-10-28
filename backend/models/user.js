@@ -7,18 +7,19 @@ const { BCRYPT_WORK_FACTOR } = require("../config");
 const { sqlForPartialUpdate } = require(".././helpers/sqlForUpdate");
 
 class User {
-	constructor({ id, username, joinAt, lastLoginAt }) {
+	constructor({ id, username, joinAt, lastLoginAt, isAdmin }) {
 		this.id = id;
 		this.username = username;
 		this.joinAt = joinAt;
 		this.lastLoginAt = lastLoginAt;
+		this.isAdmin = isAdmin;
 	}
 
 	/** register new user
 	 *  returns {id, username, joinAt, lastLoginAt}
 	 */
 
-	static async register({ username, email, password }) {
+	static async register({ username, email, password, isAdmin = false }) {
 		try {
 			const hashedPassword = await bcrypt.hash(
 				password,
@@ -26,10 +27,10 @@ class User {
 			); // hash password
 			const results = await db.query(
 				`
-			INSERT INTO users (username, password, email, join_at, last_login_at)
-			VALUES ($1, $2, $3, current_timestamp, current_timestamp)
-			RETURNING id, username, join_at AS "joinAt", last_login_at AS "lastLoginAt"`,
-				[username, hashedPassword, email]
+			INSERT INTO users (username, password, email, join_at, last_login_at, is_admin)
+			VALUES ($1, $2, $3, current_timestamp, current_timestamp, $4)
+			RETURNING id, username, join_at AS "joinAt", last_login_at AS "lastLoginAt", is_admin AS "isAdmin"`,
+				[username, hashedPassword, email, isAdmin]
 			);
 			return new User(results.rows[0]);
 		} catch (error) {
@@ -43,7 +44,7 @@ class User {
 	static async getAllUsers() {
 		try {
 			const results = await db.query(`
-        SELECT id, username, join_at AS "joinAt", last_login_at AS "lastLoginAt"
+        SELECT id, username, join_at AS "joinAt", last_login_at AS "lastLoginAt", is_admin AS "isAdmin"
         FROM users
         ORDER BY id
         `);
@@ -66,7 +67,7 @@ class User {
 			// try to find user first
 			const results = await db.query(
 				`
-			SELECT id, username, join_at AS "joinAt", last_login_at AS "lastLoginAt", password 
+			SELECT id, username, join_at AS "joinAt", last_login_at AS "lastLoginAt", password, is_admin AS "isAdmin"
 			FROM users 
 			WHERE username=$1
 			`,
@@ -106,7 +107,7 @@ class User {
 	static async get(username) {
 		const results = await db.query(
 			`
-		SELECT id, username, join_at AS "joinAt", last_login_at AS "lastLoginAt"
+		SELECT id, username, join_at AS "joinAt", last_login_at AS "lastLoginAt", is_admin AS "isAdmin"
 		FROM users 
 		WHERE username=$1
 		`,
@@ -150,7 +151,7 @@ class User {
 			const querySql = `UPDATE users 
 						  SET ${setCols} 
 						  WHERE username = ${usernameVarIdx} 
-						  RETURNING id, username, join_at AS "joinAt", last_login_at AS "lastLoginAt"`;
+						  RETURNING id, username, join_at AS "joinAt", last_login_at AS "lastLoginAt", is_admin AS "isAdmin"`;
 			const result = await db.query(querySql, [...values, this.username]);
 			const user = result.rows[0];
 
@@ -226,7 +227,7 @@ class User {
 			// subquery in from statement selects the friends' user ids from the friends table
 			const results = await db.query(
 				`
-			SELECT users.id, users.username, users.join_at AS "joinAt", users.last_login_at AS "lastLoginAt"
+			SELECT users.id, users.username, users.join_at AS "joinAt", users.last_login_at AS "lastLoginAt", users.is_admin AS "isAdmin"
 			FROM (SELECT (CASE WHEN user_1_id <> $1 THEN user_1_id ELSE user_2_id END) AS friend_user_id FROM friends WHERE $1 IN (user_1_id , user_2_id) AND accepted = $2) AS friends_ids
 			INNER JOIN users ON users.id = friends_ids.friend_user_id
 			`,
