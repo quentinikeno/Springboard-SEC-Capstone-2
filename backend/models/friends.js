@@ -35,26 +35,30 @@ class Friends {
 		}
 	}
 
-	/** accepts a friend request and sets accepted to True
+	/** accepts two users' ID's and sets accepted to for their friend request to True
 	 * returns true if accepted
 	 */
 
-	async accept() {
+	static async accept(user_1_id, user_2_id) {
 		try {
 			const results = await db.query(
 				`
 			UPDATE friends
-			SET accepted=$1
-			WHERE id=$2
-			RETURNING accepted
+			SET accepted=true
+			WHERE $1 IN (user_1_id , user_2_id) AND $2 IN (user_1_id , user_2_id)
+			RETURNING id, user_1_id, user_2_id, accepted
 			`,
-				[true, this.id]
+				[user_1_id, user_2_id]
 			);
 
-			const { accepted } = results.rows[0];
-			this.accepted = accepted;
+			const request = results.rows[0];
 
-			return accepted;
+			if (!request)
+				throw new BadRequestError400(
+					"These users don't have a pending friend request.  Please send a friend request first."
+				);
+
+			return new Friends(request);
 		} catch (error) {
 			throw error;
 		}
