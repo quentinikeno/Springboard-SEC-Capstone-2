@@ -52,7 +52,7 @@ function ensurePermittedUser(req, res, next) {
 
 function ensureAdmin(req, res, next) {
 	try {
-		if (!res.locals.isAdmin) throw new ForbiddenError403();
+		if (!res.locals.user.isAdmin) throw new ForbiddenError403();
 		return next();
 	} catch (error) {
 		return next(error);
