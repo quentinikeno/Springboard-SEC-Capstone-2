@@ -64,20 +64,3 @@ describe("test accept method", () => {
 		});
 	});
 });
-
-describe("test getFriends method", () => {
-	it("can get all of a users pending friend users", async () => {
-		const { user1, user2 } = await requestFriends();
-		const friends = await Friends.getFriends(user1.id, false);
-
-		expect(friends).toEqual([user2]);
-	});
-
-	it("can get all of a users accepted friend users", async () => {
-		const { user1, user2, request } = await requestFriends();
-		await request.accept();
-		const friends = await Friends.getFriends(user1.id, true);
-
-		expect(friends).toEqual([user2]);
-	});
-});

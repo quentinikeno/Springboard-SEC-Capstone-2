@@ -36,7 +36,7 @@ class Friends {
 	}
 
 	/** accepts two users' ID's and sets accepted to for their friend request to True
-	 * returns true if accepted
+	 * returns a friends instance.
 	 */
 
 	static async accept(user_1_id, user_2_id) {
@@ -59,33 +59,6 @@ class Friends {
 				);
 
 			return new Friends(request);
-		} catch (error) {
-			throw error;
-		}
-	}
-
-	/** Given an user's ID, get all of their accepted or pending friends.  The accepted status is a boolean.
-	 * returns array of instances of Users class for each friend [{id, user_1_id, user_2_id, accepted}, ...]
-	 * returns an empty array if nothing found
-	 * the user's ID can be either user_1_id or user_2_id
-	 */
-
-	static async getFriends(user_id, accepted) {
-		try {
-			// subquery in from statement selects the friends' user ids from the friends table
-			const results = await db.query(
-				`
-			SELECT users.id, users.username, users.join_at AS "joinAt", users.last_login_at AS "lastLoginAt", users.is_admin AS "isAdmin"
-			FROM (SELECT (CASE WHEN user_1_id <> $1 THEN user_1_id ELSE user_2_id END) AS friend_user_id FROM friends WHERE $1 IN (user_1_id , user_2_id) AND accepted = $2) AS friends_ids
-			INNER JOIN users ON users.id = friends_ids.friend_user_id
-			`,
-				[user_id, accepted]
-			);
-
-			// create array of users instances
-			const friends = results.rows.map((row) => new User(row));
-
-			return friends;
 		} catch (error) {
 			throw error;
 		}
