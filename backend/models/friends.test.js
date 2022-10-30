@@ -1,12 +1,12 @@
 /** Tests for the friends model */
 
-const User = require("./user");
 const Friends = require("./friends");
 const {
 	commonBeforeAll,
 	commonBeforeEach,
 	commonAfterEach,
 	commonAfterAll,
+	getTestUser,
 	requestFriends,
 } = require("../tests/_testCommon");
 
@@ -58,12 +58,16 @@ describe("test add method", () => {
 	});
 
 	it("will throw an error if both users are the same", async () => {
-		await requestFriends();
-		async () => {
-			await expect(requestFriends()).toThrow();
-		};
 		async () => {
 			await expect(requestFriends("user1", "user1")).toThrow();
+		};
+	});
+
+	it("will throw an error if the second user doesn't exist", async () => {
+		const user1 = await getTestUser();
+
+		async () => {
+			await expect(Friends.add(user1.id, 99999999999)).toThrow();
 		};
 	});
 });

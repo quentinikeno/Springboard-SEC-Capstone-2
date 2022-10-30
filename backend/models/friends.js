@@ -48,6 +48,19 @@ class Friends {
 			if (user_1_id === user_2_id)
 				throw new BadRequestError400("Both users's IDs' are the same.");
 
+			const user2 = await db.query(
+				`
+			SELECT id
+			FROM users
+			WHERE id=$1`,
+				[user_2_id]
+			);
+
+			if (!user2.rows[0])
+				throw new BadRequestError400(
+					"The user you are trying to add does not exist."
+				);
+
 			const results = await db.query(
 				`
 			INSERT INTO friends (user_1_id, user_2_id, accepted)
