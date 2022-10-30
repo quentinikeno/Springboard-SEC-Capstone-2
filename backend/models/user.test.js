@@ -1,6 +1,7 @@
 /** Tests for the user model */
 
 const User = require("./user");
+const Friends = require("./friends");
 const {
 	commonBeforeAll,
 	commonBeforeEach,
@@ -140,8 +141,8 @@ describe("test getFriends method", () => {
 	});
 
 	it("can get all of a users accepted friend users", async () => {
-		const { user1, user2, request } = await requestFriends();
-		await request.accept();
+		const { user1, user2 } = await requestFriends();
+		await Friends.accept(user1.id, user2.id);
 		const friends = await user1.getFriends(true);
 
 		expect(friends).toEqual([user2]);
