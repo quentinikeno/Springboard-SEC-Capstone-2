@@ -1,6 +1,5 @@
 /** Friends model */
 
-const User = require("./user");
 const { BadRequestError400 } = require("../expressError");
 const db = require("../db");
 
@@ -59,6 +58,35 @@ class Friends {
 				);
 
 			return new Friends(request);
+		} catch (error) {
+			throw error;
+		}
+	}
+
+	/** accepts two users' ID's and deletes the friends
+	 * returns the usernames of the former friends.
+	 */
+
+	static async delete(user_1_id, user_2_id) {
+		try {
+			const results = await db.query(
+				`
+			DELETE
+			FROM friends
+			WHERE $1 IN (user_1_id , user_2_id) AND $2 IN (user_1_id , user_2_id)
+			RETURNING user_1_id AS "user1Id", user_2_id AS "user2Id"
+			`,
+				[user_1_id, user_2_id]
+			);
+
+			const friends = results.rows[0];
+
+			if (!friends)
+				throw new BadRequestError400(
+					"These users don't have a pending friend request or aren't currently friends."
+				);
+
+			return friends;
 		} catch (error) {
 			throw error;
 		}

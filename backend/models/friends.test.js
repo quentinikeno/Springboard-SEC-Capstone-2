@@ -63,4 +63,28 @@ describe("test accept method", () => {
 			accepted: true,
 		});
 	});
+
+	it("will throw an error if users don't have a pending friend request", async () => {
+		async () => {
+			await Friends.accept("user1", "user2");
+		};
+	});
+});
+
+describe("test delete method", () => {
+	it("can delete two users' friend request", async () => {
+		const { user1, user2 } = await requestFriends();
+		const deletedFriends = await Friends.delete(user1.id, user2.id);
+
+		expect(deletedFriends).toEqual({
+			user1Id: user1.id,
+			user2Id: user2.id,
+		});
+	});
+
+	it("will throw an error if users don't have a pending friend request or aren't already friends.", async () => {
+		async () => {
+			await Friends.delete("user1", "user2");
+		};
+	});
 });
