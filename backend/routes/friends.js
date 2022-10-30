@@ -12,7 +12,7 @@ router.use(ensureLoggedIn);
  * authorization: logged in
  */
 
-router.get("/:username", ensureLoggedIn, async (req, res, next) => {
+router.get("/:username", async (req, res, next) => {
 	try {
 		if (!req.params.username)
 			throw new BadRequestError400("A username must be provided.");
