@@ -21,19 +21,6 @@ class Friends {
 			if (user_1_id === user_2_id)
 				throw new BadRequestError400("Both users's IDs' are the same.");
 
-			// check if users are already friends
-			const friendsResults = await db.query(
-				`
-            SELECT id 
-            FROM friends 
-            WHERE (user_1_id = $1 AND user_2_id = $2) OR (user_2_id = $2 AND user_2_id = $1)
-            `,
-				[user_1_id, user_2_id]
-			);
-
-			if (friendsResults.rows.length)
-				throw new BadRequestError400("Users are already friends.");
-
 			const results = await db.query(
 				`
 			INSERT INTO friends (user_1_id, user_2_id, accepted)
