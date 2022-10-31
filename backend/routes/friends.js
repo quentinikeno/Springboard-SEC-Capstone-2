@@ -4,21 +4,47 @@ const { ensureLoggedIn } = require("../middleware/auth");
 const { BadRequestError400 } = require("../expressError");
 const router = new express.Router();
 
-/** All of these routes must enruse that the user is logged in. */
+/** All of these routes must ensure that the user is logged in. */
 router.use(ensureLoggedIn);
 
-/** GET user/[username]
- * returns { {id, username, joinAt, lastLoginAt} }
+/** GET friends/[pendingOrAccepted]
+ * returns { {id, username, joinAt, lastLoginAt, isAdmin}, ... }
  * authorization: logged in
  */
 
-router.get("/:username", async (req, res, next) => {
+router.get("/:pendingOrAccepted", async (req, res, next) => {
+	console.log(req.params);
 	try {
-		if (!req.params.username)
-			throw new BadRequestError400("A username must be provided.");
-		const user = await User.get(req.params.username);
+		const pendingOrAccepted = req.params.pendingOrAccepted.toLowerCase();
 
-		return res.json(user);
+		if (pendingOrAccepted !== "pending" && pendingOrAccepted !== "accepted")
+			throw new BadRequestError400(
+				"The route parameter must be either 'pending' or 'accepted'."
+			);
+		const friends = await Friends.getFriends(
+			res.locals.user.id,
+			pendingOrAccepted === "accepted"
+		);
+
+		return res.json(friends);
+	} catch (error) {
+		return next(error);
+	}
+});
+
+/** POST friends/[userId]
+ * returns {id, user_1_id, user_2_id, accepted}
+ * authorization: logged in
+ */
+
+router.post("/:userId", async (req, res, next) => {
+	try {
+		const friends = await Friends.add(
+			res.locals.user.id,
+			req.params.userId
+		);
+
+		return res.status(201).json(friends);
 	} catch (error) {
 		return next(error);
 	}
