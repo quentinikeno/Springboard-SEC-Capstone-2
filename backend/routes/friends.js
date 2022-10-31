@@ -13,7 +13,6 @@ router.use(ensureLoggedIn);
  */
 
 router.get("/:pendingOrAccepted", async (req, res, next) => {
-	console.log(req.params);
 	try {
 		const pendingOrAccepted = req.params.pendingOrAccepted.toLowerCase();
 
@@ -21,6 +20,7 @@ router.get("/:pendingOrAccepted", async (req, res, next) => {
 			throw new BadRequestError400(
 				"The route parameter must be either 'pending' or 'accepted'."
 			);
+
 		const friends = await Friends.getFriends(
 			res.locals.user.id,
 			pendingOrAccepted === "accepted"
