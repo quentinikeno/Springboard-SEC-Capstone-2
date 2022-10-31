@@ -64,10 +64,29 @@ router.patch("/:userId", async (req, res, next) => {
 			req.params.userId
 		);
 
-		return res.status(201).json(friends);
+		return res.json(friends);
 	} catch (error) {
 		return next(error);
 	}
 });
+
+/** DELETE friends/[userId]
+ * returns {id, user_1_id, user_2_id, accepted}
+ * deletes a friend request or friend relationship to userId
+ * authorization: logged in
+ */
+
+// router.delete("/:userId", async (req, res, next) => {
+// 	try {
+// 		const friends = await Friends.accept(
+// 			res.locals.user.id,
+// 			req.params.userId
+// 		);
+
+// 		return res.status(201).json(friends);
+// 	} catch (error) {
+// 		return next(error);
+// 	}
+// });
 
 module.exports = router;

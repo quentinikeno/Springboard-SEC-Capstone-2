@@ -102,7 +102,7 @@ describe("test PATCH /friends/[userId]", () => {
 	it("accepts a friend request for two users", async () => {
 		const { u1Token, user2, acceptedResp } = await requestFriends(true);
 
-		expect(acceptedResp.statusCode).toBe(201);
+		expect(acceptedResp.statusCode).toBe(200);
 		expect(acceptedResp.body).toEqual({
 			id: expect.any(Number),
 			user_1_id: expect.any(Number),
