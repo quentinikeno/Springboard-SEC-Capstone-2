@@ -98,8 +98,10 @@ describe("test delete method", () => {
 		const deletedFriends = await Friends.delete(user1.id, user2.id);
 
 		expect(deletedFriends).toEqual({
-			user1Id: user1.id,
-			user2Id: user2.id,
+			deletedFriends: {
+				user_1_id: user1.id,
+				user_2_id: user2.id,
+			},
 		});
 	});
 
