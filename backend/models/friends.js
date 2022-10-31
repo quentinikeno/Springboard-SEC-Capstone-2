@@ -116,7 +116,7 @@ class Friends {
 			DELETE
 			FROM friends
 			WHERE $1 IN (user_1_id , user_2_id) AND $2 IN (user_1_id , user_2_id)
-			RETURNING user_1_id AS "user1Id", user_2_id AS "user2Id"
+			RETURNING user_1_id, user_2_id
 			`,
 				[user_1_id, user_2_id]
 			);
@@ -127,7 +127,7 @@ class Friends {
 				throw new BadRequestError400(
 					"These users don't have a pending friend request or aren't currently friends."
 				);
-
+			console.log(deleted);
 			return { deleted };
 		} catch (error) {
 			throw error;
