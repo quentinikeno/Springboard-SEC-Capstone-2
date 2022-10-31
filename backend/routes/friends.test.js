@@ -138,3 +138,47 @@ describe("test PATCH /friends/[userId]", () => {
 		expect(acceptedResp.statusCode).toBe(401);
 	});
 });
+
+describe("test DELETE /friends/[userId]", () => {
+	it("deletes a friend request for two users", async () => {
+		const { u1Token, user2 } = await requestFriends(true);
+		const deleteResp = await request(app)
+			.delete(`/friends/${user2.id}`)
+			.set("authorization", `Bearer ${u1Token}`);
+
+		expect(deleteResp.statusCode).toBe(200);
+		expect(deleteResp.body).toEqual({
+			deletedFriends: {
+				user_1_id: expect.any(Number),
+				user_2_id: user2.id,
+			},
+		});
+
+		const friends = await request(app)
+			.get("/friends/accepted")
+			.set("authorization", `Bearer ${u1Token}`);
+		expect(friends.body).toEqual([]);
+	});
+
+	it("throws an error if the two users do not have a pending friend request", async () => {
+		const u1Token = await getUserToken();
+		const { body: user2 } = await request(app)
+			.get("/user/user2")
+			.set("authorization", `Bearer ${u1Token}`);
+
+		const acceptedResp = await request(app)
+			.delete(`/friends/${user2.id}`)
+			.set("authorization", `Bearer ${u1Token}`);
+		expect(acceptedResp.statusCode).toBe(400);
+	});
+
+	it("throws an error if the user is not logged in", async () => {
+		const u1Token = await getUserToken();
+		const { body: user2 } = await request(app)
+			.get("/user/user2")
+			.set("authorization", `Bearer ${u1Token}`);
+
+		const acceptedResp = await request(app).delete(`/friends/${user2.id}`);
+		expect(acceptedResp.statusCode).toBe(401);
+	});
+});

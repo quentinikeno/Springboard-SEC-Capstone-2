@@ -76,17 +76,17 @@ router.patch("/:userId", async (req, res, next) => {
  * authorization: logged in
  */
 
-// router.delete("/:userId", async (req, res, next) => {
-// 	try {
-// 		const friends = await Friends.accept(
-// 			res.locals.user.id,
-// 			req.params.userId
-// 		);
+router.delete("/:userId", async (req, res, next) => {
+	try {
+		const deleted = await Friends.delete(
+			res.locals.user.id,
+			req.params.userId
+		);
 
-// 		return res.status(201).json(friends);
-// 	} catch (error) {
-// 		return next(error);
-// 	}
-// });
+		return res.json(deleted);
+	} catch (error) {
+		return next(error);
+	}
+});
 
 module.exports = router;
