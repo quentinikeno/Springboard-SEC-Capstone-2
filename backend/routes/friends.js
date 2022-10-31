@@ -34,12 +34,32 @@ router.get("/:pendingOrAccepted", async (req, res, next) => {
 
 /** POST friends/[userId]
  * returns {id, user_1_id, user_2_id, accepted}
+ * initializes a friend request to userId
  * authorization: logged in
  */
 
 router.post("/:userId", async (req, res, next) => {
 	try {
 		const friends = await Friends.add(
+			res.locals.user.id,
+			req.params.userId
+		);
+
+		return res.status(201).json(friends);
+	} catch (error) {
+		return next(error);
+	}
+});
+
+/** PATCH friends/[userId]
+ * returns {id, user_1_id, user_2_id, accepted}
+ * accepts a friend request to userId
+ * authorization: logged in
+ */
+
+router.patch("/:userId", async (req, res, next) => {
+	try {
+		const friends = await Friends.accept(
 			res.locals.user.id,
 			req.params.userId
 		);
