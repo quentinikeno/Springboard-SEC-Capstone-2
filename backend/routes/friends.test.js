@@ -16,17 +16,52 @@ beforeEach(commonBeforeEach);
 afterEach(commonAfterEach);
 afterAll(commonAfterAll);
 
+const requestFriends = async () => {
+	const u1Token = await getUserToken();
+	const { body: user2 } = await request(app)
+		.get("/user/user2")
+		.set("authorization", `Bearer ${u1Token}`);
+	const resp = await request(app)
+		.post(`/friends/${user2.id}`)
+		.set("authorization", `Bearer ${u1Token}`);
+	return { u1Token, user2, resp };
+};
+
 /** Test Friends routes */
+
+describe("test GET /friends/[pendingOrAccepted]", () => {
+	it("returns empty arrays for users with no friends", async () => {
+		const u1Token = await getUserToken();
+		const pending = await request(app)
+			.get("/friends/pending")
+			.set("authorization", `Bearer ${u1Token}`);
+		const accepted = await request(app)
+			.get("/friends/accepted")
+			.set("authorization", `Bearer ${u1Token}`);
+		expect(pending.body).toEqual([]);
+		expect(accepted.body).toEqual([]);
+	});
+
+	it("returns a user's pending friends", async () => {
+		const { u1Token, user2 } = await requestFriends();
+		const friends = await request(app)
+			.get("/friends/pending")
+			.set("authorization", `Bearer ${u1Token}`);
+		expect(friends.body).toEqual([user2]);
+	});
+
+	it("throws an error if the route parameter is not 'pending' or 'accepted'", async () => {
+		const u1Token = await getUserToken();
+		const resp = await request(app)
+			.get("/friends/wrong")
+			.set("authorization", `Bearer ${u1Token}`);
+		expect(resp.statusCode).toBe(400);
+	});
+});
 
 describe("test POST /friends/[userId]", () => {
 	it("create a friend request for two users", async () => {
-		const u1Token = await getUserToken();
-		const { body: user2 } = await request(app)
-			.get("/user/user2")
-			.set("authorization", `Bearer ${u1Token}`);
-		const resp = await request(app)
-			.post(`/friends/${user2.id}`)
-			.set("authorization", `Bearer ${u1Token}`);
+		const { u1Token, user2, resp } = await requestFriends();
 
 		expect(resp.statusCode).toBe(201);
 		expect(resp.body).toEqual({
