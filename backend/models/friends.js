@@ -106,7 +106,7 @@ class Friends {
 
 	/** accepts two users' ID's and deletes the friends
 	 * returns the usernames of the former friends.
-	 * {deleted: {user1Id, user2Id}}
+	 * {deletedFriends: {user1Id, user2Id}}
 	 */
 
 	static async delete(user_1_id, user_2_id) {
@@ -121,14 +121,14 @@ class Friends {
 				[user_1_id, user_2_id]
 			);
 
-			const deleted = results.rows[0];
+			const deletedFriends = results.rows[0];
 
-			if (!deleted)
+			if (!deletedFriends)
 				throw new BadRequestError400(
 					"These users don't have a pending friend request or aren't currently friends."
 				);
-			console.log(deleted);
-			return { deleted };
+
+			return { deletedFriends };
 		} catch (error) {
 			throw error;
 		}
