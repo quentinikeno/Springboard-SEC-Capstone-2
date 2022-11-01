@@ -79,24 +79,22 @@ class Games {
 	 * Returns instance of Game
 	 */
 
-	static async update(oldName, newName) {
+	static async update(id, newName) {
 		try {
 			const results = await db.query(
 				`
         UPDATE games
         SET name=$2
-        WHERE name=$1
+        WHERE id=$1
         RETURNING id, name
         `,
-				[oldName, newName]
+				[id, newName]
 			);
 
 			const game = results.rows[0];
 
 			if (!game)
-				throw new NotFoundError404(
-					`No games found with name: ${oldName}.`
-				);
+				throw new NotFoundError404(`No games found with ID: ${id}.`);
 
 			return new Games(game);
 		} catch (error) {
@@ -108,24 +106,22 @@ class Games {
 	 * Returns {deleted: Game(id, name)}
 	 */
 
-	static async delete(name) {
+	static async delete(id) {
 		try {
 			const results = await db.query(
 				`
         DELETE
         FROM games
-        WHERE name=$1
+        WHERE id=$1
         RETURNING id, name
         `,
-				[name]
+				[id]
 			);
 
 			const game = results.rows[0];
 
 			if (!game)
-				throw new NotFoundError404(
-					`No games found with name: ${name}.`
-				);
+				throw new NotFoundError404(`No games found with ID: ${id}.`);
 
 			return { deleted: new Games(game) };
 		} catch (error) {

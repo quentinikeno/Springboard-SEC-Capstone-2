@@ -24,13 +24,14 @@ describe("test getAll games method", () => {
 
 describe("test get games method", () => {
 	it("gets a game with the game's id", async () => {
-		const game = await Games.get("testGame");
-		expect(game).toEqual({ id: expect.any(Number), name: "testGame" });
+		const [testGame] = await Games.getAll();
+		const game = await Games.get(testGame.id);
+		expect(game).toEqual({ id: testGame.id, name: "testGame" });
 	});
 
 	it("throws an error if the game name does not exist", async () => {
 		async () => {
-			await expect(Games.add("nonexistant")).toThrow();
+			await expect(Games.add(99999999)).toThrow();
 		};
 	});
 });
@@ -40,7 +41,7 @@ describe("test add games method", () => {
 		const game = await Games.add("test");
 		expect(game).toEqual({ id: expect.any(Number), name: "test" });
 
-		const testGame = await Games.get("test");
+		const testGame = await Games.get(game.id);
 		expect(testGame).toEqual(game);
 	});
 
@@ -59,28 +60,30 @@ describe("test add games method", () => {
 
 describe("test update games method", () => {
 	it("updates a game's name", async () => {
-		const game = await Games.update("testGame", "updatedName");
+		const [testGame] = await Games.getAll();
+		const game = await Games.update(testGame.id, "updatedName");
 		expect(game).toEqual({ id: expect.any(Number), name: "updatedName" });
 	});
 
 	it("throws an error if the game name does not exist", async () => {
 		async () => {
-			await expect(Games.add("nonexistant")).toThrow();
+			await expect(Games.update(999999, "updatedName")).toThrow();
 		};
 	});
 });
 
 describe("test delete games method", () => {
 	it("deletes a game by name", async () => {
-		const game = await Games.delete("testGame");
+		const [testGame] = await Games.getAll();
+		const game = await Games.delete(testGame.id);
 		expect(game).toEqual({
-			deleted: { id: expect.any(Number), name: "testGame" },
+			deleted: { id: testGame.id, name: "testGame" },
 		});
 	});
 
 	it("throws an error if the game name does not exist", async () => {
 		async () => {
-			await expect(Games.add("nonexistant")).toThrow();
+			await expect(Games.delete(99999999)).toThrow();
 		};
 	});
 });
