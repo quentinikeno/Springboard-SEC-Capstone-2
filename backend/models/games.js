@@ -9,27 +9,44 @@ class Games {
 		this.name = name;
 	}
 
-	/** Gets a game with "name" from the database.
-	 * Returns instance of Game
+	/** Gets all games from the database.
+	 * Returns array of instances of Games
 	 */
 
-	static async get(name) {
+	static async getAll() {
 		try {
 			const results = await db.query(
 				`
         SELECT id, name
         FROM games
-        WHERE name=$1
+        `
+			);
+
+			return results.rows.map((game) => new Games(game));
+		} catch (error) {
+			throw error;
+		}
+	}
+
+	/** Gets a game with id from the database.
+	 * Returns instance of Game
+	 */
+
+	static async get(id) {
+		try {
+			const results = await db.query(
+				`
+        SELECT id, name
+        FROM games
+        WHERE id=$1
         `,
-				[name]
+				[id]
 			);
 
 			const game = results.rows[0];
 
 			if (!game)
-				throw new NotFoundError404(
-					`No games found with name: ${name}.`
-				);
+				throw new NotFoundError404(`No games found with id: ${id}.`);
 
 			return new Games(game);
 		} catch (error) {

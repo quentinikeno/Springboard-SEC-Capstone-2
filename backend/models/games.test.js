@@ -15,8 +15,15 @@ afterAll(commonAfterAll);
 
 /** Test Games model */
 
+describe("test getAll games method", () => {
+	it("gets all Games", async () => {
+		const games = await Games.getAll();
+		expect(games).toEqual([{ id: expect.any(Number), name: "testGame" }]);
+	});
+});
+
 describe("test get games method", () => {
-	it("gets a game with the game's name", async () => {
+	it("gets a game with the game's id", async () => {
 		const game = await Games.get("testGame");
 		expect(game).toEqual({ id: expect.any(Number), name: "testGame" });
 	});
