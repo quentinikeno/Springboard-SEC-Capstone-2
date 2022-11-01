@@ -28,6 +28,15 @@ describe("test /games", () => {
 			games: [{ id: expect.any(Number), name: "testGame" }],
 		});
 	});
+
+	it("is forbidden if user is not admin", async () => {
+		const u1Token = await getUserToken();
+		const resp = await request(app)
+			.get("/games")
+			.set("authorization", `Bearer ${u1Token}`);
+
+		expect(resp.statusCode).toEqual(403);
+	});
 });
 
 describe("test /games/[id]", () => {
@@ -49,5 +58,19 @@ describe("test /games/[id]", () => {
 			.get("/games/99999999")
 			.set("authorization", `Bearer ${adminToken}`);
 		expect(resp.statusCode).toEqual(404);
+	});
+
+	it("is forbidden if user is not admin", async () => {
+		const u1Token = await getUserToken();
+		const adminToken = await getUserToken("admin", "admin");
+		const gamesResp = await request(app)
+			.get("/games")
+			.set("authorization", `Bearer ${adminToken}`);
+		const testGameId = gamesResp.body.games[0].id;
+		const resp = await request(app)
+			.get(`/games/${testGameId}`)
+			.set("authorization", `Bearer ${u1Token}`);
+
+		expect(resp.statusCode).toEqual(403);
 	});
 });
