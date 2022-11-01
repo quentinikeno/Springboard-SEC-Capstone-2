@@ -28,6 +28,12 @@ async function commonBeforeAll() {
 			email: "user3@test.com",
 			password: "password3",
 		}),
+		User.register({
+			username: "admin",
+			email: "admin@test.com",
+			password: "admin",
+			isAdmin: true,
+		}),
 		Games.add("testGame"),
 	]);
 }
