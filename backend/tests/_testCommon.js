@@ -5,6 +5,7 @@ const request = require("supertest");
 const app = require("../app");
 const User = require("../models/user");
 const Friends = require("../models/friends");
+const Games = require("../models/games");
 
 /** queries and functions to be run before all tests */
 
@@ -27,6 +28,7 @@ async function commonBeforeAll() {
 			email: "user3@test.com",
 			password: "password3",
 		}),
+		Games.add("testGame"),
 	]);
 }
 
