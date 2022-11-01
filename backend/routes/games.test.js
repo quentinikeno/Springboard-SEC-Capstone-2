@@ -17,7 +17,7 @@ beforeEach(commonBeforeEach);
 afterEach(commonAfterEach);
 afterAll(commonAfterAll);
 
-describe("test /games", () => {
+describe("test GET /games", () => {
 	it("gets all games", async () => {
 		const adminToken = await getUserToken("admin", "admin");
 		const resp = await request(app)
@@ -39,7 +39,7 @@ describe("test /games", () => {
 	});
 });
 
-describe("test /games/[id]", () => {
+describe("test GET /games/[id]", () => {
 	it("gets a game with an ID", async () => {
 		const adminToken = await getUserToken("admin", "admin");
 		const gamesResp = await request(app)
@@ -70,6 +70,39 @@ describe("test /games/[id]", () => {
 		const resp = await request(app)
 			.get(`/games/${testGameId}`)
 			.set("authorization", `Bearer ${u1Token}`);
+
+		expect(resp.statusCode).toEqual(403);
+	});
+});
+
+describe("test POST /games", () => {
+	it("adds a new game", async () => {
+		const adminToken = await getUserToken("admin", "admin");
+		const resp = await request(app)
+			.post("/games")
+			.set("authorization", `Bearer ${adminToken}`)
+			.send({ name: "newGame" });
+
+		expect(resp.statusCode).toEqual(201);
+		expect(resp.body).toEqual({ id: expect.any(Number), name: "newGame" });
+	});
+
+	it("throws an error if the game name is not unique", async () => {
+		const adminToken = await getUserToken("admin", "admin");
+		const resp = await request(app)
+			.post("/games")
+			.set("authorization", `Bearer ${adminToken}`)
+			.send({ name: "testGame" });
+
+		expect(resp.statusCode).toEqual(500);
+	});
+
+	it("is forbidden if user is not admin", async () => {
+		const u1Token = await getUserToken();
+		const resp = await request(app)
+			.post("/games")
+			.set("authorization", `Bearer ${u1Token}`)
+			.send({ name: "newGame" });
 
 		expect(resp.statusCode).toEqual(403);
 	});

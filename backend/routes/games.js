@@ -1,6 +1,8 @@
 const Games = require("../models/games");
 const express = require("express");
 const { ensureAdmin } = require("../middleware/auth");
+const validateSchema = require("../helpers/validateSchema");
+const gameAddSchema = require("../schemas/gameAdd.json");
 const { BadRequestError400 } = require("../expressError");
 const router = new express.Router();
 
@@ -30,6 +32,21 @@ router.get("/:id", async (req, res, next) => {
 	try {
 		const game = await Games.get(req.params.id);
 		return res.json(game);
+	} catch (error) {
+		return next(error);
+	}
+});
+
+/** POST /games
+ * returns {id, name}
+ * authorization: admin
+ */
+
+router.post("/", async (req, res, next) => {
+	try {
+		validateSchema(req, gameAddSchema);
+		const game = await Games.add(req.body.name);
+		return res.status(201).json(game);
 	} catch (error) {
 		return next(error);
 	}
