@@ -57,6 +57,35 @@ class Games {
 			throw error;
 		}
 	}
+
+	/** Updates a game's name.
+	 * Returns instance of Game
+	 */
+
+	static async update(oldName, newName) {
+		try {
+			const results = await db.query(
+				`
+        UPDATE games
+        SET name=$2
+        WHERE name=$1
+        RETURNING id, name
+        `,
+				[oldName, newName]
+			);
+
+			const game = results.rows[0];
+
+			if (!game)
+				throw new NotFoundError404(
+					`No games found with name: ${oldName}.`
+				);
+
+			return new Games(game);
+		} catch (error) {
+			throw error;
+		}
+	}
 }
 
 module.exports = Games;

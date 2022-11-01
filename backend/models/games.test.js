@@ -49,3 +49,16 @@ describe("test add games method", () => {
 		};
 	});
 });
+
+describe("test update games method", () => {
+	it("updates a game's name", async () => {
+		const game = await Games.update("testGame", "updatedName");
+		expect(game).toEqual({ id: expect.any(Number), name: "updatedName" });
+	});
+
+	it("throws an error if the game name does not exist", async () => {
+		async () => {
+			await expect(Games.add("nonexistant")).toThrow();
+		};
+	});
+});
