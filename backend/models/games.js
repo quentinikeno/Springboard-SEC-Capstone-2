@@ -86,6 +86,35 @@ class Games {
 			throw error;
 		}
 	}
+
+	/** Deletes a game with "name" from the database.
+	 * Returns {deleted: Game(id, name)}
+	 */
+
+	static async delete(name) {
+		try {
+			const results = await db.query(
+				`
+        DELETE
+        FROM games
+        WHERE name=$1
+        RETURNING id, name
+        `,
+				[name]
+			);
+
+			const game = results.rows[0];
+
+			if (!game)
+				throw new NotFoundError404(
+					`No games found with name: ${name}.`
+				);
+
+			return { deleted: new Games(game) };
+		} catch (error) {
+			throw error;
+		}
+	}
 }
 
 module.exports = Games;

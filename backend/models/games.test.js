@@ -62,3 +62,18 @@ describe("test update games method", () => {
 		};
 	});
 });
+
+describe("test delete games method", () => {
+	it("deletes a game by name", async () => {
+		const game = await Games.delete("testGame");
+		expect(game).toEqual({
+			deleted: { id: expect.any(Number), name: "testGame" },
+		});
+	});
+
+	it("throws an error if the game name does not exist", async () => {
+		async () => {
+			await expect(Games.add("nonexistant")).toThrow();
+		};
+	});
+});
