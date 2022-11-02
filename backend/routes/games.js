@@ -67,4 +67,18 @@ router.patch("/:id", async (req, res, next) => {
 	}
 });
 
+/** DELETE /games/[id]
+ * returns {deleted: Game(id, name)}
+ * authorization: admin
+ */
+
+router.delete("/:id", async (req, res, next) => {
+	try {
+		const game = await Games.delete(req.params.id);
+		return res.json(game);
+	} catch (error) {
+		return next(error);
+	}
+});
+
 module.exports = router;

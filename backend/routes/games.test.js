@@ -149,3 +149,41 @@ describe("test PATCH /games/[id]", () => {
 		expect(resp.statusCode).toEqual(403);
 	});
 });
+
+describe("test DELETE /games/[id]", () => {
+	it("deletes a game with an ID", async () => {
+		const adminToken = await getUserToken("admin", "admin");
+		const gamesResp = await request(app)
+			.get("/games")
+			.set("authorization", `Bearer ${adminToken}`);
+		const testGameId = gamesResp.body.games[0].id;
+		const resp = await request(app)
+			.delete(`/games/${testGameId}`)
+			.set("authorization", `Bearer ${adminToken}`);
+		expect(resp.body).toEqual({
+			deleted: { id: expect.any(Number), name: "testGame" },
+		});
+	});
+
+	it("throws an error if the game does not exist", async () => {
+		const adminToken = await getUserToken("admin", "admin");
+		const resp = await request(app)
+			.delete("/games/99999999")
+			.set("authorization", `Bearer ${adminToken}`);
+		expect(resp.statusCode).toEqual(404);
+	});
+
+	it("is forbidden if user is not admin", async () => {
+		const u1Token = await getUserToken();
+		const adminToken = await getUserToken("admin", "admin");
+		const gamesResp = await request(app)
+			.get("/games")
+			.set("authorization", `Bearer ${adminToken}`);
+		const testGameId = gamesResp.body.games[0].id;
+		const resp = await request(app)
+			.delete(`/games/${testGameId}`)
+			.set("authorization", `Bearer ${u1Token}`);
+
+		expect(resp.statusCode).toEqual(403);
+	});
+});
