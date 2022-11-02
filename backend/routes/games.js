@@ -52,4 +52,19 @@ router.post("/", async (req, res, next) => {
 	}
 });
 
+/** PATCH /games/[id]
+ * returns {id, name}
+ * authorization: admin
+ */
+
+router.patch("/:id", async (req, res, next) => {
+	try {
+		validateSchema(req, gameAddSchema);
+		const game = await Games.update(req.params.id, req.body.name);
+		return res.json(game);
+	} catch (error) {
+		return next(error);
+	}
+});
+
 module.exports = router;

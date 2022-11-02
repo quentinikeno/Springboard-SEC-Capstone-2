@@ -107,3 +107,45 @@ describe("test POST /games", () => {
 		expect(resp.statusCode).toEqual(403);
 	});
 });
+
+describe("test PATCH /games/[id]", () => {
+	it("updates a game with an ID", async () => {
+		const adminToken = await getUserToken("admin", "admin");
+		const gamesResp = await request(app)
+			.get("/games")
+			.set("authorization", `Bearer ${adminToken}`);
+		const testGameId = gamesResp.body.games[0].id;
+		const resp = await request(app)
+			.patch(`/games/${testGameId}`)
+			.set("authorization", `Bearer ${adminToken}`)
+			.send({ name: "updatedGame" });
+		expect(resp.body).toEqual({
+			id: expect.any(Number),
+			name: "updatedGame",
+		});
+	});
+
+	it("throws an error if the game does not exist", async () => {
+		const adminToken = await getUserToken("admin", "admin");
+		const resp = await request(app)
+			.patch("/games/99999")
+			.set("authorization", `Bearer ${adminToken}`)
+			.send({ name: "updatedGame" });
+		expect(resp.statusCode).toEqual(404);
+	});
+
+	it("is forbidden if user is not admin", async () => {
+		const u1Token = await getUserToken();
+		const adminToken = await getUserToken("admin", "admin");
+		const gamesResp = await request(app)
+			.get("/games")
+			.set("authorization", `Bearer ${adminToken}`);
+		const testGameId = gamesResp.body.games[0].id;
+		const resp = await request(app)
+			.patch(`/games/${testGameId}`)
+			.set("authorization", `Bearer ${u1Token}`)
+			.send({ name: "updatedGame" });
+
+		expect(resp.statusCode).toEqual(403);
+	});
+});
