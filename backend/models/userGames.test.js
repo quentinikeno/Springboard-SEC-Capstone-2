@@ -1,6 +1,7 @@
 /** Tests for the userGames model */
 
 const UserGames = require("./userGames");
+const User = require("./user");
 const Games = require("./games");
 
 const {
@@ -131,5 +132,25 @@ describe("test delete method", () => {
 		async () => {
 			await expect(UserGames.delete(0, 0)).toThrow();
 		};
+	});
+});
+
+describe("test deletion on cascade", () => {
+	it("can delete a user's high score data when a user is deleted", async () => {
+		const { testUser } = await addTestGame();
+
+		await testUser.delete();
+
+		const scores = await UserGames.getAll(testUser.id);
+		expect(scores).toEqual([]);
+	});
+
+	it("can delete a user's high score data when a game is deleted", async () => {
+		const { testGame, testUser } = await addTestGame();
+
+		await Games.delete(testGame.id);
+
+		const scores = await UserGames.getAll(testUser.id);
+		expect(scores).toEqual([]);
 	});
 });
