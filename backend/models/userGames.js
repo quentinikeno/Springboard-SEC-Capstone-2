@@ -1,0 +1,59 @@
+/** User_Games model */
+
+const { BadRequestError400, NotFoundError404 } = require("../expressError");
+const db = require("../db");
+
+class UserGames {
+	constructor({ id, userId, gameId, highScore }) {
+		this.id = id;
+		this.userId = userId;
+		this.gameId = gameId;
+		this.highScore = highScore;
+	}
+
+	/** Gets a user's high score for all games.
+	 * Returns array of objects with the [{id, userId, gameId, highScore, gameName}, ...]
+	 */
+
+	static async getAll(userId) {
+		try {
+			const results = await db.query(
+				`
+        SELECT user_games.id, game_id AS "gameId", user_id AS "userId", high_score AS "highScore", games.name AS "gameName"
+        FROM user_games
+        JOIN games
+        ON user_games.game_id = games.id
+        WHERE user_id = $1
+        `,
+				[userId]
+			);
+
+			return results.rows;
+		} catch (error) {
+			throw error;
+		}
+	}
+
+	/** Adds a user's high score for a game.
+	 * Returns an instance of userGame.
+	 */
+
+	static async add(userId, gameId, highScore) {
+		try {
+			const results = await db.query(
+				`
+        INSERT INTO user_games (user_id, game_id, high_score)
+        VALUES ($1, $2, $3)
+        RETURNING id, game_id AS "gameId", user_id AS "userId", high_score AS "highScore"
+        `,
+				[userId, gameId, highScore]
+			);
+
+			return new UserGames(results.rows[0]);
+		} catch (error) {
+			throw error;
+		}
+	}
+}
+
+module.exports = UserGames;
