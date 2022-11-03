@@ -36,7 +36,8 @@ CREATE TABLE "user_games" (
     "id" serial PRIMARY KEY,
     "game_id" int NOT NULL REFERENCES "games" ("id") ON DELETE CASCADE,
     "user_id" int NOT NULL REFERENCES "users" ("id") ON DELETE CASCADE,
-    "high_score" int NOT NULL
+    "high_score" int NOT NULL,
+    UNIQUE ("game_id","user_id")
 );
 
 CREATE TABLE "friends_challenges" (
