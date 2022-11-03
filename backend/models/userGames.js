@@ -34,11 +34,39 @@ class UserGames {
 		}
 	}
 
+	/** Gets a user's high score for all games.
+	 * Returns array of objects with the [{id, userId, gameId, highScore, gameName}, ...]
+	 */
+
+	static async get(userId, gameId) {
+		try {
+			const results = await db.query(
+				`
+        SELECT id, game_id AS "gameId", user_id AS "userId", high_score AS "highScore"
+        FROM user_games
+        WHERE user_id = $1 AND game_id = $2
+        `,
+				[userId, gameId]
+			);
+
+			const userGame = results.rows[0];
+
+			if (!userGame)
+				throw new NotFoundError404(
+					`Could not find high score for user with ID ${userId} and game with ID ${gameId}.`
+				);
+
+			return new UserGames(userGame);
+		} catch (error) {
+			throw error;
+		}
+	}
+
 	/** Adds a user's high score for a game.
 	 * Returns an instance of userGame.
 	 */
 
-	static async add(userId, gameId, highScore) {
+	static async add({ userId, gameId, highScore }) {
 		try {
 			const results = await db.query(
 				`

@@ -20,7 +20,11 @@ afterAll(commonAfterAll);
 const addTestGame = async () => {
 	const [testGame] = await Games.getAll();
 	const testUser = await getTestUser();
-	const score = await UserGames.add(testUser.id, testGame.id, 100);
+	const score = await UserGames.add({
+		userId: testUser.id,
+		gameId: testGame.id,
+		highScore: 100,
+	});
 	return { testGame, testUser, score };
 };
 
@@ -39,6 +43,27 @@ describe("test getAll method", () => {
 				gameName: "testGame",
 			},
 		]);
+	});
+});
+
+describe("test get method", () => {
+	it("can get a user's high score data for a specific game", async () => {
+		const { testGame, testUser } = await addTestGame();
+
+		const scores = await UserGames.get(testUser.id, testGame.id);
+
+		expect(scores).toEqual({
+			id: expect.any(Number),
+			userId: testUser.id,
+			gameId: testGame.id,
+			highScore: 100,
+		});
+	});
+
+	it("will throw an error if nothing is found", async () => {
+		async () => {
+			await expect(UserGames.get(0, 0)).toThrow();
+		};
 	});
 });
 
