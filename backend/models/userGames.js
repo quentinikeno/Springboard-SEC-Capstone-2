@@ -34,8 +34,8 @@ class UserGames {
 		}
 	}
 
-	/** Gets a user's high score for all games.
-	 * Returns array of objects with the [{id, userId, gameId, highScore, gameName}, ...]
+	/** Gets a user's high score for a specific game.
+	 * Returns an instance of UserGames.
 	 */
 
 	static async get(userId, gameId) {
@@ -107,6 +107,35 @@ class UserGames {
 				);
 
 			return new UserGames(userGame);
+		} catch (error) {
+			throw error;
+		}
+	}
+
+	/** Deletes a user's high score for all games.
+	 * Returns an object {deleted: UserGames}
+	 */
+
+	static async delete(userId, gameId) {
+		try {
+			const results = await db.query(
+				`
+        DELETE
+        FROM user_games
+        WHERE user_id = $1 AND game_id = $2
+        RETURNING id, game_id AS "gameId", user_id AS "userId", high_score AS "highScore"
+        `,
+				[userId, gameId]
+			);
+
+			const userGame = results.rows[0];
+
+			if (!userGame)
+				throw new NotFoundError404(
+					`Could not find high score for user with ID ${userId} and game with ID ${gameId}.`
+				);
+
+			return { deleted: new UserGames(userGame) };
 		} catch (error) {
 			throw error;
 		}
