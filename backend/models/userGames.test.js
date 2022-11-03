@@ -79,3 +79,34 @@ describe("test add method", () => {
 		});
 	});
 });
+
+describe("test update method", () => {
+	it("can update a user's high score data for a specific game", async () => {
+		const { testGame, testUser } = await addTestGame();
+
+		const score = await UserGames.update({
+			userId: testUser.id,
+			gameId: testGame.id,
+			highScore: 200,
+		});
+
+		expect(score).toEqual({
+			id: expect.any(Number),
+			userId: testUser.id,
+			gameId: testGame.id,
+			highScore: 200,
+		});
+	});
+
+	it("will throw an error if nothing is found", async () => {
+		async () => {
+			await expect(
+				UserGames.update({
+					userId: testUser.id,
+					gameId: testGame.id,
+					highScore: 200,
+				})
+			).toThrow();
+		};
+	});
+});

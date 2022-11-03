@@ -1,6 +1,6 @@
 /** User_Games model */
 
-const { BadRequestError400, NotFoundError404 } = require("../expressError");
+const { NotFoundError404 } = require("../expressError");
 const db = require("../db");
 
 class UserGames {
@@ -78,6 +78,35 @@ class UserGames {
 			);
 
 			return new UserGames(results.rows[0]);
+		} catch (error) {
+			throw error;
+		}
+	}
+
+	/** Adds a user's high score for a game.
+	 * Returns an instance of userGame.
+	 */
+
+	static async update({ userId, gameId, highScore }) {
+		try {
+			const results = await db.query(
+				`
+        UPDATE user_games
+        SET high_score = $3
+        WHERE user_id = $1 AND game_id = $2
+        RETURNING id, game_id AS "gameId", user_id AS "userId", high_score AS "highScore"
+        `,
+				[userId, gameId, highScore]
+			);
+
+			const userGame = results.rows[0];
+
+			if (!userGame)
+				throw new NotFoundError404(
+					`Could not find high score for user with ID ${userId} and game with ID ${gameId}.`
+				);
+
+			return new UserGames(userGame);
 		} catch (error) {
 			throw error;
 		}
