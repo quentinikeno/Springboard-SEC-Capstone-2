@@ -1,6 +1,4 @@
 /** Tests for the games routes */
-
-const { expectCt } = require("helmet");
 const request = require("supertest");
 const app = require("../app");
 

@@ -1,7 +1,6 @@
 /** Tests for the userGames model */
 
 const UserGames = require("./userGames");
-const User = require("./user");
 const Games = require("./games");
 
 const {
@@ -11,7 +10,6 @@ const {
 	commonAfterAll,
 	getTestUser,
 } = require("../tests/_testCommon");
-const { expectCt } = require("helmet");
 
 beforeAll(commonBeforeAll);
 beforeEach(commonBeforeEach);
