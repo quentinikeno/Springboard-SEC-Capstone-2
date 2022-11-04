@@ -3,7 +3,6 @@ const express = require("express");
 const { ensureAdmin } = require("../middleware/auth");
 const validateSchema = require("../helpers/validateSchema");
 const gameAddSchema = require("../schemas/gameAdd.json");
-const { BadRequestError400 } = require("../expressError");
 const router = new express.Router();
 
 /** All of these routes must ensure that the user is an admin. */
