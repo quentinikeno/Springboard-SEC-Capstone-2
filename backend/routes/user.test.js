@@ -43,6 +43,12 @@ describe("test GET /user/[username]", () => {
 
 		expect(resp.statusCode).toBe(404);
 	});
+
+	it("thows a 401 status code if the user isn't logged in.", async () => {
+		const resp = await request(app).get("/user/user1");
+
+		expect(resp.statusCode).toBe(401);
+	});
 });
 
 describe("test PATCH /user/[username]", () => {
@@ -143,6 +149,17 @@ describe("test PATCH /user/[username]", () => {
 
 		expect(resp.statusCode).toBe(403);
 	});
+
+	it("thows a 401 status code if the user isn't logged in.", async () => {
+		const resp = await request(app).patch("/user/user1").send({
+			email: "wow@mail.com",
+			newPassword: "superSecret",
+			oldPassword: "password1",
+			username: "betterUsername",
+		});
+
+		expect(resp.statusCode).toBe(401);
+	});
 });
 
 describe("test DELETE /user/[username]", () => {
@@ -195,5 +212,13 @@ describe("test DELETE /user/[username]", () => {
 
 		expect(resp.statusCode).toBe(400);
 		expect(resp2.statusCode).toBe(400);
+	});
+
+	it("thows a 401 status code if the user isn't logged in.", async () => {
+		const resp = await request(app).delete("/user/user1").send({
+			password: "password1",
+		});
+
+		expect(resp.statusCode).toBe(401);
 	});
 });
