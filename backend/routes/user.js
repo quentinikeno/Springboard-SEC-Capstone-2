@@ -6,12 +6,15 @@ const validateSchema = require("../helpers/validateSchema");
 const userPatchSchema = require("../schemas/userPatch.json");
 const router = new express.Router();
 
+/** All of these routes must ensure that the user is logged in. */
+router.use(ensureLoggedIn);
+
 /** GET user/[username]
  * returns { {id, username, joinAt, lastLoginAt} }
  * authorization: logged in
  */
 
-router.get("/:username", ensureLoggedIn, async (req, res, next) => {
+router.get("/:username", async (req, res, next) => {
 	try {
 		if (!req.params.username)
 			throw new BadRequestError400("A username must be provided.");
@@ -28,57 +31,47 @@ router.get("/:username", ensureLoggedIn, async (req, res, next) => {
  * authorization: logged in and permitted user
  */
 
-router.patch(
-	"/:username",
-	ensureLoggedIn,
-	ensurePermittedUser,
-	async (req, res, next) => {
-		try {
-			if (!req.params.username)
-				throw new BadRequestError400("A username must be provided.");
-			validateSchema(req, userPatchSchema);
+router.patch("/:username", ensurePermittedUser, async (req, res, next) => {
+	try {
+		if (!req.params.username)
+			throw new BadRequestError400("A username must be provided.");
+		validateSchema(req, userPatchSchema);
 
-			const user = await User.authenticate(
-				req.params.username,
-				req.body.oldPassword
-			);
-			const updatedUser = await user.update(req.body);
+		const user = await User.authenticate(
+			req.params.username,
+			req.body.oldPassword
+		);
+		const updatedUser = await user.update(req.body);
 
-			return res.json(updatedUser);
-		} catch (error) {
-			return next(error);
-		}
+		return res.json(updatedUser);
+	} catch (error) {
+		return next(error);
 	}
-);
+});
 
 /** DELETE user/[username]
  * returns { deleted: username }
  * authorization: logged in and permitted user
  */
 
-router.delete(
-	"/:username",
-	ensureLoggedIn,
-	ensurePermittedUser,
-	async (req, res, next) => {
-		try {
-			const { username } = req.params;
-			const { password } = req.body;
-			if (!username)
-				throw new BadRequestError400("A username must be provided.");
-			if (!password)
-				throw new BadRequestError400(
-					"Your account's password is required."
-				);
+router.delete("/:username", ensurePermittedUser, async (req, res, next) => {
+	try {
+		const { username } = req.params;
+		const { password } = req.body;
+		if (!username)
+			throw new BadRequestError400("A username must be provided.");
+		if (!password)
+			throw new BadRequestError400(
+				"Your account's password is required."
+			);
 
-			const user = await User.authenticate(username, password);
-			const { username: deleted } = await user.delete(req.body); // deleted user's username
+		const user = await User.authenticate(username, password);
+		const { username: deleted } = await user.delete(req.body); // deleted user's username
 
-			return res.json({ deleted });
-		} catch (error) {
-			return next(error);
-		}
+		return res.json({ deleted });
+	} catch (error) {
+		return next(error);
 	}
-);
+});
 
 module.exports = router;
