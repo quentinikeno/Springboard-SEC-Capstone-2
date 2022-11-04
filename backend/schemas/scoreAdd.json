@@ -1,0 +1,28 @@
+{
+	"$schema": "https://json-schema.org/draft/2019-09/schema",
+	"$id": "http://example.com/example.json",
+	"title": "Root Schema",
+	"type": "object",
+	"default": {},
+	"required": ["gameId", "highScore"],
+	"properties": {
+		"gameId": {
+			"title": "The gameId Schema",
+			"type": "integer",
+			"default": 0,
+			"examples": [1]
+		},
+		"highScore": {
+			"title": "The score Schema",
+			"type": "integer",
+			"default": 0,
+			"examples": [100]
+		}
+	},
+	"examples": [
+		{
+			"gameId": 1,
+			"highScore": 100
+		}
+	]
+}
