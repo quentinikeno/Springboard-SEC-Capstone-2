@@ -32,7 +32,7 @@ CREATE TABLE "games" (
     "name" text UNIQUE NOT NULL
 );
 
-CREATE TABLE "user_games" (
+CREATE TABLE "scores" (
     "id" serial PRIMARY KEY,
     "game_id" int NOT NULL REFERENCES "games" ("id") ON DELETE CASCADE,
     "user_id" int NOT NULL REFERENCES "users" ("id") ON DELETE CASCADE,
@@ -40,7 +40,7 @@ CREATE TABLE "user_games" (
     UNIQUE ("game_id","user_id")
 );
 
-CREATE TABLE "friends_challenges" (
+CREATE TABLE "challenges" (
     "id" serial PRIMARY KEY,
     "friends_id" int NOT NULL REFERENCES "friends" ("id") ON DELETE CASCADE,
     "game_id" int NOT NULL REFERENCES "games" ("id") ON DELETE CASCADE,
