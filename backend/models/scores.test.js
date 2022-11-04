@@ -1,6 +1,6 @@
-/** Tests for the userGames model */
+/** Tests for the Scores model */
 
-const UserGames = require("./userGames");
+const Scores = require("./scores");
 const Games = require("./games");
 
 const {
@@ -19,7 +19,7 @@ afterAll(commonAfterAll);
 const addTestGame = async () => {
 	const [testGame] = await Games.getAll();
 	const testUser = await getTestUser();
-	const score = await UserGames.add({
+	const score = await Scores.add({
 		userId: testUser.id,
 		gameId: testGame.id,
 		highScore: 100,
@@ -31,7 +31,7 @@ describe("test getAll method", () => {
 	it("can get all of a user's high score data", async () => {
 		const { testGame, testUser } = await addTestGame();
 
-		const scores = await UserGames.getAll(testUser.id);
+		const scores = await Scores.getAll(testUser.id);
 
 		expect(scores).toEqual([
 			{
@@ -49,7 +49,7 @@ describe("test get method", () => {
 	it("can get a user's high score data for a specific game", async () => {
 		const { testGame, testUser } = await addTestGame();
 
-		const scores = await UserGames.get(testUser.id, testGame.id);
+		const scores = await Scores.get(testUser.id, testGame.id);
 
 		expect(scores).toEqual({
 			id: expect.any(Number),
@@ -61,7 +61,7 @@ describe("test get method", () => {
 
 	it("will throw an error if nothing is found", async () => {
 		async () => {
-			await expect(UserGames.get(0, 0)).toThrow();
+			await expect(Scores.get(0, 0)).toThrow();
 		};
 	});
 });
@@ -83,7 +83,7 @@ describe("test update method", () => {
 	it("can update a user's high score data for a specific game", async () => {
 		const { testGame, testUser } = await addTestGame();
 
-		const score = await UserGames.update({
+		const score = await Scores.update({
 			userId: testUser.id,
 			gameId: testGame.id,
 			highScore: 200,
@@ -100,7 +100,7 @@ describe("test update method", () => {
 	it("will throw an error if nothing is found", async () => {
 		async () => {
 			await expect(
-				UserGames.update({
+				Scores.update({
 					userId: testUser.id,
 					gameId: testGame.id,
 					highScore: 200,
@@ -114,7 +114,7 @@ describe("test delete method", () => {
 	it("can delete a user's high score data for a specific game", async () => {
 		const { testGame, testUser } = await addTestGame();
 
-		const score = await UserGames.delete(testUser.id, testGame.id);
+		const score = await Scores.delete(testUser.id, testGame.id);
 
 		expect(score).toEqual({
 			deleted: {
@@ -128,7 +128,7 @@ describe("test delete method", () => {
 
 	it("will throw an error if nothing is found", async () => {
 		async () => {
-			await expect(UserGames.delete(0, 0)).toThrow();
+			await expect(Scores.delete(0, 0)).toThrow();
 		};
 	});
 });
@@ -139,7 +139,7 @@ describe("test deletion on cascade", () => {
 
 		await testUser.delete();
 
-		const scores = await UserGames.getAll(testUser.id);
+		const scores = await Scores.getAll(testUser.id);
 		expect(scores).toEqual([]);
 	});
 
@@ -148,7 +148,7 @@ describe("test deletion on cascade", () => {
 
 		await Games.delete(testGame.id);
 
-		const scores = await UserGames.getAll(testUser.id);
+		const scores = await Scores.getAll(testUser.id);
 		expect(scores).toEqual([]);
 	});
 });

@@ -3,7 +3,7 @@
 const { NotFoundError404 } = require("../expressError");
 const db = require("../db");
 
-class UserGames {
+class Scores {
 	constructor({ id, userId, gameId, highScore }) {
 		this.id = id;
 		this.userId = userId;
@@ -19,10 +19,10 @@ class UserGames {
 		try {
 			const results = await db.query(
 				`
-        SELECT user_games.id, game_id AS "gameId", user_id AS "userId", high_score AS "highScore", games.name AS "gameName"
-        FROM user_games
+        SELECT scores.id, game_id AS "gameId", user_id AS "userId", high_score AS "highScore", games.name AS "gameName"
+        FROM scores
         JOIN games
-        ON user_games.game_id = games.id
+        ON scores.game_id = games.id
         WHERE user_id = $1
         `,
 				[userId]
@@ -35,7 +35,7 @@ class UserGames {
 	}
 
 	/** Gets a user's high score for a specific game.
-	 * Returns an instance of UserGames.
+	 * Returns an instance of Scores.
 	 */
 
 	static async get(userId, gameId) {
@@ -43,55 +43,55 @@ class UserGames {
 			const results = await db.query(
 				`
         SELECT id, game_id AS "gameId", user_id AS "userId", high_score AS "highScore"
-        FROM user_games
+        FROM scores
         WHERE user_id = $1 AND game_id = $2
         `,
 				[userId, gameId]
 			);
 
-			const userGame = results.rows[0];
+			const score = results.rows[0];
 
-			if (!userGame)
+			if (!score)
 				throw new NotFoundError404(
 					`Could not find high score for user with ID ${userId} and game with ID ${gameId}.`
 				);
 
-			return new UserGames(userGame);
+			return new Scores(score);
 		} catch (error) {
 			throw error;
 		}
 	}
 
 	/** Adds a user's high score for a game.
-	 * Returns an instance of userGame.
+	 * Returns an instance of Score.
 	 */
 
 	static async add({ userId, gameId, highScore }) {
 		try {
 			const results = await db.query(
 				`
-        INSERT INTO user_games (user_id, game_id, high_score)
+        INSERT INTO scores (user_id, game_id, high_score)
         VALUES ($1, $2, $3)
         RETURNING id, game_id AS "gameId", user_id AS "userId", high_score AS "highScore"
         `,
 				[userId, gameId, highScore]
 			);
 
-			return new UserGames(results.rows[0]);
+			return new Scores(results.rows[0]);
 		} catch (error) {
 			throw error;
 		}
 	}
 
 	/** Adds a user's high score for a game.
-	 * Returns an instance of userGame.
+	 * Returns an instance of Score.
 	 */
 
 	static async update({ userId, gameId, highScore }) {
 		try {
 			const results = await db.query(
 				`
-        UPDATE user_games
+        UPDATE scores
         SET high_score = $3
         WHERE user_id = $1 AND game_id = $2
         RETURNING id, game_id AS "gameId", user_id AS "userId", high_score AS "highScore"
@@ -99,21 +99,21 @@ class UserGames {
 				[userId, gameId, highScore]
 			);
 
-			const userGame = results.rows[0];
+			const score = results.rows[0];
 
-			if (!userGame)
+			if (!score)
 				throw new NotFoundError404(
 					`Could not find high score for user with ID ${userId} and game with ID ${gameId}.`
 				);
 
-			return new UserGames(userGame);
+			return new Scores(score);
 		} catch (error) {
 			throw error;
 		}
 	}
 
 	/** Deletes a user's high score for all games.
-	 * Returns an object {deleted: UserGames}
+	 * Returns an object {deleted: Scores}
 	 */
 
 	static async delete(userId, gameId) {
@@ -121,25 +121,25 @@ class UserGames {
 			const results = await db.query(
 				`
         DELETE
-        FROM user_games
+        FROM scores
         WHERE user_id = $1 AND game_id = $2
         RETURNING id, game_id AS "gameId", user_id AS "userId", high_score AS "highScore"
         `,
 				[userId, gameId]
 			);
 
-			const userGame = results.rows[0];
+			const score = results.rows[0];
 
-			if (!userGame)
+			if (!score)
 				throw new NotFoundError404(
 					`Could not find high score for user with ID ${userId} and game with ID ${gameId}.`
 				);
 
-			return { deleted: new UserGames(userGame) };
+			return { deleted: new Scores(score) };
 		} catch (error) {
 			throw error;
 		}
 	}
 }
 
-module.exports = UserGames;
+module.exports = Scores;
