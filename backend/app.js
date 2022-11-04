@@ -12,6 +12,7 @@ const userRoutes = require("./routes/user");
 const authRoutes = require("./routes/auth");
 const friendsRoutes = require("./routes/friends");
 const gamesRoutes = require("./routes/games");
+const scoresRoutes = require("./routes/scores");
 
 /** Middleware */
 app.use(express.json());
@@ -24,6 +25,7 @@ app.use("/user", userRoutes);
 app.use("/auth", authRoutes);
 app.use("/friends", friendsRoutes);
 app.use("/games", gamesRoutes);
+app.use("/scores", scoresRoutes);
 
 /** 404 handler */
 app.use((req, res, next) => {
