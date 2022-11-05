@@ -77,7 +77,14 @@ class Scores {
 				[userId, gameId, highScore]
 			);
 
-			return new Scores(results.rows[0]);
+			const score = results.rows[0];
+
+			if (!score)
+				throw new NotFoundError404(
+					`A high score already exists for user with ID ${userId} and game with ID ${gameId}.`
+				);
+
+			return new Scores(score);
 		} catch (error) {
 			throw error;
 		}
