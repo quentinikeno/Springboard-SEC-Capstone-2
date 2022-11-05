@@ -48,4 +48,18 @@ router.patch("/", async (req, res, next) => {
 	}
 });
 
+/** DELETE /scores
+ * Deletess a high score for a logged in user
+ * returns {deleted: {id, userId, gameId, highScore}}
+ * authorization: logged in
+ */
+router.delete("/:id", async (req, res, next) => {
+	try {
+		const del = await Scores.delete(req.params.id);
+		return res.json(del);
+	} catch (error) {
+		return next(error);
+	}
+});
+
 module.exports = router;
