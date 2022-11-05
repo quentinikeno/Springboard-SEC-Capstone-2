@@ -120,16 +120,16 @@ class Scores {
 	 * Returns an object {deleted: Scores}
 	 */
 
-	static async delete(userId, gameId) {
+	static async delete(scoreId) {
 		try {
 			const results = await db.query(
 				`
         DELETE
         FROM scores
-        WHERE user_id = $1 AND game_id = $2
+        WHERE id = $1
         RETURNING id, game_id AS "gameId", user_id AS "userId", high_score AS "highScore"
         `,
-				[userId, gameId]
+				[scoreId]
 			);
 
 			const score = results.rows[0];
