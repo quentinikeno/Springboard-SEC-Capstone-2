@@ -1,6 +1,6 @@
 /** User_Games model */
 
-const { NotFoundError404 } = require("../expressError");
+const { NotFoundError404, BadRequestError400 } = require("../expressError");
 const db = require("../db");
 
 class Scores {
@@ -77,15 +77,12 @@ class Scores {
 				[userId, gameId, highScore]
 			);
 
-			const score = results.rows[0];
-
-			if (!score)
-				throw new NotFoundError404(
+			return new Scores(results.rows[0]);
+		} catch (error) {
+			if (error.code === "23505")
+				throw new BadRequestError400(
 					`A high score already exists for user with ID ${userId} and game with ID ${gameId}.`
 				);
-
-			return new Scores(score);
-		} catch (error) {
 			throw error;
 		}
 	}
