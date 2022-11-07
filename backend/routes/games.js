@@ -1,19 +1,16 @@
 const Games = require("../models/games");
 const express = require("express");
-const { ensureAdmin } = require("../middleware/auth");
+const { ensureAdmin, ensureLoggedIn } = require("../middleware/auth");
 const validateSchema = require("../helpers/validateSchema");
 const gameAddSchema = require("../schemas/gameAdd.json");
 const router = new express.Router();
-
-/** All of these routes must ensure that the user is an admin. */
-router.use(ensureAdmin);
 
 /** GET /games/
  * returns {games: [ {id, name}, ... ]}
  * authorization: admin
  */
 
-router.get("/", async (req, res, next) => {
+router.get("/", ensureAdmin, async (req, res, next) => {
 	try {
 		const games = await Games.getAll();
 		return res.json({ games });
@@ -27,7 +24,7 @@ router.get("/", async (req, res, next) => {
  * authorization: admin
  */
 
-router.get("/:id", async (req, res, next) => {
+router.get("/:id", ensureAdmin, async (req, res, next) => {
 	try {
 		const game = await Games.get(req.params.id);
 		return res.json(game);
@@ -41,7 +38,7 @@ router.get("/:id", async (req, res, next) => {
  * authorization: admin
  */
 
-router.post("/", async (req, res, next) => {
+router.post("/", ensureAdmin, async (req, res, next) => {
 	try {
 		validateSchema(req, gameAddSchema);
 		const game = await Games.add(req.body.name);
@@ -56,7 +53,7 @@ router.post("/", async (req, res, next) => {
  * authorization: admin
  */
 
-router.patch("/:id", async (req, res, next) => {
+router.patch("/:id", ensureAdmin, async (req, res, next) => {
 	try {
 		validateSchema(req, gameAddSchema);
 		const game = await Games.update(req.params.id, req.body.name);
@@ -71,10 +68,24 @@ router.patch("/:id", async (req, res, next) => {
  * authorization: admin
  */
 
-router.delete("/:id", async (req, res, next) => {
+router.delete("/:id", ensureAdmin, async (req, res, next) => {
 	try {
 		const game = await Games.delete(req.params.id);
 		return res.json(game);
+	} catch (error) {
+		return next(error);
+	}
+});
+
+/** GET /games/[id]/top-scores
+ * returns [{username, highScore}, ...]
+ * authorization: admin
+ */
+
+router.get("/:id/top-scores", ensureLoggedIn, async (req, res, next) => {
+	try {
+		const topUsers = await Games.getTop10Scores(req.params.id);
+		return res.json(topUsers);
 	} catch (error) {
 		return next(error);
 	}

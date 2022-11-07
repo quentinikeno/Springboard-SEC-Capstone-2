@@ -8,6 +8,7 @@ const {
 	commonAfterEach,
 	commonAfterAll,
 	getUserToken,
+	addScore,
 } = require("../tests/_testCommon");
 
 beforeAll(commonBeforeAll);
@@ -183,5 +184,19 @@ describe("test DELETE /games/[id]", () => {
 			.set("authorization", `Bearer ${u1Token}`);
 
 		expect(resp.statusCode).toEqual(403);
+	});
+});
+
+describe("GET games/[id]/top-score", () => {
+	it("Returns the scores of the top 10 highest scoring users for a game", async () => {
+		const { testGameId, score } = await addScore();
+		const u1Token = await getUserToken();
+		const resp = await request(app)
+			.get(`/games/${testGameId}/top-scores`)
+			.set("authorization", `Bearer ${u1Token}`);
+
+		expect(resp.body).toEqual([
+			{ username: "user1", highScore: score.highScore },
+		]);
 	});
 });
