@@ -128,6 +128,33 @@ class Games {
 			throw error;
 		}
 	}
+
+	/** Gets a game with id from the database and also gets the top 10 highest scoring users.
+	 * Returns {username, highScore}, ...]
+	 */
+
+	static async getTop10Scores(id) {
+		try {
+			const results = await db.query(
+				`
+			SELECT users.username, scores.high_score AS "highScore"
+			FROM games
+			JOIN scores
+			ON games.id = scores.game_id
+			JOIN users
+			ON scores.user_id = users.id
+			WHERE games.id=$1
+			ORDER BY scores.high_score
+			LIMIT 10
+			`,
+				[id]
+			);
+
+			return results.rows;
+		} catch (error) {
+			throw error;
+		}
+	}
 }
 
 module.exports = Games;

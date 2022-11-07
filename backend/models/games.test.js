@@ -6,6 +6,7 @@ const {
 	commonBeforeEach,
 	commonAfterEach,
 	commonAfterAll,
+	addTestGame,
 } = require("../tests/_testCommon");
 
 beforeAll(commonBeforeAll);
@@ -85,5 +86,16 @@ describe("test delete games method", () => {
 		async () => {
 			await expect(Games.delete(99999999)).toThrow();
 		};
+	});
+});
+
+describe("getTop10Scores method ", () => {
+	it("returns the top 10 scores and user", async () => {
+		const { testGame, testUser, score } = await addTestGame();
+		const users = await Games.getTop10Scores(testGame.id);
+
+		expect(users).toEqual([
+			{ username: testUser.username, highScore: score.highScore },
+		]);
 	});
 });
