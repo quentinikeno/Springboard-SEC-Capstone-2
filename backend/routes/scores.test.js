@@ -9,26 +9,13 @@ const {
 	commonAfterEach,
 	commonAfterAll,
 	getUserToken,
+	addScore,
 } = require("../tests/_testCommon");
 
 beforeAll(commonBeforeAll);
 beforeEach(commonBeforeEach);
 afterEach(commonAfterEach);
 afterAll(commonAfterAll);
-
-const addScore = async () => {
-	const adminToken = await getUserToken("admin", "admin");
-	const u1Token = await getUserToken();
-	const gamesResp = await request(app)
-		.get("/games")
-		.set("authorization", `Bearer ${adminToken}`);
-	const testGameId = gamesResp.body.games[0].id;
-	const resp = await request(app)
-		.post("/scores")
-		.set("authorization", `Bearer ${u1Token}`)
-		.send({ gameId: testGameId, highScore: 1000 });
-	return { u1Token, testGameId, score: resp.body, status: resp.status };
-};
 
 describe("test POST /scores", () => {
 	it("adds a new highscore for a user and game", async () => {

@@ -11,6 +11,8 @@ const Games = require("../models/games");
 
 async function commonBeforeAll() {
 	await Promise.allSettled([
+		db.query("DELETE FROM games"),
+		db.query("DELETE FROM scores"),
 		db.query("DELETE FROM friends"),
 		db.query("DELETE FROM users"),
 		User.register({
@@ -93,6 +95,20 @@ async function requestFriends(username1 = "user1", username2 = "user2") {
 	}
 }
 
+async function addScore() {
+	const adminToken = await getUserToken("admin", "admin");
+	const u1Token = await getUserToken();
+	const gamesResp = await request(app)
+		.get("/games")
+		.set("authorization", `Bearer ${adminToken}`);
+	const testGameId = gamesResp.body.games[0].id;
+	const resp = await request(app)
+		.post("/scores")
+		.set("authorization", `Bearer ${u1Token}`)
+		.send({ gameId: testGameId, highScore: 1000 });
+	return { u1Token, testGameId, score: resp.body, status: resp.status };
+}
+
 module.exports = {
 	commonBeforeAll,
 	commonBeforeEach,
@@ -101,4 +117,5 @@ module.exports = {
 	getUserToken,
 	getTestUser,
 	requestFriends,
+	addScore,
 };
