@@ -6,6 +6,7 @@ const app = require("../app");
 const User = require("../models/user");
 const Friends = require("../models/friends");
 const Games = require("../models/games");
+const Scores = require("../models/scores");
 
 /** queries and functions to be run before all tests */
 
@@ -109,6 +110,17 @@ async function addScore() {
 	return { u1Token, testGameId, score: resp.body, status: resp.status };
 }
 
+async function addTestGame() {
+	const [testGame] = await Games.getAll();
+	const testUser = await getTestUser();
+	const score = await Scores.add({
+		userId: testUser.id,
+		gameId: testGame.id,
+		highScore: 100,
+	});
+	return { testGame, testUser, score };
+}
+
 module.exports = {
 	commonBeforeAll,
 	commonBeforeEach,
@@ -118,4 +130,5 @@ module.exports = {
 	getTestUser,
 	requestFriends,
 	addScore,
+	addTestGame,
 };

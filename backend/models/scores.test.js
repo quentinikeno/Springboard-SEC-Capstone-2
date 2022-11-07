@@ -8,24 +8,13 @@ const {
 	commonBeforeEach,
 	commonAfterEach,
 	commonAfterAll,
-	getTestUser,
+	addTestGame,
 } = require("../tests/_testCommon");
 
 beforeAll(commonBeforeAll);
 beforeEach(commonBeforeEach);
 afterEach(commonAfterEach);
 afterAll(commonAfterAll);
-
-const addTestGame = async () => {
-	const [testGame] = await Games.getAll();
-	const testUser = await getTestUser();
-	const score = await Scores.add({
-		userId: testUser.id,
-		gameId: testGame.id,
-		highScore: 100,
-	});
-	return { testGame, testUser, score };
-};
 
 describe("test getAll method", () => {
 	it("can get all of a user's high score data", async () => {
