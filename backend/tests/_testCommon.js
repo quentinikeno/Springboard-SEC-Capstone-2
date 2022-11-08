@@ -18,6 +18,7 @@ async function commonBeforeAll() {
 			db.query("DELETE FROM friends"),
 			db.query("DELETE FROM games"),
 			db.query("DELETE FROM scores"),
+			db.query("DELETE FROM challenges"),
 		]);
 
 		const results = await Promise.allSettled([
