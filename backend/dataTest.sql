@@ -3,9 +3,9 @@
 
 \c math_games_test
 
-DROP TABLE IF EXISTS "friends_challenges";
+DROP TABLE IF EXISTS "challenges";
 DROP TABLE IF EXISTS "friends";
-DROP TABLE IF EXISTS "user_games";
+DROP TABLE IF EXISTS "scores";
 DROP TABLE IF EXISTS "games";
 DROP TABLE IF EXISTS "users";
 
