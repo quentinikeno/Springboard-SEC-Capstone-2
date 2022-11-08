@@ -61,60 +61,56 @@ class Challenges {
 		}
 	}
 
-	/** accepts two users' ID's and sets accepted to for their friend request to True
-	 * returns a friends instance.
+	/** Updates a challenge score
+	 * returns a Challenges instance.
 	 */
 
-	static async accept(user_1_id, user_2_id) {
+	static async update(id, score) {
 		try {
-			const results = await db.query(
-				`
-			UPDATE friends
-			SET accepted=true
-			WHERE $1 IN (user_1_id , user_2_id) AND $2 IN (user_1_id , user_2_id)
-			RETURNING id, user_1_id, user_2_id, accepted
-			`,
-				[user_1_id, user_2_id]
-			);
-
-			const request = results.rows[0];
-
-			if (!request)
+			if (!Number.isInteger(score))
 				throw new BadRequestError400(
-					"These users don't have a pending friend request.  Please send a friend request first."
+					"Score must be provided as an integer."
 				);
 
-			return new Friends(request);
+			const results = await db.query(
+				`
+			UPDATE challenges
+			SET score_to_beat = $1
+			WHERE id = $2
+			RETURNING id, friends_id AS "friendsId", game_id AS "gameId", score_to_beat AS "scoreToBeat"
+			`,
+				[score, id]
+			);
+
+			return new Challenges(results.rows[0]);
 		} catch (error) {
 			throw error;
 		}
 	}
 
-	/** accepts two users' ID's and deletes the friends
-	 * returns the usernames of the former friends.
-	 * {deletedFriends: {user1Id, user2Id}}
+	/** accepts a challenge ID and deletes it
+	 * returns the Challenge instance that was deleted.
+	 * {deletedChallenge: { id, friendsId, gameId, scoreToBeat }}
 	 */
 
-	static async delete(user_1_id, user_2_id) {
+	static async delete(id) {
 		try {
 			const results = await db.query(
 				`
 			DELETE
-			FROM friends
-			WHERE $1 IN (user_1_id , user_2_id) AND $2 IN (user_1_id , user_2_id)
-			RETURNING user_1_id, user_2_id
+			FROM challenges
+			WHERE id = $1
+			RETURNING id, friends_id AS "friendsId", game_id AS "gameId", score_to_beat AS "scoreToBeat"
 			`,
-				[user_1_id, user_2_id]
+				[id]
 			);
 
-			const deletedFriends = results.rows[0];
+			const deletedChallenge = results.rows[0];
 
-			if (!deletedFriends)
-				throw new BadRequestError400(
-					"These users don't have a pending friend request or aren't currently friends."
-				);
+			if (!deletedChallenge)
+				throw new BadRequestError400("This challenge does not exist.");
 
-			return { deletedFriends };
+			return { deletedChallenge };
 		} catch (error) {
 			throw error;
 		}
