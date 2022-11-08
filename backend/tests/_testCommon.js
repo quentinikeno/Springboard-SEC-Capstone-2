@@ -11,34 +11,39 @@ const Scores = require("../models/scores");
 /** queries and functions to be run before all tests */
 
 async function commonBeforeAll() {
-	await Promise.allSettled([
-		db.query("DELETE FROM games"),
-		db.query("DELETE FROM scores"),
-		db.query("DELETE FROM friends"),
-		db.query("DELETE FROM users"),
-		User.register({
-			username: "user1",
-			email: "user1@test.com",
-			password: "password1",
-		}),
-		User.register({
-			username: "user2",
-			email: "user2@test.com",
-			password: "password2",
-		}),
-		User.register({
-			username: "user3",
-			email: "user3@test.com",
-			password: "password3",
-		}),
-		User.register({
-			username: "admin",
-			email: "admin@test.com",
-			password: "admin",
-			isAdmin: true,
-		}),
-		Games.add("testGame"),
-	]);
+	try {
+		await Promise.all([
+			db.query("DELETE FROM users"),
+			db.query("DELETE FROM friends"),
+			db.query("DELETE FROM games"),
+			db.query("DELETE FROM scores"),
+		]);
+
+		const results = await Promise.allSettled([
+			User.register({
+				username: "user1",
+				email: "user1@test.com",
+				password: "password1",
+			}),
+			User.register({
+				username: "user2",
+				email: "user2@test.com",
+				password: "password2",
+			}),
+			User.register({
+				username: "user3",
+				email: "user3@test.com",
+				password: "password3",
+			}),
+			User.register({
+				username: "admin",
+				email: "admin@test.com",
+				password: "admin",
+				isAdmin: true,
+			}),
+			Games.add("testGame"),
+		]);
+	} catch (error) {}
 }
 
 async function commonBeforeEach() {
