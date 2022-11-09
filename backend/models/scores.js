@@ -136,7 +136,7 @@ class Scores {
 
 			if (!score)
 				throw new NotFoundError404(
-					`Could not find high score for user with ID ${userId} and game with ID ${gameId}.`
+					`Could not find high score with id ${scoreId}.`
 				);
 
 			return { deleted: new Scores(score) };

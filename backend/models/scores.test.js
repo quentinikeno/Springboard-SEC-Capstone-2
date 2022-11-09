@@ -101,11 +101,11 @@ describe("test update method", () => {
 
 describe("test delete method", () => {
 	it("can delete a user's high score data for a specific game", async () => {
-		const { testGame, testUser } = await addTestGame();
+		const { testUser, testGame, score } = await addTestGame();
 
-		const score = await Scores.delete(testUser.id, testGame.id);
+		const delScore = await Scores.delete(score.id);
 
-		expect(score).toEqual({
+		expect(delScore).toEqual({
 			deleted: {
 				id: expect.any(Number),
 				userId: testUser.id,
@@ -117,7 +117,7 @@ describe("test delete method", () => {
 
 	it("will throw an error if nothing is found", async () => {
 		async () => {
-			await expect(Scores.delete(0, 0)).toThrow();
+			await expect(Scores.delete(0)).toThrow();
 		};
 	});
 });
