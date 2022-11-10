@@ -100,12 +100,12 @@ class Challenges {
 				[id]
 			);
 
-			const deletedChallenge = results.rows[0];
+			const deleted = results.rows[0];
 
-			if (!deletedChallenge)
+			if (!deleted)
 				throw new BadRequestError400("This challenge does not exist.");
 
-			return { deletedChallenge };
+			return { deleted };
 		} catch (error) {
 			throw error;
 		}
