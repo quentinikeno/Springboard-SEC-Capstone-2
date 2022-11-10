@@ -21,7 +21,7 @@ async function commonBeforeAll() {
 			db.query("DELETE FROM challenges"),
 		]);
 
-		const results = await Promise.allSettled([
+		await Promise.allSettled([
 			User.register({
 				username: "user1",
 				email: "user1@test.com",
@@ -45,7 +45,9 @@ async function commonBeforeAll() {
 			}),
 			Games.add("testGame"),
 		]);
-	} catch (error) {}
+	} catch (error) {
+		console.error(error);
+	}
 }
 
 async function commonBeforeEach() {
