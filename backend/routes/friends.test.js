@@ -9,29 +9,13 @@ const {
 	commonAfterEach,
 	commonAfterAll,
 	getUserToken,
+	requestFriendsAPI,
 } = require("../tests/_testCommon");
 
 beforeAll(commonBeforeAll);
 beforeEach(commonBeforeEach);
 afterEach(commonAfterEach);
 afterAll(commonAfterAll);
-
-const requestFriends = async (accept = false) => {
-	const u1Token = await getUserToken();
-	const { body: user2 } = await request(app)
-		.get("/user/user2")
-		.set("authorization", `Bearer ${u1Token}`);
-	const resp = await request(app)
-		.post(`/friends/${user2.id}`)
-		.set("authorization", `Bearer ${u1Token}`);
-	let acceptedResp;
-	if (accept) {
-		acceptedResp = await request(app)
-			.patch(`/friends/${user2.id}`)
-			.set("authorization", `Bearer ${u1Token}`);
-	}
-	return { u1Token, user2, resp, acceptedResp };
-};
 
 /** Test Friends routes */
 
@@ -49,7 +33,7 @@ describe("test GET /friends/[pendingOrAccepted]", () => {
 	});
 
 	it("returns a user's pending friends", async () => {
-		const { u1Token, user2 } = await requestFriends();
+		const { u1Token, user2 } = await requestFriendsAPI();
 		const friends = await request(app)
 			.get("/friends/pending")
 			.set("authorization", `Bearer ${u1Token}`);
@@ -72,7 +56,7 @@ describe("test GET /friends/[pendingOrAccepted]", () => {
 
 describe("test POST /friends/[userId]", () => {
 	it("create a friend request for two users", async () => {
-		const { u1Token, user2, resp } = await requestFriends();
+		const { u1Token, user2, resp } = await requestFriendsAPI();
 
 		expect(resp.statusCode).toBe(201);
 		expect(resp.body).toEqual({
@@ -100,7 +84,7 @@ describe("test POST /friends/[userId]", () => {
 
 describe("test PATCH /friends/[userId]", () => {
 	it("accepts a friend request for two users", async () => {
-		const { u1Token, user2, acceptedResp } = await requestFriends(true);
+		const { u1Token, user2, acceptedResp } = await requestFriendsAPI(true);
 
 		expect(acceptedResp.statusCode).toBe(200);
 		expect(acceptedResp.body).toEqual({
@@ -141,7 +125,7 @@ describe("test PATCH /friends/[userId]", () => {
 
 describe("test DELETE /friends/[userId]", () => {
 	it("deletes a friend request for two users", async () => {
-		const { u1Token, user2 } = await requestFriends(true);
+		const { u1Token, user2 } = await requestFriendsAPI(true);
 		const deleteResp = await request(app)
 			.delete(`/friends/${user2.id}`)
 			.set("authorization", `Bearer ${u1Token}`);
