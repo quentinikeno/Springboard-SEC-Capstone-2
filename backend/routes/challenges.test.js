@@ -49,6 +49,13 @@ describe("GET /challenges", () => {
 			},
 		]);
 	});
+
+	it("throws a 401 status code if the user is not logged in", async () => {
+		await postChallenge();
+		const resp = await request(app).get("/challenges");
+
+		expect(resp.status).toBe(401);
+	});
 });
 
 describe("POST /challenges", () => {
@@ -62,6 +69,30 @@ describe("POST /challenges", () => {
 			gameId: testGame.id,
 			scoreToBeat: 100,
 		});
+	});
+
+	it("throws a 400 error if no data is provided", async () => {
+		const { u1Token } = await requestFriendsAPI(true);
+		const resp = await request(app)
+			.post("/challenges")
+			.set("authorization", `Bearer ${u1Token}`)
+			.send({});
+
+		expect(resp.status).toBe(400);
+	});
+
+	it("throws a 400 error if data is bad", async () => {
+		const { u1Token } = await requestFriendsAPI(true);
+		const resp = await request(app)
+			.post("/challenges")
+			.set("authorization", `Bearer ${u1Token}`)
+			.send({
+				friendsId: "hello",
+				gameId: "abc",
+				scoreToBeat: "dkfj",
+			});
+
+		expect(resp.status).toBe(400);
 	});
 });
 
@@ -85,6 +116,26 @@ describe("PATCH /challenges", () => {
 			scoreToBeat: 99,
 		});
 	});
+
+	it("throws an error if data is missing", async () => {
+		const { u1Token, resp: challengeResp } = await postChallenge();
+		const resp = await request(app)
+			.patch(`/challenges/${challengeResp.body.id}`)
+			.set("authorization", `Bearer ${u1Token}`)
+			.send({});
+
+		expect(resp.status).toBe(400);
+	});
+
+	it("throws an error if score is less than 1", async () => {
+		const { u1Token, resp: challengeResp } = await postChallenge();
+		const resp = await request(app)
+			.patch(`/challenges/${challengeResp.body.id}`)
+			.set("authorization", `Bearer ${u1Token}`)
+			.send({ scoreToBeat: 0 });
+
+		expect(resp.status).toBe(400);
+	});
 });
 
 describe("DELETE /challenges", () => {
@@ -107,5 +158,14 @@ describe("DELETE /challenges", () => {
 				scoreToBeat: 100,
 			},
 		});
+	});
+
+	it("gives 404 status code if not found", async () => {
+		const { u1Token } = await postChallenge();
+		const resp = await request(app)
+			.delete(`/challenges/0`)
+			.set("authorization", `Bearer ${u1Token}`);
+
+		expect(resp.status).toBe(404);
 	});
 });
