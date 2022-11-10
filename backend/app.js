@@ -13,6 +13,7 @@ const authRoutes = require("./routes/auth");
 const friendsRoutes = require("./routes/friends");
 const gamesRoutes = require("./routes/games");
 const scoresRoutes = require("./routes/scores");
+const challengesRoutes = require("./routes/challenges");
 
 /** Middleware */
 app.use(express.json());
@@ -26,6 +27,7 @@ app.use("/auth", authRoutes);
 app.use("/friends", friendsRoutes);
 app.use("/games", gamesRoutes);
 app.use("/scores", scoresRoutes);
+app.use("/challenges", challengesRoutes);
 
 /** 404 handler */
 app.use((req, res, next) => {
