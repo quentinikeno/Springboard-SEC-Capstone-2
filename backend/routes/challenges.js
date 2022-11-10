@@ -3,6 +3,7 @@ const express = require("express");
 const { ensureLoggedIn } = require("../middleware/auth");
 const validateSchema = require("../helpers/validateSchema");
 const challengesAddSchema = require("../schemas/challengesAdd.json");
+const challengesUpdateSchema = require("../schemas/challengesUpdate.json");
 const router = new express.Router();
 
 /** All of these routes must ensure that the user is logged in. */
@@ -32,6 +33,24 @@ router.post("/", async (req, res, next) => {
 		validateSchema(req, challengesAddSchema);
 		const challenges = await Challenges.add(req.body);
 		return res.status(201).json(challenges);
+	} catch (error) {
+		return next(error);
+	}
+});
+
+/** PATCH /challenges/:id
+ * updates a challenge for a user
+ * returns { id, friendsId, gameId, scoreToBeat }
+ * authorization: logged in
+ */
+router.patch("/:id", async (req, res, next) => {
+	try {
+		validateSchema(req, challengesUpdateSchema);
+		const challenge = await Challenges.update(
+			req.params.id,
+			req.body.scoreToBeat
+		);
+		return res.json(challenge);
 	} catch (error) {
 		return next(error);
 	}

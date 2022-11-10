@@ -8,10 +8,8 @@ const {
 	commonBeforeEach,
 	commonAfterEach,
 	commonAfterAll,
-	addChallenge,
 	addTestGame,
 	requestFriendsAPI,
-	getUserToken,
 } = require("../tests/_testCommon");
 
 beforeAll(commonBeforeAll);
@@ -63,6 +61,28 @@ describe("POST /challenges", () => {
 			friendsId: acceptedResp.body.id,
 			gameId: testGame.id,
 			scoreToBeat: 100,
+		});
+	});
+});
+
+describe("PATCH /challenges", () => {
+	it("returns all challenges for a user", async () => {
+		const {
+			u1Token,
+			acceptedResp,
+			testGame,
+			resp: challengeResp,
+		} = await postChallenge();
+		const resp = await request(app)
+			.patch(`/challenges/${challengeResp.body.id}`)
+			.set("authorization", `Bearer ${u1Token}`)
+			.send({ scoreToBeat: 99 });
+
+		expect(resp.body).toEqual({
+			id: expect.any(Number),
+			friendsId: acceptedResp.body.id,
+			gameId: testGame.id,
+			scoreToBeat: 99,
 		});
 	});
 });
