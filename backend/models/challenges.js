@@ -67,11 +67,6 @@ class Challenges {
 
 	static async update(id, score) {
 		try {
-			if (!Number.isInteger(score))
-				throw new BadRequestError400(
-					"Score must be provided as an integer."
-				);
-
 			const results = await db.query(
 				`
 			UPDATE challenges
