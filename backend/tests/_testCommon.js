@@ -105,40 +105,73 @@ async function requestFriends(username1 = "user1", username2 = "user2") {
 	}
 }
 
+async function requestFriendsAPI(accept = false) {
+	try {
+		const u1Token = await getUserToken();
+		const { body: user2 } = await request(app)
+			.get("/user/user2")
+			.set("authorization", `Bearer ${u1Token}`);
+		const resp = await request(app)
+			.post(`/friends/${user2.id}`)
+			.set("authorization", `Bearer ${u1Token}`);
+		let acceptedResp;
+		if (accept) {
+			acceptedResp = await request(app)
+				.patch(`/friends/${user2.id}`)
+				.set("authorization", `Bearer ${u1Token}`);
+		}
+		return { u1Token, user2, resp, acceptedResp };
+	} catch (error) {
+		console.error(error);
+	}
+}
+
 async function addScore() {
-	const adminToken = await getUserToken("admin", "admin");
-	const u1Token = await getUserToken();
-	const gamesResp = await request(app)
-		.get("/games")
-		.set("authorization", `Bearer ${adminToken}`);
-	const testGameId = gamesResp.body.games[0].id;
-	const resp = await request(app)
-		.post("/scores")
-		.set("authorization", `Bearer ${u1Token}`)
-		.send({ gameId: testGameId, highScore: 1000 });
-	return { u1Token, testGameId, score: resp.body, status: resp.status };
+	try {
+		const adminToken = await getUserToken("admin", "admin");
+		const u1Token = await getUserToken();
+		const gamesResp = await request(app)
+			.get("/games")
+			.set("authorization", `Bearer ${adminToken}`);
+		const testGameId = gamesResp.body.games[0].id;
+		const resp = await request(app)
+			.post("/scores")
+			.set("authorization", `Bearer ${u1Token}`)
+			.send({ gameId: testGameId, highScore: 1000 });
+		return { u1Token, testGameId, score: resp.body, status: resp.status };
+	} catch (error) {
+		console.error(error);
+	}
 }
 
 async function addTestGame() {
-	const [testGame] = await Games.getAll();
-	const testUser = await getTestUser();
-	const score = await Scores.add({
-		userId: testUser.id,
-		gameId: testGame.id,
-		highScore: 100,
-	});
-	return { testGame, testUser, score };
+	try {
+		const [testGame] = await Games.getAll();
+		const testUser = await getTestUser();
+		const score = await Scores.add({
+			userId: testUser.id,
+			gameId: testGame.id,
+			highScore: 100,
+		});
+		return { testGame, testUser, score };
+	} catch (error) {
+		console.error(error);
+	}
 }
 
 async function addChallenge() {
-	const { request } = await requestFriends();
-	const [testGame] = await Games.getAll();
-	const challenge = await Challenges.add({
-		friendsId: request.id,
-		gameId: testGame.id,
-		scoreToBeat: 1000,
-	});
-	return { request, testGame, challenge };
+	try {
+		const { request } = await requestFriends();
+		const [testGame] = await Games.getAll();
+		const challenge = await Challenges.add({
+			friendsId: request.id,
+			gameId: testGame.id,
+			scoreToBeat: 1000,
+		});
+		return { request, testGame, challenge };
+	} catch (error) {
+		console.error(error);
+	}
 }
 
 module.exports = {
@@ -149,6 +182,7 @@ module.exports = {
 	getUserToken,
 	getTestUser,
 	requestFriends,
+	requestFriendsAPI,
 	addScore,
 	addTestGame,
 	addChallenge,
