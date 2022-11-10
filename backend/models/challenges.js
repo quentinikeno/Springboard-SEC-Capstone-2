@@ -1,6 +1,6 @@
 /** Challenges model */
 
-const { BadRequestError400 } = require("../expressError");
+const { NotFoundError404 } = require("../expressError");
 const db = require("../db");
 
 class Challenges {
@@ -77,7 +77,12 @@ class Challenges {
 				[score, id]
 			);
 
-			return new Challenges(results.rows[0]);
+			const challenge = results.rows[0];
+
+			if (!challenge)
+				throw new NotFoundError404("This challenge does not exist.");
+
+			return new Challenges(challenge);
 		} catch (error) {
 			throw error;
 		}
@@ -103,7 +108,7 @@ class Challenges {
 			const deleted = results.rows[0];
 
 			if (!deleted)
-				throw new BadRequestError400("This challenge does not exist.");
+				throw new NotFoundError404("This challenge does not exist.");
 
 			return { deleted };
 		} catch (error) {
