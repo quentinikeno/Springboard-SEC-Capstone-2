@@ -56,4 +56,18 @@ router.patch("/:id", async (req, res, next) => {
 	}
 });
 
+/** DELETE /challenges/:id
+ * deletes a challenge for a user
+ * returns {deleted: { id, friendsId, gameId, scoreToBeat }}
+ * authorization: logged in
+ */
+router.delete("/:id", async (req, res, next) => {
+	try {
+		const deleted = await Challenges.delete(req.params.id);
+		return res.json(deleted);
+	} catch (error) {
+		return next(error);
+	}
+});
+
 module.exports = router;

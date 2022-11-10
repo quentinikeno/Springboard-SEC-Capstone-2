@@ -52,7 +52,7 @@ describe("GET /challenges", () => {
 });
 
 describe("POST /challenges", () => {
-	it("returns all challenges for a user", async () => {
+	it("adds a challenge", async () => {
 		const { acceptedResp, testGame, resp } = await postChallenge();
 
 		expect(resp.status).toBe(201);
@@ -66,7 +66,7 @@ describe("POST /challenges", () => {
 });
 
 describe("PATCH /challenges", () => {
-	it("returns all challenges for a user", async () => {
+	it("updates a challenge", async () => {
 		const {
 			u1Token,
 			acceptedResp,
@@ -83,6 +83,29 @@ describe("PATCH /challenges", () => {
 			friendsId: acceptedResp.body.id,
 			gameId: testGame.id,
 			scoreToBeat: 99,
+		});
+	});
+});
+
+describe("DELETE /challenges", () => {
+	it("deletes a challenge", async () => {
+		const {
+			u1Token,
+			acceptedResp,
+			testGame,
+			resp: challengeResp,
+		} = await postChallenge();
+		const resp = await request(app)
+			.delete(`/challenges/${challengeResp.body.id}`)
+			.set("authorization", `Bearer ${u1Token}`);
+
+		expect(resp.body).toEqual({
+			deleted: {
+				id: expect.any(Number),
+				friendsId: acceptedResp.body.id,
+				gameId: testGame.id,
+				scoreToBeat: 100,
+			},
 		});
 	});
 });
