@@ -10,8 +10,9 @@
 		"scoreToBeat": {
 			"title": "The scoreToBeat Schema",
 			"type": "integer",
-			"default": 0,
-			"examples": [1]
+			"default": 1,
+			"examples": [1],
+			"minimum": 1
 		}
 	},
 	"examples": [
