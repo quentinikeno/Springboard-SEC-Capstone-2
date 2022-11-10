@@ -76,7 +76,7 @@ describe("test delete method", () => {
 		const updated = await Challenges.delete(challenge.id);
 
 		expect(updated).toEqual({
-			deletedChallenge: {
+			deleted: {
 				id: challenge.id,
 				friendsId: request.id,
 				gameId: testGame.id,
