@@ -52,3 +52,29 @@ describe("authenticate JWT", () => {
 		expect(res.locals).toEqual({});
 	});
 });
+
+describe("ensureLoggedIn", () => {
+	it("works", () => {
+		expect.assertions(1);
+		const req = {};
+		const res = {
+			locals: { user: { id: 1, username: "test", isAdmin: false } },
+		};
+		const next = (error) => {
+			expect(error).toBeFalsy();
+		};
+		ensureLoggedIn(req, res, next);
+	});
+
+	it("unauthorized if not logged in", () => {
+		expect.assertions(1);
+		const req = {};
+		const res = {
+			locals: {},
+		};
+		const next = (error) => {
+			expect(error instanceof UnauthorizedError401).toBeTruthy();
+		};
+		ensureLoggedIn(req, res, next);
+	});
+});
