@@ -37,8 +37,10 @@ app.use((req, res, next) => {
 
 /** General error handler */
 app.use((error, req, res, next) => {
-	res.status(error.status || 500);
-	return res.json({ error, message: error.message });
+	const status = err.status || 500;
+	const message = err.message;
+
+	return res.status(status).json({ error: { message, status } });
 });
 
 module.exports = app;
