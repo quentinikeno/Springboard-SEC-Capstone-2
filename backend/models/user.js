@@ -1,7 +1,11 @@
 /** User model*/
 
 const bcrypt = require("bcrypt");
-const { NotFoundError404, BadRequestError400 } = require("../expressError");
+const {
+	NotFoundError404,
+	BadRequestError400,
+	ConflictError409,
+} = require("../expressError");
 const db = require("../db");
 const { BCRYPT_WORK_FACTOR } = require("../config");
 const { sqlForPartialUpdate } = require(".././helpers/sqlForUpdate");
@@ -34,6 +38,16 @@ class User {
 			);
 			return new User(results.rows[0]);
 		} catch (error) {
+			if (error.code === "23505") {
+				if (error.constraint === "users_username_key")
+					throw new ConflictError409(
+						`A user with ${username} already exists.  Please choose another username.`
+					);
+				if (error.constraint === "users_email_key")
+					throw new ConflictError409(
+						`${email} is already being used.  Please use another email.`
+					);
+			}
 			throw error;
 		}
 	}

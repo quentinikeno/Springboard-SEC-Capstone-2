@@ -20,7 +20,7 @@ afterAll(commonAfterAll);
 describe("Tests for POST /auth/register", () => {
 	it("should register a new user", async () => {
 		const resp = await request(app).post("/auth/register").send({
-			username: "registerMe",
+			username: "reggieStir",
 			email: "registerMe@email.com",
 			password: "register",
 		});
@@ -47,6 +47,25 @@ describe("Tests for POST /auth/register", () => {
 		});
 
 		expect(resp.statusCode).toEqual(400);
+	});
+
+	it("should have a 409 status code if the username is already taken", async () => {
+		const resp = await request(app).post("/auth/register").send({
+			username: "user1",
+			email: "test@mail.com",
+			password: "helloWorld1234",
+		});
+
+		expect(resp.statusCode).toEqual(409);
+	});
+	it("should have a 409 status code if the email is already taken", async () => {
+		const resp = await request(app).post("/auth/register").send({
+			username: "reggieStir",
+			email: "user1@test.com",
+			password: "helloWorld1234",
+		});
+
+		expect(resp.statusCode).toEqual(409);
 	});
 });
 
