@@ -13,13 +13,11 @@ const Challenges = require("../models/challenges");
 
 async function commonBeforeAll() {
 	try {
-		await Promise.all([
-			db.query("DELETE FROM users"),
-			db.query("DELETE FROM friends"),
-			db.query("DELETE FROM games"),
-			db.query("DELETE FROM scores"),
-			db.query("DELETE FROM challenges"),
-		]);
+		await db.query("DELETE FROM users");
+		await db.query("DELETE FROM friends");
+		await db.query("DELETE FROM games");
+		await db.query("DELETE FROM scores");
+		await db.query("DELETE FROM challenges");
 
 		await Promise.allSettled([
 			User.register({
