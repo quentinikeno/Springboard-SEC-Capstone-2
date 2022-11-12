@@ -5,20 +5,15 @@ const { BadRequestError400 } = require("../expressError");
  *
  * For users, dataToUpdate can include: { username, password, email }
  *
- * jsToSql is an object with mappings of the camel cased JS variables to the snake cased
- * SQL variables.
- *
  *  Returns { setCols, values }
  */
 
-function sqlForPartialUpdate(dataToUpdate, jsToSql = {}) {
+function sqlForPartialUpdate(dataToUpdate) {
 	const keys = Object.keys(dataToUpdate);
 	if (keys.length === 0) throw new BadRequestError400("No data");
 
 	// {email: 'test@username.com', username: 'coolguy47'} => ['"email"=$1', '"username"=$2']
-	const cols = keys.map(
-		(colName, idx) => `"${jsToSql[colName] || colName}"=$${idx + 1}`
-	);
+	const cols = keys.map((colName, idx) => `"${colName}"=$${idx + 1}`);
 
 	return {
 		setCols: cols.join(", "),
