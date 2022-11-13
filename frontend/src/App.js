@@ -1,14 +1,18 @@
+import useFetchFourProblems from "./hooks/useFetchFourProblems";
 import "./App.css";
 
 function App() {
+	const [problems, setProblems] = useFetchFourProblems();
+
 	return (
 		<div className="App">
 			<div className="container">
 				<div className="grid">
-					<div className="box">One</div>
-					<div className="box">Two</div>
-					<div className="box">Three</div>
-					<div className="box mb-5">Four</div>
+					{problems.map((prob) => (
+						<div className="box">
+							{prob.expression} = {prob.answer}
+						</div>
+					))}
 				</div>
 			</div>
 		</div>
