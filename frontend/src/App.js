@@ -5,10 +5,10 @@ function App() {
 		<div className="App">
 			<div className="container">
 				<div className="grid">
-					<div>One</div>
-					<div>Two</div>
-					<div>Three</div>
-					<div>Four</div>
+					<div className="box">One</div>
+					<div className="box">Two</div>
+					<div className="box">Three</div>
+					<div className="box">Four</div>
 				</div>
 			</div>
 		</div>
