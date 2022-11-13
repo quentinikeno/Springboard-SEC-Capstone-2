@@ -6,5 +6,6 @@
 .grid {
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
-	gap: 1rem;
+	grid-auto-rows: minmax(15rem, auto);
+	grid-gap: 1rem;
 }
