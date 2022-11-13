@@ -1,4 +1,5 @@
 import useFetchFourProblems from "./hooks/useFetchFourProblems";
+import ProblemBox from "./ProblemBox";
 import "./App.css";
 
 function App() {
@@ -9,9 +10,7 @@ function App() {
 			<div className="container">
 				<div className="grid">
 					{problems.map((prob) => (
-						<div className="box">
-							{prob.expression} = {prob.answer}
-						</div>
+						<ProblemBox prob={prob} />
 					))}
 				</div>
 			</div>
