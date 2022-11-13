@@ -10,27 +10,31 @@ const ProblemBox = ({ prob: { expression, answer } }) => {
 
 	return (
 		<div className="box">
-			<p>{expression}</p>
+			<p></p>
 
 			<form className="my-5">
-				<div className="field">
-					<label htmlFor="answer" className="label">
-						Label
-					</label>
-					<div className="control">
-						<input
-							className="input"
-							type="number"
-							onChange={handleChange}
-							value={formData.answer}
-							id="answer"
-							name="answer"
-							required
-						/>
+				<div className="field is-horizontal">
+					<div className="field-label is-normal">
+						<label htmlFor="answer" className="label">
+							{expression} =
+						</label>
 					</div>
-					<div className="control my-3">
-						<button className="button is-primary">Submit</button>
+					<div className="field-body">
+						<div className="control">
+							<input
+								className="input"
+								type="number"
+								onChange={handleChange}
+								value={formData.answer}
+								id="answer"
+								name="answer"
+								required
+							/>
+						</div>
 					</div>
+				</div>
+				<div className="control my-3">
+					<button className="button is-primary">Submit</button>
 				</div>
 			</form>
 		</div>
