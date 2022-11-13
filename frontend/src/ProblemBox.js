@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const ProblemBox = ({ prob: { expression, answer } }) => {
+const ProblemBox = ({ prob: { expression, operation, answer } }) => {
 	const [formData, setFormData] = useState({ answer: null });
 
 	const handleChange = (event) => {
@@ -10,7 +10,7 @@ const ProblemBox = ({ prob: { expression, answer } }) => {
 
 	return (
 		<div className="box">
-			<p></p>
+			<h2 className="is-2">{operation}</h2>
 
 			<form className="my-5">
 				<div className="field is-horizontal">
