@@ -8,10 +8,10 @@ const useFetchFourProblems = () => {
 		async function fetchProblems() {
 			const baseUrl = "https://x-math.herokuapp.com/api";
 			const probs = await Promise.all([
-				axios.get(`${baseUrl}/add`),
-				axios.get(`${baseUrl}/sub`),
-				axios.get(`${baseUrl}/mul`),
-				axios.get(`${baseUrl}/div`),
+				axios.get(`${baseUrl}/add/?max=100&min=0`),
+				axios.get(`${baseUrl}/sub?max=100&min=0`),
+				axios.get(`${baseUrl}/mul?max=10&min=0`),
+				axios.get(`${baseUrl}/div?max=10&min=0`),
 			]);
 			for (let problem of probs) {
 				setProblems((problems) => [...problems, problem.data]);
