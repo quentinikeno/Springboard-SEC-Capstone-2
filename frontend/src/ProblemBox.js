@@ -1,17 +1,13 @@
 import { useState } from "react";
+import useFormState from "./hooks/useFormState";
 
 const ProblemBox = ({ problems, level, setLevel, operation }) => {
 	const initialState = { answer: "" };
-	const [formData, setFormData] = useState(initialState);
+	const [formData, setFormData, handleChange] = useFormState(initialState);
 	const [submittedAnswer, setSubmittedAnswer] = useState(null);
 	const { expression, answer } = problems[level[operation] - 1] || {
 		expression: null,
 		answer: null,
-	};
-
-	const handleChange = (event) => {
-		const { name, value } = event.target;
-		setFormData((formData) => ({ ...formData, [name]: value }));
 	};
 
 	const handleSubmit = (event) => {
