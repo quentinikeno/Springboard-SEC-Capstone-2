@@ -30,43 +30,49 @@ const ProblemBox = ({ problems, level, setLevel, operation }) => {
 	};
 
 	if (expression === null) {
-		return <div className="box">You've completed all of the problems.</div>;
+		return (
+			<div className="column box">
+				You've completed all of the problems.
+			</div>
+		);
 	}
 
 	return (
-		<div className="box">
-			<h2 className="is-2">{operation}</h2>
+		<div className="column">
+			<div className=" box mb-4">
+				<h2 className="is-2">{operation}</h2>
 
-			<form onSubmit={handleSubmit} className="my-5">
-				<div className="field is-horizontal">
-					<div className="field-label is-normal">
-						<label htmlFor="answer" className="label">
-							{expression} =
-						</label>
-					</div>
-					<div className="field-body">
-						<div className="control">
-							<input
-								className="input"
-								type="number"
-								onChange={handleChange}
-								value={formData.answer}
-								id="answer"
-								name="answer"
-								required
-							/>
+				<form onSubmit={handleSubmit} className="my-5">
+					<div className="field is-horizontal">
+						<div className="field-label is-normal">
+							<label htmlFor="answer" className="label">
+								{expression} =
+							</label>
+						</div>
+						<div className="field-body">
+							<div className="control">
+								<input
+									className="input"
+									type="number"
+									onChange={handleChange}
+									value={formData.answer}
+									id="answer"
+									name="answer"
+									required
+								/>
+							</div>
 						</div>
 					</div>
-				</div>
-				{submittedAnswer && (
-					<p className="help is-danger">
-						{submittedAnswer} is incorrect. Please try again.
-					</p>
-				)}
-				<div className="control my-3">
-					<button className="button is-primary">Submit</button>
-				</div>
-			</form>
+					{submittedAnswer && (
+						<p className="help is-danger">
+							{submittedAnswer} is incorrect. Please try again.
+						</p>
+					)}
+					<div className="control my-3">
+						<button className="button is-primary">Submit</button>
+					</div>
+				</form>
+			</div>
 		</div>
 	);
 };

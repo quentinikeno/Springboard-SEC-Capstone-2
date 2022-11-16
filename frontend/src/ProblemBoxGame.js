@@ -12,37 +12,41 @@ const ProblemBoxGame = () => {
 
 	if (addProblems.length === 0) return <Loading />;
 	return (
-		<div className="grid">
-			<ProblemBox
-				level={level}
-				setLevel={setLevel}
-				operation={"add"}
-				problems={addProblems}
-			/>
-			{level["add"] > 5 && (
+		<div className="ProblemBoxGame">
+			<div className="columns">
 				<ProblemBox
 					level={level}
 					setLevel={setLevel}
-					operation={"sub"}
-					problems={subProblems}
+					operation={"add"}
+					problems={addProblems}
 				/>
-			)}
-			{level["sub"] > 5 && (
-				<ProblemBox
-					level={level}
-					setLevel={setLevel}
-					operation={"mul"}
-					problems={mulProblems}
-				/>
-			)}
-			{level["mul"] > 5 && (
-				<ProblemBox
-					level={level}
-					setLevel={setLevel}
-					operation={"div"}
-					problems={divProblems}
-				/>
-			)}
+				{level["add"] > 5 && (
+					<ProblemBox
+						level={level}
+						setLevel={setLevel}
+						operation={"sub"}
+						problems={subProblems}
+					/>
+				)}
+			</div>
+			<div className="columns">
+				{level["sub"] > 5 && (
+					<ProblemBox
+						level={level}
+						setLevel={setLevel}
+						operation={"mul"}
+						problems={mulProblems}
+					/>
+				)}
+				{level["mul"] > 5 && (
+					<ProblemBox
+						level={level}
+						setLevel={setLevel}
+						operation={"div"}
+						problems={divProblems}
+					/>
+				)}
+			</div>
 		</div>
 	);
 };
