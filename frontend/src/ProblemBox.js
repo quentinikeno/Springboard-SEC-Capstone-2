@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const ProblemBox = ({ problems, level, setLevel, operation, previousBox }) => {
+const ProblemBox = ({ problems, level, setLevel, operation }) => {
 	const initialState = { answer: "" };
 	const [formData, setFormData] = useState(initialState);
 	const [submittedAnswer, setSubmittedAnswer] = useState(null);
