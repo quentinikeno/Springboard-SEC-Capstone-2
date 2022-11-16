@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 
-const ProblemBox = ({ problems, level, correct, setCorrect }) => {
-	const [formData, setFormData] = useState({ answer: "" });
+const ProblemBox = ({ problems, level, setLevel }) => {
+	const initialState = { answer: "" };
+	const [formData, setFormData] = useState(initialState);
 	const [submittedAnswer, setSubmittedAnswer] = useState(null);
-	// const [fact, setFact] = useState(null);
 	const { expression, answer, operation } = problems[level - 1] || {
 		expression: null,
 		answer: null,
@@ -19,30 +18,14 @@ const ProblemBox = ({ problems, level, correct, setCorrect }) => {
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		if (+formData.answer === answer) {
-			setCorrect(() => true);
 			setSubmittedAnswer(() => null);
+			setLevel((level) => level + 1);
 		} else {
 			setSubmittedAnswer(() => +formData.answer);
 		}
+		setFormData(() => initialState);
 	};
 
-	// useEffect(
-	// 	function fetchNumberFact() {
-	// 		async function fetchFact() {
-	// 			let { data } = await axios.get(
-	// 				`http://numbersapi.com/${answer}/trivia/`
-	// 			);
-	// 			if (
-	// 				data ===
-	// 				`${answer} is a number for which we're missing a fact (submit one to numbersapi at google mail!).`
-	// 			)
-	// 				data = "Correct!";
-	// 			setFact(() => data);
-	// 		}
-	// 		fetchFact();
-	// 	},
-	// 	[answer]
-	// );
 	if (expression === null) {
 		return <div className="box">You've completed all of the problems.</div>;
 	}
@@ -72,7 +55,7 @@ const ProblemBox = ({ problems, level, correct, setCorrect }) => {
 						</div>
 					</div>
 				</div>
-				{submittedAnswer && !correct && (
+				{submittedAnswer && (
 					<p className="help is-danger">
 						{submittedAnswer} is incorrect. Please try again.
 					</p>
