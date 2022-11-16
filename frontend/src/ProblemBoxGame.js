@@ -4,38 +4,45 @@ import Loading from "./common/Loading";
 import useFetchProblems from "./hooks/useFetchProblems";
 
 const ProblemBoxGame = () => {
-	const [addLevel, setAddLevel] = useState(1);
+	const [level, setLevel] = useState({ add: 1, sub: 1, mul: 1, div: 1 });
 	const [addProblems, setAddProblems] = useFetchProblems("add");
-	const [subLevel, setSubLevel] = useState(1);
 	const [subProblems, setSubProblems] = useFetchProblems("sub");
-	const [mulLevel, setMulLevel] = useState(1);
 	const [mulProblems, setMulProblems] = useFetchProblems("mul");
-	const [divLevel, setDivLevel] = useState(1);
 	const [divProblems, setDivProblems] = useFetchProblems("div");
 
 	if (addProblems.length === 0) return <Loading />;
 	return (
 		<div className="grid">
 			<ProblemBox
-				level={addLevel}
-				setLevel={setAddLevel}
+				level={level}
+				setLevel={setLevel}
+				operation={"add"}
 				problems={addProblems}
 			/>
-			<ProblemBox
-				level={subLevel}
-				setLevel={setSubLevel}
-				problems={subProblems}
-			/>
-			<ProblemBox
-				level={mulLevel}
-				setLevel={setMulLevel}
-				problems={mulProblems}
-			/>
-			<ProblemBox
-				level={divLevel}
-				setLevel={setDivLevel}
-				problems={divProblems}
-			/>
+			{level["add"] > 5 && (
+				<ProblemBox
+					level={level}
+					setLevel={setLevel}
+					operation={"sub"}
+					problems={subProblems}
+				/>
+			)}
+			{level["sub"] > 5 && (
+				<ProblemBox
+					level={level}
+					setLevel={setLevel}
+					operation={"mul"}
+					problems={mulProblems}
+				/>
+			)}
+			{level["mul"] > 5 && (
+				<ProblemBox
+					level={level}
+					setLevel={setLevel}
+					operation={"div"}
+					problems={divProblems}
+				/>
+			)}
 		</div>
 	);
 };

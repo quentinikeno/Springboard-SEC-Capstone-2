@@ -1,13 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
-const ProblemBox = ({ problems, level, setLevel }) => {
+const ProblemBox = ({ problems, level, setLevel, operation, previousBox }) => {
 	const initialState = { answer: "" };
 	const [formData, setFormData] = useState(initialState);
 	const [submittedAnswer, setSubmittedAnswer] = useState(null);
-	const { expression, answer, operation } = problems[level - 1] || {
+	const { expression, answer } = problems[level[operation] - 1] || {
 		expression: null,
 		answer: null,
-		operation: null,
 	};
 
 	const handleChange = (event) => {
@@ -19,7 +18,11 @@ const ProblemBox = ({ problems, level, setLevel }) => {
 		event.preventDefault();
 		if (+formData.answer === answer) {
 			setSubmittedAnswer(() => null);
-			setLevel((level) => level + 1);
+			setLevel((level) => {
+				const updatedLevel = { ...level };
+				updatedLevel[operation] = updatedLevel[operation] + 1;
+				return updatedLevel;
+			});
 		} else {
 			setSubmittedAnswer(() => +formData.answer);
 		}
