@@ -39,19 +39,27 @@ const ProblemBoxGame = () => {
 		return min + ":" + `${sec}`.padStart(2, "0");
 	};
 
+	const calcScore = (levels) =>
+		Object.values(levels).reduce((sum, nextLevel) => sum + nextLevel, 0) -
+		4;
+
 	if (isLoaded) return <Loading />;
 	return (
 		<div className="ProblemBoxGame">
 			<h2>{convertToMinutesSeconds(seconds)}</h2>
 
-			<ProblemBoxes
-				level={level}
-				setLevel={setLevel}
-				addProblems={addProblems}
-				subProblems={subProblems}
-				mulProblems={mulProblems}
-				divProblems={divProblems}
-			/>
+			{seconds > 0 ? (
+				<ProblemBoxes
+					level={level}
+					setLevel={setLevel}
+					addProblems={addProblems}
+					subProblems={subProblems}
+					mulProblems={mulProblems}
+					divProblems={divProblems}
+				/>
+			) : (
+				<div>Time's up! Your score is {calcScore(level)}.</div>
+			)}
 		</div>
 	);
 };
