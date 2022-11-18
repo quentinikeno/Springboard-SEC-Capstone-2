@@ -1,11 +1,21 @@
 import { useState } from "react";
 import useFormState from "./hooks/useFormState";
+import useToggleState from "./hooks/useToggleState";
 
 const ProblemBox = ({ problems, level, setLevel, operation }) => {
 	const initialState = { answer: "" };
 	const [formData, setFormData, handleChange] = useFormState(initialState);
 	const [submittedAnswer, setSubmittedAnswer] = useState(null);
-	const { expression, answer } = problems[level[operation] - 1] || {
+	const [isHorizontal, toggleIsHorizontal] = useToggleState(true);
+	const {
+		first,
+		second,
+		expression,
+		answer,
+		operation: operationSymbol,
+	} = problems[level[operation] - 1] || {
+		first: null,
+		second: null,
 		expression: null,
 		answer: null,
 	};
@@ -38,14 +48,52 @@ const ProblemBox = ({ problems, level, setLevel, operation }) => {
 			<div className=" box mb-4">
 				<h2 className="is-2">{operation}</h2>
 
-				<form onSubmit={handleSubmit} className="my-5">
-					<div className="field is-horizontal">
-						<div className="field-label is-normal">
-							<label htmlFor="answer" className="label">
-								{expression} =
+				<div class="field">
+					<div class="label">
+						<label className="label">Display:</label>
+					</div>
+					<div class="field">
+						<div className="control">
+							<label className="checkbox">
+								<input
+									className="mr-3"
+									type="checkbox"
+									onClick={() => {
+										toggleIsHorizontal();
+									}}
+								/>
+								Display problems horizontally.
 							</label>
 						</div>
-						<div className="field-body">
+					</div>
+				</div>
+
+				<form onSubmit={handleSubmit} className="my-5">
+					<div
+						className={`field ${
+							isHorizontal ? "is-horizontal" : ""
+						}`}
+					>
+						<div className="field-label is-normal">
+							<label htmlFor="answer" className="label">
+								{isHorizontal ? (
+									<>{expression} = </>
+								) : (
+									<>
+										<div>{first}</div>
+										<div>
+											{operationSymbol} {second}
+										</div>
+										<hr />
+									</>
+								)}
+							</label>
+						</div>
+						<div
+							className={`field-body ${
+								isHorizontal ? "" : "is-justify-content-end"
+							}`}
+						>
 							<div className="control">
 								<input
 									className="input"
