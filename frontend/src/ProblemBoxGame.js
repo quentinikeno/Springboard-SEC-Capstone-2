@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import ProblemBox from "./ProblemBox";
+import ProblemBoxes from "./ProblemBoxes";
 import Loading from "./common/Loading";
 import useFetchProblems from "./hooks/useFetchProblems";
 import useToggleState from "./hooks/useToggleState";
@@ -43,40 +43,15 @@ const ProblemBoxGame = () => {
 	return (
 		<div className="ProblemBoxGame">
 			<h2>{convertToMinutesSeconds(seconds)}</h2>
-			<div className="columns">
-				<ProblemBox
-					level={level}
-					setLevel={setLevel}
-					operation={"add"}
-					problems={addProblems}
-				/>
-				{level["add"] > 5 && (
-					<ProblemBox
-						level={level}
-						setLevel={setLevel}
-						operation={"sub"}
-						problems={subProblems}
-					/>
-				)}
-			</div>
-			<div className="columns">
-				{level["sub"] > 5 && (
-					<ProblemBox
-						level={level}
-						setLevel={setLevel}
-						operation={"mul"}
-						problems={mulProblems}
-					/>
-				)}
-				{level["mul"] > 5 && (
-					<ProblemBox
-						level={level}
-						setLevel={setLevel}
-						operation={"div"}
-						problems={divProblems}
-					/>
-				)}
-			</div>
+
+			<ProblemBoxes
+				level={level}
+				setLevel={setLevel}
+				addProblems={addProblems}
+				subProblems={subProblems}
+				mulProblems={mulProblems}
+				divProblems={divProblems}
+			/>
 		</div>
 	);
 };
