@@ -1,13 +1,10 @@
-import ProblemBoxGame from "./ProblemBoxGame";
-import { v4 as uuid } from "uuid";
+import AppRoutes from "./routes/AppRoutes";
 import "./App.css";
 
 function App() {
 	return (
-		<div className="App">
-			<div className="container">
-				<ProblemBoxGame />
-			</div>
+		<div className="App container">
+			<AppRoutes />
 		</div>
 	);
 }
