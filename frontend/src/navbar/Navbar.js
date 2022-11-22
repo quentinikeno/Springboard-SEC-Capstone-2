@@ -1,10 +1,10 @@
-import { selectCurrentToken } from "../features/auth/authSlice";
+import { selectCurrentUser } from "../features/auth/authSlice";
 import { NavLink, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logOut } from "../features/auth/authSlice";
 
 const Navbar = () => {
-	const currentUser = useSelector(selectCurrentToken);
+	const currentUser = useSelector(selectCurrentUser);
 	const dispatch = useDispatch();
 
 	const handleLogOut = () => {
@@ -24,7 +24,7 @@ const Navbar = () => {
 	const profileAndSignout = (
 		<>
 			<NavLink className="navbar-item" to="/profile">
-				Profile
+				{currentUser}'s Profile
 			</NavLink>
 			<Link className="navbar-item" to="/" onClick={handleLogOut}>
 				Sign Out
