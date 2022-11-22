@@ -28,6 +28,7 @@ describe("Tests for POST /auth/register", () => {
 		expect(resp.statusCode).toEqual(201);
 		expect(resp.body).toEqual({
 			token: expect.any(String),
+			username: "reggieStir",
 		});
 	});
 
@@ -79,6 +80,7 @@ describe("Tests for POST /auth/login", () => {
 		});
 		expect(resp.body).toEqual({
 			token: expect.any(String),
+			username: "user1",
 		});
 	});
 
