@@ -1,7 +1,7 @@
 --createdb math_games if you haven't already
 --then run psql < data.sql
 
-\c math_games_test
+\c math_games
 
 DROP TABLE IF EXISTS "challenges";
 DROP TABLE IF EXISTS "friends";
