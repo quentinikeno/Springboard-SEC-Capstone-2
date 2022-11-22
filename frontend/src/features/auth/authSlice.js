@@ -19,25 +19,48 @@ export const registerUser = createAsyncThunk(
 	}
 );
 
+export const loginUser = createAsyncThunk(
+	"auth/loginUser",
+	async ({ username, password }, { rejectWithValue }) => {
+		try {
+			const resp = await axios.post(`${apiURL}/auth/login`, {
+				username,
+				password,
+			});
+			return resp.data; // {token}
+		} catch (error) {
+			return rejectWithValue(error.message);
+		}
+	}
+);
+
+const reducers = {
+	setCredentials: (state, action) => {
+		const { token } = action.payload;
+		state.token = token;
+	},
+	logOut: (state, action) => {
+		state.token = null;
+	},
+};
+
 const authSlice = createSlice({
 	name: "auth",
 	initialState: { token: null, error: null },
-	reducers: {
-		setCredentials: (state, action) => {
-			const { token } = action.payload;
-			state.token = token;
-		},
-		logOut: (state, action) => {
-			state.token = null;
-		},
-	},
+	reducers,
 	extraReducers: (builder) => {
 		builder
 			.addCase(registerUser.fulfilled, (state, action) => {
-				this.reducers.setCredentials(state, action);
+				reducers.setCredentials(state, action);
 			})
 			.addCase(registerUser.rejected, (state, action) => {
-				this.state.error = action.payload;
+				state.error = action.payload;
+			})
+			.addCase(loginUser.fulfilled, (state, action) => {
+				reducers.setCredentials(state, action);
+			})
+			.addCase(loginUser.rejected, (state, action) => {
+				state.error = action.payload;
 			});
 	},
 });
