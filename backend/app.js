@@ -4,6 +4,7 @@ const express = require("express");
 const app = express();
 const morgan = require("morgan");
 const helmet = require("helmet");
+const cors = require("cors");
 
 const { NotFoundError404 } = require("./expressError");
 const { authenticateJWT } = require("./middleware/auth");
@@ -20,6 +21,7 @@ app.use(express.json());
 app.use(morgan("dev"));
 app.use(helmet());
 app.use(authenticateJWT);
+app.use(cors());
 
 //** Routes */
 app.use("/user", userRoutes);
