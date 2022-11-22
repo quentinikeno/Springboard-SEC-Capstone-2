@@ -24,7 +24,7 @@ const RegisterUserForm = () => {
 					<input
 						type="text"
 						className="input"
-						onchange={handleChange}
+						onChange={handleChange}
 						id="username"
 						name="username"
 						value={formData.username}
@@ -40,7 +40,7 @@ const RegisterUserForm = () => {
 					<input
 						type="text"
 						className="input"
-						onchange={handleChange}
+						onChange={handleChange}
 						id="password"
 						name="password"
 						value={formData.username}
@@ -56,7 +56,7 @@ const RegisterUserForm = () => {
 					<input
 						type="email"
 						className="input"
-						onchange={handleChange}
+						onChange={handleChange}
 						id="email"
 						name="email"
 						value={formData.username}
