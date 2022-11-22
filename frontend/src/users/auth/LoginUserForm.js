@@ -1,17 +1,17 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import useFormState from "../hooks/useFormState";
-import { registerUser } from "../features/auth/authSlice";
+import useFormState from "../../hooks/useFormState";
+import { loginUser } from "../../features/auth/authSlice";
 
-const RegisterUserForm = () => {
-	const initialState = { username: "", password: "", email: "" };
+const LoginUserForm = () => {
+	const initialState = { username: "", password: "" };
 	const [formData, setFormData, handleChange] = useFormState(initialState);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
-		dispatch(registerUser(formData));
+		dispatch(loginUser(formData));
 		navigate("/");
 	};
 	return (
@@ -48,26 +48,11 @@ const RegisterUserForm = () => {
 					/>
 				</div>
 			</div>
-			<div className="field">
-				<label htmlFor="email" className="label">
-					Email
-				</label>
-				<div className="control">
-					<input
-						type="email"
-						className="input"
-						onChange={handleChange}
-						id="email"
-						name="email"
-						value={formData.email}
-						required
-					/>
-				</div>
-			</div>
+
 			<div className="field is-grouped">
 				<div className="control">
 					<button type="submit" className="button is-link">
-						Register
+						Login
 					</button>
 				</div>
 				<div className="control">
@@ -80,4 +65,4 @@ const RegisterUserForm = () => {
 	);
 };
 
-export default RegisterUserForm;
+export default LoginUserForm;

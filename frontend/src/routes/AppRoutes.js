@@ -1,6 +1,6 @@
 import ProblemBoxGame from "../ProblemBoxGame";
-import LoginUserForm from "../users/LoginUserForm";
-import RegisterUserForm from "../users/RegisterUserForm";
+import LoginUserForm from "../users/auth/LoginUserForm";
+import RegisterUserForm from "../users/auth/RegisterUserForm";
 import { Routes, Route, Navigate } from "react-router-dom";
 
 const AppRoutes = () => {
