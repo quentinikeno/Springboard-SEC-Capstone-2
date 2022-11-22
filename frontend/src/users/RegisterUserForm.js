@@ -38,7 +38,7 @@ const RegisterUserForm = () => {
 				</label>
 				<div className="control">
 					<input
-						type="text"
+						type="password"
 						className="input"
 						onChange={handleChange}
 						id="password"
