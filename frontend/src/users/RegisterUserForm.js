@@ -68,7 +68,7 @@ const RegisterUserForm = () => {
 			<div className="field is-grouped">
 				<div className="control">
 					<button type="submit" className="button is-link">
-						Save
+						Register
 					</button>
 				</div>
 				<div className="control">
