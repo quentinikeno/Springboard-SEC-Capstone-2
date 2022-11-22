@@ -5,12 +5,13 @@ import { registerUser } from "../features/auth/authSlice";
 
 const RegisterUserForm = () => {
 	const initialState = { username: "", password: "", email: "" };
-	const [formData, handleChange] = useFormState(initialState);
+	const [formData, setFormData, handleChange] = useFormState(initialState);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
+		console.log(formData);
 		dispatch(registerUser(formData));
 		navigate("/");
 	};
@@ -43,7 +44,7 @@ const RegisterUserForm = () => {
 						onChange={handleChange}
 						id="password"
 						name="password"
-						value={formData.username}
+						value={formData.password}
 						required
 					/>
 				</div>
@@ -59,7 +60,7 @@ const RegisterUserForm = () => {
 						onChange={handleChange}
 						id="email"
 						name="email"
-						value={formData.username}
+						value={formData.email}
 						required
 					/>
 				</div>
