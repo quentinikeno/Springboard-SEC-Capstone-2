@@ -36,28 +36,33 @@ export const loginUser = createAsyncThunk(
 
 const reducers = {
 	setCredentials: (state, action) => {
-		const { token } = action.payload;
+		const { token, username } = action.payload;
 		state.token = token;
+		state.username = username;
 	},
 	logOut: (state, action) => {
 		state.token = null;
+		state.username = null;
+		state.error = null;
 	},
 };
 
 const authSlice = createSlice({
 	name: "auth",
-	initialState: { token: null, error: null },
+	initialState: { token: null, username: null, error: null },
 	reducers,
 	extraReducers: (builder) => {
 		builder
 			.addCase(registerUser.fulfilled, (state, action) => {
 				reducers.setCredentials(state, action);
+				state.error = null;
 			})
 			.addCase(registerUser.rejected, (state, action) => {
 				state.error = action.payload;
 			})
 			.addCase(loginUser.fulfilled, (state, action) => {
 				reducers.setCredentials(state, action);
+				state.error = null;
 			})
 			.addCase(loginUser.rejected, (state, action) => {
 				state.error = action.payload;
