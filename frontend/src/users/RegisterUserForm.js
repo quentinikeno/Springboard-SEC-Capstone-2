@@ -11,7 +11,6 @@ const RegisterUserForm = () => {
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
-		console.log(formData);
 		dispatch(registerUser(formData));
 		navigate("/");
 	};
