@@ -1,14 +1,13 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const apiAuthURL =
-	`${process.env.REACT_APP_API_URL}/auth` || "http://localhost:3000/auth";
+const apiURL = process.env.REACT_APP_API_URL || "http://localhost:5000";
 
 export const registerUser = createAsyncThunk(
 	"auth/registerUser",
 	async ({ username, email, password }, { rejectWithValue }) => {
 		try {
-			const resp = await axios.post(`${apiAuthURL}`, {
+			const resp = await axios.post(`${apiURL}/auth/register`, {
 				username,
 				email,
 				password,
