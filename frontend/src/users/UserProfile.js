@@ -1,12 +1,14 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getUser } from "../redux-slices/user/userSlice";
-import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import UserProfileMenu from "./UserProfileMenu";
 
 const UserProfile = () => {
 	const dispatch = useDispatch();
 	const { username, token } = useSelector((state) => state.auth);
 	const { id, joinAt } = useSelector((state) => state.user);
+	const location = useLocation();
 
 	useEffect(() => {
 		if (!id) {
@@ -17,16 +19,7 @@ const UserProfile = () => {
 	return (
 		<div className="columns is-desktop">
 			<div className="column">
-				<aside className="menu">
-					<p className="menu-label">Your Profile</p>
-					<ul className="menu-list">
-						<li>
-							<Link className="is-active" to="/profile">
-								{username}
-							</Link>
-						</li>
-					</ul>
-				</aside>
+				<UserProfileMenu location={location} username={username} />
 			</div>
 			<div className="column is-three-quarters">
 				<h1>{username}</h1>
