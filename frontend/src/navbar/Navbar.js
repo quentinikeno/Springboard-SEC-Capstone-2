@@ -2,6 +2,7 @@ import { selectCurrentUser } from "../redux-slices/auth/authSlice";
 import { NavLink, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logOut } from "../redux-slices/auth/authSlice";
+import { removeUserOnLogOut } from "../redux-slices/user/userSlice";
 
 const Navbar = () => {
 	const currentUser = useSelector(selectCurrentUser);
@@ -9,6 +10,7 @@ const Navbar = () => {
 
 	const handleLogOut = () => {
 		dispatch(logOut());
+		dispatch(removeUserOnLogOut());
 	};
 
 	const loginAndSignup = (
