@@ -17,12 +17,17 @@ export const getUser = createAsyncThunk(
 	}
 );
 
+const formatDate = (dateString) => {
+	const options = { year: "numeric", month: "long", day: "numeric" };
+	return new Date(dateString).toLocaleDateString(undefined, options);
+};
+
 const reducers = {
 	setUser: (state, action) => {
 		const { id, joinAt, lastLoginAt } = action.payload;
 		state.id = id;
-		state.joinAt = joinAt;
-		state.lastLoginAt = lastLoginAt;
+		state.joinAt = formatDate(joinAt);
+		state.lastLoginAt = formatDate(lastLoginAt);
 	},
 	removeUserOnLogOut: (state, action) => {
 		state.id = null;
