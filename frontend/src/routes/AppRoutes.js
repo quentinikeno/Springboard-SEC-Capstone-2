@@ -1,6 +1,6 @@
 import ProblemBoxGame from "../ProblemBoxGame";
 import AuthRoutes from "./AuthRoutes";
-import UserProfile from "../users/UserProfile";
+import ProfileRoutes from "./ProfileRoutes";
 import { Routes, Route, Navigate } from "react-router-dom";
 
 const AppRoutes = () => {
@@ -8,7 +8,7 @@ const AppRoutes = () => {
 		<Routes>
 			<Route path={"/"} element={<ProblemBoxGame />} />
 			<Route path={"/auth/*"} element={<AuthRoutes />} />
-			<Route path={"/profile"} element={<UserProfile />} />
+			<Route path={"/profile/*"} element={<ProfileRoutes />} />
 			<Route path="*" element={<Navigate to="/" />} />
 		</Routes>
 	);
