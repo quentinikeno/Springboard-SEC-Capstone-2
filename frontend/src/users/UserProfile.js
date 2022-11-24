@@ -1,22 +1,26 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getUser } from "../redux-slices/user/userSlice";
+import { getUser, setLoading } from "../redux-slices/user/userSlice";
 import { useLocation } from "react-router-dom";
 import UserProfileMenu from "./UserProfileMenu";
+import Loading from "../common/Loading";
 
 const UserProfile = () => {
 	const dispatch = useDispatch();
 	const { username, token } = useSelector((state) => state.auth);
-	const { id, joinAt } = useSelector((state) => state.user);
+	const { id, joinAt, loading } = useSelector((state) => state.user);
 	const location = useLocation();
 
 	useEffect(() => {
-		if (!id) {
+		if (!id && token) {
+			dispatch(setLoading(true));
 			dispatch(getUser({ username, token }));
 		}
-	}, [id]);
+	}, [id, token]);
 
-	return (
+	return loading ? (
+		<Loading />
+	) : (
 		<div className="columns is-desktop">
 			<div className="column">
 				<UserProfileMenu location={location} username={username} />
