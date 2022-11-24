@@ -34,16 +34,26 @@ const reducers = {
 		state.joinAt = null;
 		state.lastLoginAt = null;
 	},
+	setLoading: (state, action) => {
+		state.loading = action.payload;
+	},
 };
 
 const userSlice = createSlice({
 	name: "user",
-	initialState: { id: null, joinAt: null, lastLoginAt: null, error: null },
+	initialState: {
+		id: null,
+		joinAt: null,
+		lastLoginAt: null,
+		loading: false,
+		error: null,
+	},
 	reducers,
 	extraReducers: (builder) => {
 		builder
 			.addCase(getUser.fulfilled, (state, action) => {
 				reducers.setUser(state, action);
+				state.loading = false;
 				state.error = null;
 			})
 			.addCase(getUser.rejected, (state, action) => {
@@ -52,7 +62,7 @@ const userSlice = createSlice({
 	},
 });
 
-export const { setUser, removeUserOnLogOut } = userSlice.actions;
+export const { setUser, removeUserOnLogOut, setLoading } = userSlice.actions;
 
 export default userSlice.reducer;
 
