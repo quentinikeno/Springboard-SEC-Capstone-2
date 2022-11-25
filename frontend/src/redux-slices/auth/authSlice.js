@@ -34,22 +34,20 @@ export const loginUser = createAsyncThunk(
 	}
 );
 
+const initialState = { token: null, username: null, error: null };
+
 const reducers = {
 	setCredentials: (state, action) => {
 		const { token, username } = action.payload;
 		state.token = token;
 		state.username = username;
 	},
-	logOut: (state, action) => {
-		state.token = null;
-		state.username = null;
-		state.error = null;
-	},
+	logOut: (state, action) => initialState,
 };
 
 const authSlice = createSlice({
 	name: "auth",
-	initialState: { token: null, username: null, error: null },
+	initialState,
 	reducers,
 	extraReducers: (builder) => {
 		builder
