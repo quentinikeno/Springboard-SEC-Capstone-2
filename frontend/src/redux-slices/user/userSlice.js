@@ -22,6 +22,14 @@ const formatDate = (dateString) => {
 	return new Date(dateString).toLocaleDateString(undefined, options);
 };
 
+const initialState = {
+	id: null,
+	joinAt: null,
+	lastLoginAt: null,
+	loading: false,
+	error: null,
+};
+
 const reducers = {
 	setUser: (state, action) => {
 		const { id, joinAt, lastLoginAt } = action.payload;
@@ -29,11 +37,7 @@ const reducers = {
 		state.joinAt = formatDate(joinAt);
 		state.lastLoginAt = formatDate(lastLoginAt);
 	},
-	removeUserOnLogOut: (state, action) => {
-		state.id = null;
-		state.joinAt = null;
-		state.lastLoginAt = null;
-	},
+	removeUserOnLogOut: (state, action) => initialState,
 	setLoading: (state, action) => {
 		state.loading = action.payload;
 	},
@@ -41,13 +45,7 @@ const reducers = {
 
 const userSlice = createSlice({
 	name: "user",
-	initialState: {
-		id: null,
-		joinAt: null,
-		lastLoginAt: null,
-		loading: false,
-		error: null,
-	},
+	initialState,
 	reducers,
 	extraReducers: (builder) => {
 		builder
