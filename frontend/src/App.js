@@ -21,7 +21,9 @@ function App() {
 	useEffect(() => {
 		const token = Cookies.get("token");
 		const username = Cookies.get("username");
-		dispatch(setCredentials({ token, username }));
+		if (token && username) {
+			dispatch(setCredentials({ token, username }));
+		}
 	}, []);
 
 	return (
