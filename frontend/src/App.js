@@ -3,7 +3,7 @@ import Navbar from "./navbar/Navbar";
 import Loading from "./common/Loading";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getUser } from "./redux-slices/user/userSlice";
+import { getUser, setCredentials } from "./redux-slices/user/userSlice";
 import Cookies from "js-cookie";
 import "./App.css";
 
@@ -30,6 +30,7 @@ function App() {
 		const username = Cookies.get("username");
 		if (token && username) {
 			dispatch(getUser({ token, username }));
+			dispatch(setCredentials({ token }));
 		}
 	}, []);
 
