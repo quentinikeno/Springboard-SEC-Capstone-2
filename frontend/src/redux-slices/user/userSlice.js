@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { formatDate } from "../../helpers/formatDate";
 
 const apiURL = process.env.REACT_APP_API_URL || "http://localhost:5000";
 
@@ -61,11 +62,6 @@ export const updateUser = createAsyncThunk(
 		}
 	}
 );
-
-const formatDate = (dateString) => {
-	const options = { year: "numeric", month: "long", day: "numeric" };
-	return new Date(dateString).toLocaleDateString(undefined, options);
-};
 
 const initialState = {
 	id: null,
