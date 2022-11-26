@@ -12,7 +12,7 @@ const RegisterUserForm = () => {
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		dispatch(registerUser(formData));
-		navigate("/");
+		navigate("/profile");
 	};
 	return (
 		<form onSubmit={handleSubmit}>
