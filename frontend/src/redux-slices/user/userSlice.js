@@ -55,7 +55,7 @@ export const updateUser = createAsyncThunk(
 			const resp = await axios.patch(`${apiURL}/user/${username}`, data, {
 				headers: { Authorization: `Bearer ${token}` },
 			});
-			return resp.data;
+			return { user: resp.data };
 		} catch (error) {
 			return rejectWithValue(error.message);
 		}
@@ -107,7 +107,11 @@ const userSlice = createSlice({
 			.addCase(registerUser.fulfilled, (state, action) => {
 				reducers.setCredentials(state, action);
 				reducers.setUser(state, action);
+				state.loading = false;
 				state.error = null;
+			})
+			.addCase(registerUser.pending, (state, action) => {
+				state.loading = true;
 			})
 			.addCase(registerUser.rejected, (state, action) => {
 				state.error = action.payload;
@@ -115,7 +119,11 @@ const userSlice = createSlice({
 			.addCase(loginUser.fulfilled, (state, action) => {
 				reducers.setCredentials(state, action);
 				reducers.setUser(state, action);
+				state.loading = false;
 				state.error = null;
+			})
+			.addCase(loginUser.pending, (state, action) => {
+				state.loading = true;
 			})
 			.addCase(loginUser.rejected, (state, action) => {
 				state.error = action.payload;
@@ -135,6 +143,9 @@ const userSlice = createSlice({
 				reducers.updateUser(state, action);
 				state.loading = false;
 				state.error = null;
+			})
+			.addCase(updateUser.pending, (state, action) => {
+				state.loading = true;
 			})
 			.addCase(updateUser.rejected, (state, action) => {
 				state.error = action.payload;
