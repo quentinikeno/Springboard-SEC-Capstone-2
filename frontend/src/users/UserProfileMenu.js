@@ -20,6 +20,21 @@ const UserProfileMenu = () => {
 					</Link>
 				</li>
 			</ul>
+			<p className="menu-label">Edit Your Info</p>
+			<ul className="menu-list">
+				<li>
+					<Link
+						className={`${
+							location.pathname === "/profile/edit/username"
+								? "is-active"
+								: ""
+						}`}
+						to="/profile/edit/username"
+					>
+						Username
+					</Link>
+				</li>
+			</ul>
 		</aside>
 	);
 };
