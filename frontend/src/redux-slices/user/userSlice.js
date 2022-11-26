@@ -141,7 +141,6 @@ const userSlice = createSlice({
 			})
 			.addCase(updateUser.fulfilled, (state, action) => {
 				reducers.setUser(state, action);
-				console.log(action.payload);
 				if (action.payload.user.token) {
 					reducers.setCredentials(state, {
 						...action,
