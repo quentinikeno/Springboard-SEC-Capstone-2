@@ -7,7 +7,7 @@ export const registerUser = createAsyncThunk(
 	"user/registerUser",
 	async ({ username, email, password }, { rejectWithValue }) => {
 		try {
-			const resp = await axios.post(`${apiURL}/user/register`, {
+			const resp = await axios.post(`${apiURL}/auth/register`, {
 				username,
 				email,
 				password,
@@ -23,7 +23,7 @@ export const loginUser = createAsyncThunk(
 	"user/loginUser",
 	async ({ username, password }, { rejectWithValue }) => {
 		try {
-			const resp = await axios.post(`${apiURL}/user/login`, {
+			const resp = await axios.post(`${apiURL}/auth/login`, {
 				username,
 				password,
 			});
@@ -41,7 +41,7 @@ export const getUser = createAsyncThunk(
 			const resp = await axios.get(`${apiURL}/user/${username}`, {
 				headers: { Authorization: `Bearer ${token}` },
 			});
-			return resp.data;
+			return { user: resp.data };
 		} catch (error) {
 			return rejectWithValue(error.message);
 		}
@@ -124,6 +124,9 @@ const userSlice = createSlice({
 				reducers.setUser(state, action);
 				state.loading = false;
 				state.error = null;
+			})
+			.addCase(getUser.pending, (state, action) => {
+				state.loading = true;
 			})
 			.addCase(getUser.rejected, (state, action) => {
 				state.error = action.payload;
