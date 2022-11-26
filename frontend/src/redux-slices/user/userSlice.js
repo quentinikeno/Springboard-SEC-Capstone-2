@@ -50,7 +50,7 @@ export const getUser = createAsyncThunk(
 
 export const updateUser = createAsyncThunk(
 	"user/updateUser",
-	async ({ username, data }, { rejectWithValue }) => {
+	async ({ username, token, data }, { rejectWithValue }) => {
 		try {
 			const resp = await axios.patch(`${apiURL}/user/${username}`, data, {
 				headers: { Authorization: `Bearer ${token}` },
