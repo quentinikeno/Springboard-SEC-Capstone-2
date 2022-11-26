@@ -28,7 +28,13 @@ describe("Tests for POST /auth/register", () => {
 		expect(resp.statusCode).toEqual(201);
 		expect(resp.body).toEqual({
 			token: expect.any(String),
-			username: "reggieStir",
+			user: {
+				username: "reggieStir",
+				id: expect.any(Number),
+				lastLoginAt: expect.any(String),
+				joinAt: expect.any(String),
+				isAdmin: false,
+			},
 		});
 	});
 
@@ -80,7 +86,13 @@ describe("Tests for POST /auth/login", () => {
 		});
 		expect(resp.body).toEqual({
 			token: expect.any(String),
-			username: "user1",
+			user: {
+				username: "user1",
+				id: expect.any(Number),
+				lastLoginAt: expect.any(String),
+				joinAt: expect.any(String),
+				isAdmin: false,
+			},
 		});
 	});
 

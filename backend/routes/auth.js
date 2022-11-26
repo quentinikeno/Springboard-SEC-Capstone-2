@@ -18,7 +18,7 @@ router.post("/register", async (req, res, next) => {
 		const user = await User.register(req.body);
 		const token = createToken(user);
 
-		return res.status(201).json({ token, username: user.username });
+		return res.status(201).json({ token, user });
 	} catch (error) {
 		return next(error);
 	}
@@ -35,7 +35,7 @@ router.post("/login", async (req, res, next) => {
 		const user = await User.authenticate(username, password);
 		const token = createToken(user);
 
-		return res.json({ token, username: user.username });
+		return res.json({ token, user });
 	} catch (error) {
 		return next(error);
 	}
