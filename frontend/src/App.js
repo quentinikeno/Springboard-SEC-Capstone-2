@@ -3,7 +3,7 @@ import Navbar from "./navbar/Navbar";
 import Loading from "./common/Loading";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getUser, setLoading } from "./redux-slices/user/userSlice";
+import { getUser } from "./redux-slices/user/userSlice";
 import Cookies from "js-cookie";
 import "./App.css";
 
