@@ -24,6 +24,7 @@ const ProfileRoutes = () => {
 				path={"/edit/password"}
 				element={<UserProfile child={<EditPasswordForm />} />}
 			/>
+			<Route path="*" element={<Navigate to="/" />} />
 		</Routes>
 	);
 };
