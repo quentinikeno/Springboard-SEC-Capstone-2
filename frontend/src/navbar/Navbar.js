@@ -1,4 +1,4 @@
-import { selectCurrentUser } from "../redux-slices/auth/authSlice";
+import { selectCurrentUser } from "../redux-slices/user/userSlice";
 import { NavLink, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logOut } from "../redux-slices/user/userSlice";
