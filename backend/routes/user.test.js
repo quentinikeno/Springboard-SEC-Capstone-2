@@ -98,7 +98,6 @@ describe("test PATCH /user/[username]", () => {
 			.set("authorization", `Bearer ${u1Token}`)
 			.send({
 				email: "wow@mail.com",
-				oldPassword: "password1",
 			});
 
 		expect(resp.statusCode).toBe(200);
@@ -111,7 +110,7 @@ describe("test PATCH /user/[username]", () => {
 		});
 	});
 
-	it("throws an error if the password is wrong or not included", async () => {
+	it("throws an error if the password is wrong or not included when changing password", async () => {
 		const u1Token = await getUserToken();
 		const resp = await request(app)
 			.patch("/user/user1")
@@ -150,7 +149,7 @@ describe("test PATCH /user/[username]", () => {
 		expect(resp.statusCode).toBe(403);
 	});
 
-	it("thows a 401 status code if the user isn't logged in.", async () => {
+	it("throws a 401 status code if the user isn't logged in.", async () => {
 		const resp = await request(app).patch("/user/user1").send({
 			email: "wow@mail.com",
 			newPassword: "superSecret",

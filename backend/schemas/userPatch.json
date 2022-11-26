@@ -26,5 +26,7 @@
 		}
 	},
 	"additionalProperties": false,
-	"required": ["oldPassword"]
+	"dependentRequired": {
+		"newPassword": ["oldPassword"]
+	}
 }

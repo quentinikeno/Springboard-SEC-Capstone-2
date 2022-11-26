@@ -37,10 +37,9 @@ router.patch("/:username", ensurePermittedUser, async (req, res, next) => {
 			throw new BadRequestError400("A username must be provided.");
 		validateSchema(req, userPatchSchema);
 
-		const user = await User.authenticate(
-			req.params.username,
-			req.body.oldPassword
-		);
+		const user = req.body.newPassword
+			? await User.authenticate(req.params.username, req.body.oldPassword)
+			: await User.get(req.params.username);
 		const updatedUser = await user.update(req.body);
 
 		return res.json(updatedUser);
