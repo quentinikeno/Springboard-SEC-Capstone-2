@@ -115,6 +115,7 @@ const userSlice = createSlice({
 			})
 			.addCase(registerUser.rejected, (state, action) => {
 				state.error = action.payload;
+				state.loading = false;
 			})
 			.addCase(loginUser.fulfilled, (state, action) => {
 				reducers.setCredentials(state, action);
@@ -127,6 +128,7 @@ const userSlice = createSlice({
 			})
 			.addCase(loginUser.rejected, (state, action) => {
 				state.error = action.payload;
+				state.loading = false;
 			})
 			.addCase(getUser.fulfilled, (state, action) => {
 				reducers.setUser(state, action);
@@ -138,6 +140,7 @@ const userSlice = createSlice({
 			})
 			.addCase(getUser.rejected, (state, action) => {
 				state.error = action.payload;
+				state.loading = false;
 			})
 			.addCase(updateUser.fulfilled, (state, action) => {
 				reducers.setUser(state, action);
@@ -157,6 +160,7 @@ const userSlice = createSlice({
 			})
 			.addCase(updateUser.rejected, (state, action) => {
 				state.error = action.payload;
+				state.loading = false;
 			});
 	},
 });
