@@ -80,7 +80,6 @@ const initialState = {
 
 const reducers = {
 	setCredentials: (state, action) => {
-		console.log(action);
 		const { token } = action.payload;
 		state.token = token;
 	},
