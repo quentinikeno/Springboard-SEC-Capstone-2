@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import UserDetail from "../users/UserDetail";
 import EditUsernameForm from "../users/EditUsernameForm";
 import EditEmailForm from "../users/EditEmailForm";
+import EditPasswordForm from "../users/EditPasswordForm";
 
 const ProfileRoutes = () => {
 	return (
@@ -18,6 +19,10 @@ const ProfileRoutes = () => {
 			<Route
 				path={"/edit/email"}
 				element={<UserProfile child={<EditEmailForm />} />}
+			/>
+			<Route
+				path={"/edit/password"}
+				element={<UserProfile child={<EditPasswordForm />} />}
 			/>
 		</Routes>
 	);
