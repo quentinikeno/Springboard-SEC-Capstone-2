@@ -7,7 +7,7 @@ export const registerUser = createAsyncThunk(
 	"user/registerUser",
 	async ({ username, email, password }, { rejectWithValue }) => {
 		try {
-			const resp = await axios.post(`${apiURL}/auth/register`, {
+			const resp = await axios.post(`${apiURL}/user/register`, {
 				username,
 				email,
 				password,
@@ -23,7 +23,7 @@ export const loginUser = createAsyncThunk(
 	"user/loginUser",
 	async ({ username, password }, { rejectWithValue }) => {
 		try {
-			const resp = await axios.post(`${apiURL}/auth/login`, {
+			const resp = await axios.post(`${apiURL}/user/login`, {
 				username,
 				password,
 			});
@@ -139,6 +139,6 @@ export const { setCredentials, logOut, setUser, setLoading } =
 
 export default userSlice.reducer;
 
-export const selectCurrentToken = (state) => state.auth.token;
-export const selectCurrentUser = (state) => state.auth.username;
+export const selectCurrentToken = (state) => state.user.token;
+export const selectCurrentUser = (state) => state.user.username;
 export const selectUserId = (state) => state.user.id;
