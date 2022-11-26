@@ -140,7 +140,7 @@ const userSlice = createSlice({
 				state.error = action.payload;
 			})
 			.addCase(updateUser.fulfilled, (state, action) => {
-				reducers.updateUser(state, action);
+				reducers.setUser(state, action);
 				state.loading = false;
 				state.error = null;
 			})
