@@ -4,6 +4,8 @@ const { ensureLoggedIn, ensurePermittedUser } = require("../middleware/auth");
 const { BadRequestError400 } = require("../expressError");
 const validateSchema = require("../helpers/validateSchema");
 const userPatchSchema = require("../schemas/userPatch.json");
+const createToken = require("../helpers/createToken");
+const { update } = require("../models/games");
 const router = new express.Router();
 
 /** All of these routes must ensure that the user is logged in. */
@@ -41,6 +43,12 @@ router.patch("/:username", ensurePermittedUser, async (req, res, next) => {
 			? await User.authenticate(req.params.username, req.body.oldPassword)
 			: await User.get(req.params.username);
 		const updatedUser = await user.update(req.body);
+
+		if (req.body.username) {
+			//if a user updates their username, send them their user info and a new token
+			const token = createToken(updatedUser);
+			return res.json({ ...updatedUser, token });
+		}
 
 		return res.json(updatedUser);
 	} catch (error) {

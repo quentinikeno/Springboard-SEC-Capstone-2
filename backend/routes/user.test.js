@@ -71,6 +71,7 @@ describe("test PATCH /user/[username]", () => {
 			lastLoginAt: expect.any(String),
 			joinAt: expect.any(String),
 			isAdmin: false,
+			token: expect.any(String),
 		});
 
 		// check that we can access the get route with the new username
