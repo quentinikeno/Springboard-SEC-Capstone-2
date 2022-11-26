@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import useFormState from "../hooks/useFormState";
+import { updateUser } from "../redux-slices/user/userSlice";
 
 const EditUsernameForm = () => {
 	const initialState = { username: "" };
@@ -10,7 +11,7 @@ const EditUsernameForm = () => {
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
-		dispatch();
+		dispatch(updateUser(formData));
 		navigate("/profile");
 	};
 	return (
