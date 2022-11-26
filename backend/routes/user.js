@@ -10,7 +10,7 @@ const router = new express.Router();
 router.use(ensureLoggedIn);
 
 /** GET user/[username]
- * returns { {id, username, joinAt, lastLoginAt} }
+ * returns { {id, username, joinAt, lastLoginAt, isAdmin} }
  * authorization: logged in
  */
 
@@ -27,7 +27,7 @@ router.get("/:username", async (req, res, next) => {
 });
 
 /** PATCH user/[username]
- * returns { {id, username, joinAt, lastLoginAt} }
+ * returns { {id, username, joinAt, lastLoginAt, isAdmin} }
  * authorization: logged in and permitted user
  */
 
