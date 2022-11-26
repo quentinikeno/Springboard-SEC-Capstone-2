@@ -1,5 +1,5 @@
 import UserProfile from "../users/UserProfile";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import UserDetail from "../users/UserDetail";
 import EditUsernameForm from "../users/EditUsernameForm";
 import EditEmailForm from "../users/EditEmailForm";
