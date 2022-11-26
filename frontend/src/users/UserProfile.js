@@ -1,23 +1,13 @@
-import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getUser, setLoading } from "../redux-slices/user/userSlice";
 import { useLocation } from "react-router-dom";
 import UserProfileMenu from "./UserProfileMenu";
 import Loading from "../common/Loading";
 
 const UserProfile = () => {
-	const dispatch = useDispatch();
-	const { username, token, id, joinAt, loading } = useSelector(
+	const { username, id, joinAt, loading } = useSelector(
 		(state) => state.user
 	);
 	const location = useLocation();
-
-	useEffect(() => {
-		if (!id && token) {
-			dispatch(setLoading(true));
-			dispatch(getUser({ username, token }));
-		}
-	}, [id, token]);
 
 	return loading ? (
 		<Loading />
