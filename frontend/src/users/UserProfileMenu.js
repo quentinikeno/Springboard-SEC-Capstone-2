@@ -1,6 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectCurrentUser } from "../redux-slices/user/userSlice";
 
-const UserProfileMenu = ({ location, username }) => {
+const UserProfileMenu = () => {
+	const location = useLocation();
+	const username = useSelector(selectCurrentUser);
 	return (
 		<aside className="menu">
 			<p className="menu-label">Your Profile</p>
