@@ -34,6 +34,18 @@ const UserProfileMenu = () => {
 						Username
 					</Link>
 				</li>
+				<li>
+					<Link
+						className={`${
+							location.pathname === "/profile/edit/email"
+								? "is-active"
+								: ""
+						}`}
+						to="/profile/edit/email"
+					>
+						Email
+					</Link>
+				</li>
 			</ul>
 		</aside>
 	);
