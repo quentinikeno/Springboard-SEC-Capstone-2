@@ -1,5 +1,5 @@
 import { Outlet, Navigate } from "react-router-dom";
-import { selectCurrentUser } from "../redux-slices/auth/authSlice";
+import { selectCurrentUser } from "../redux-slices/user/userSlice";
 import { useSelector } from "react-redux";
 import Cookies from "js-cookie";
 

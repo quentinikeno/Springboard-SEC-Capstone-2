@@ -1,8 +1,7 @@
 import { selectCurrentUser } from "../redux-slices/auth/authSlice";
 import { NavLink, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { logOut } from "../redux-slices/auth/authSlice";
-import { removeUserOnLogOut } from "../redux-slices/user/userSlice";
+import { logOut } from "../redux-slices/user/userSlice";
 import Cookies from "js-cookie";
 
 const Navbar = () => {
@@ -11,7 +10,6 @@ const Navbar = () => {
 
 	const handleLogOut = () => {
 		dispatch(logOut());
-		dispatch(removeUserOnLogOut());
 		Cookies.remove("token");
 		Cookies.remove("username");
 	};

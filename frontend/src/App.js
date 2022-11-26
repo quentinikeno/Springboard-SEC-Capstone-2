@@ -2,12 +2,12 @@ import AppRoutes from "./routes/AppRoutes";
 import Navbar from "./navbar/Navbar";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setCredentials } from "./redux-slices/auth/authSlice";
+import { setCredentials } from "./redux-slices/user/userSlice";
 import Cookies from "js-cookie";
 import "./App.css";
 
 function App() {
-	const { token, username } = useSelector((state) => state.auth);
+	const { token, username } = useSelector((state) => state.user);
 	const dispatch = useDispatch();
 
 	useEffect(() => {

@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import useFormState from "../../hooks/useFormState";
-import { registerUser } from "../../redux-slices/auth/authSlice";
+import { registerUser } from "../../redux-slices/user/userSlice";
 
 const RegisterUserForm = () => {
 	const initialState = { username: "", password: "", email: "" };

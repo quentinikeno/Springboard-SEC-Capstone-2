@@ -7,8 +7,9 @@ import Loading from "../common/Loading";
 
 const UserProfile = () => {
 	const dispatch = useDispatch();
-	const { username, token } = useSelector((state) => state.auth);
-	const { id, joinAt, loading } = useSelector((state) => state.user);
+	const { username, token, id, joinAt, loading } = useSelector(
+		(state) => state.user
+	);
 	const location = useLocation();
 
 	useEffect(() => {
