@@ -12,7 +12,7 @@ export const registerUser = createAsyncThunk(
 				email,
 				password,
 			});
-			return resp.data; // {token}
+			return resp.data; // {token, user}
 		} catch (error) {
 			return rejectWithValue(error.message);
 		}
@@ -27,7 +27,7 @@ export const loginUser = createAsyncThunk(
 				username,
 				password,
 			});
-			return resp.data; // {token}
+			return resp.data; // {token, user}
 		} catch (error) {
 			return rejectWithValue(error.message);
 		}
@@ -73,22 +73,25 @@ const initialState = {
 	username: null,
 	joinAt: null,
 	lastLoginAt: null,
+	isAdmin: false,
 	loading: false,
 	error: null,
 };
 
 const reducers = {
 	setCredentials: (state, action) => {
-		const { token, username } = action.payload;
+		const { token } = action.payload;
 		state.token = token;
-		state.username = username;
 	},
 	logOut: (state, action) => initialState,
 	setUser: (state, action) => {
-		const { id, joinAt, lastLoginAt } = action.payload;
+		const { id, username, joinAt, lastLoginAt, isAdmin } =
+			action.payload.user;
 		state.id = id;
+		state.username = username;
 		state.joinAt = formatDate(joinAt);
 		state.lastLoginAt = formatDate(lastLoginAt);
+		state.isAdmin = isAdmin;
 	},
 	setLoading: (state, action) => {
 		state.loading = action.payload;
@@ -103,6 +106,7 @@ const userSlice = createSlice({
 		builder
 			.addCase(registerUser.fulfilled, (state, action) => {
 				reducers.setCredentials(state, action);
+				reducers.setUser(state, action);
 				state.error = null;
 			})
 			.addCase(registerUser.rejected, (state, action) => {
@@ -110,6 +114,7 @@ const userSlice = createSlice({
 			})
 			.addCase(loginUser.fulfilled, (state, action) => {
 				reducers.setCredentials(state, action);
+				reducers.setUser(state, action);
 				state.error = null;
 			})
 			.addCase(loginUser.rejected, (state, action) => {

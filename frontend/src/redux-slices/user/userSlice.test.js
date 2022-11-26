@@ -2,14 +2,16 @@ import { store } from "../../store/store";
 import { setCredentials, logOut, setUser, setLoading } from "./userSlice";
 
 const setTestUser = () => {
-	store.dispatch(
-		setCredentials({ token: "testToken", username: "testUser" })
-	);
+	store.dispatch(setCredentials({ token: "testToken" }));
 	store.dispatch(
 		setUser({
-			id: 1,
-			joinAt: "2022-11-21 18:02:39.862016",
-			lastLoginAt: "2022-11-24 10:42:48.257598-10",
+			user: {
+				id: 1,
+				username: "testUser",
+				joinAt: "2022-11-21 18:02:39.862016",
+				lastLoginAt: "2022-11-24 10:42:48.257598-10",
+				isAdmin: false,
+			},
 		})
 	);
 };
@@ -21,11 +23,12 @@ describe("test setCredentials", () => {
 		);
 		expect(store.getState().user).toEqual({
 			token: "testToken",
-			username: "testUser",
+			username: null,
 			id: null,
 			joinAt: null,
 			lastLoginAt: null,
 			loading: false,
+			isAdmin: false,
 			error: null,
 		});
 	});
@@ -42,7 +45,7 @@ describe("test logOut", () => {
 			joinAt: null,
 			lastLoginAt: null,
 			loading: false,
-			error: null,
+			isAdmin: false,
 			error: null,
 		});
 	});
@@ -58,6 +61,7 @@ describe("test setUser", () => {
 			joinAt: "November 21, 2022",
 			lastLoginAt: "November 24, 2022",
 			error: null,
+			isAdmin: false,
 			loading: false,
 		});
 	});
