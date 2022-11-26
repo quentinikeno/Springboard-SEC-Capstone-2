@@ -45,7 +45,7 @@ const EditPasswordForm = () => {
 						onChange={handleChange}
 						id="newPassword"
 						name="newPassword"
-						value={formData.oldPassword}
+						value={formData.newPassword}
 						required
 					/>
 				</div>
