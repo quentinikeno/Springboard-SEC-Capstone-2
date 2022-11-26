@@ -80,6 +80,7 @@ const initialState = {
 
 const reducers = {
 	setCredentials: (state, action) => {
+		console.log(action);
 		const { token } = action.payload;
 		state.token = token;
 	},
@@ -141,6 +142,15 @@ const userSlice = createSlice({
 			})
 			.addCase(updateUser.fulfilled, (state, action) => {
 				reducers.setUser(state, action);
+				console.log(action.payload);
+				if (action.payload.user.token) {
+					reducers.setCredentials(state, {
+						...action,
+						payload: {
+							token: action.payload.user.token,
+						},
+					});
+				}
 				state.loading = false;
 				state.error = null;
 			})
