@@ -20,7 +20,7 @@ const EditEmailForm = () => {
 		<form onSubmit={handleSubmit}>
 			<div className="field">
 				<label htmlFor="email" className="label">
-					New email
+					New Email
 				</label>
 				<div className="control">
 					<input
