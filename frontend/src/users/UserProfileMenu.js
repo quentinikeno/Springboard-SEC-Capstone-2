@@ -1,4 +1,3 @@
-import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectCurrentUser } from "../redux-slices/user/userSlice";
 import UserProfileMenuLink from "./UserProfileMenuLink";
