@@ -4,6 +4,7 @@ import UserDetail from "../users/UserDetail";
 import EditUsernameForm from "../users/EditUsernameForm";
 import EditEmailForm from "../users/EditEmailForm";
 import EditPasswordForm from "../users/EditPasswordForm";
+import DeleteUserForm from "../users/DeleteUserForm";
 
 const ProfileRoutes = () => {
 	return (
@@ -23,6 +24,10 @@ const ProfileRoutes = () => {
 			<Route
 				path={"/edit/password"}
 				element={<UserProfile child={<EditPasswordForm />} />}
+			/>
+			<Route
+				path={"/delete"}
+				element={<UserProfile child={<DeleteUserForm />} />}
 			/>
 			<Route path="*" element={<Navigate to="/" />} />
 		</Routes>
