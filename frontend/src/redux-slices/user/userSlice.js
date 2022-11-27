@@ -175,6 +175,18 @@ const userSlice = createSlice({
 			.addCase(updateUser.rejected, (state, action) => {
 				state.error = action.payload;
 				state.loading = false;
+			})
+			.addCase(deleteUser.fulfilled, (state, action) => {
+				reducers.logOut(state, action);
+				state.loading = false;
+				state.error = null;
+			})
+			.addCase(deleteUser.pending, (state, action) => {
+				state.loading = true;
+			})
+			.addCase(deleteUser.rejected, (state, action) => {
+				state.error = action.payload;
+				state.loading = false;
 			});
 	},
 });
