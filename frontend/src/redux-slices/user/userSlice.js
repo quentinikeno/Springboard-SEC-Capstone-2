@@ -66,7 +66,6 @@ export const updateUser = createAsyncThunk(
 export const deleteUser = createAsyncThunk(
 	"user/deleteUser",
 	async ({ username, token, data }, { rejectWithValue }) => {
-		console.log({ username, token, data });
 		try {
 			const resp = await axios.delete(`${apiURL}/user/${username}`, {
 				headers: { Authorization: `Bearer ${token}` },
