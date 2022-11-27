@@ -5,7 +5,7 @@ const UserProfileMenuLink = ({ to, text }) => {
 	return (
 		<li>
 			<Link
-				className={`${location.pathname === { to } ? "is-active" : ""}`}
+				className={`${location.pathname === to ? "is-active" : ""}`}
 				to={to}
 			>
 				{text}
