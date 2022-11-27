@@ -27,6 +27,10 @@ const UserProfileMenu = () => {
 					text={"Password"}
 				/>
 			</ul>
+			<p className="menu-label">Delete Your Account</p>
+			<ul className="menu-list">
+				<UserProfileMenuLink to={"/profile/delete"} text={"Delete"} />
+			</ul>
 		</aside>
 	);
 };
