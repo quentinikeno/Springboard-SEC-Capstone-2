@@ -39,9 +39,9 @@ export const getMathProblem = (type, digits = 2, allowNegative = false) => {
 		const answer = first * second;
 		return { first, second, operation, expression, answer };
 	} else if (type === "div") {
+		const { first, second, answer } = findDivisor(first, second, digits);
 		const operation = "&divide;";
 		const expression = `${first} ${operation} ${second}`;
-		const answer = first * second;
 		return { first, second, operation, expression, answer };
 	}
 };
