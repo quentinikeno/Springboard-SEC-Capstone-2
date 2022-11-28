@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import useFormState from "../hooks/useFormState";
 import { deleteUser } from "../redux-slices/user/userSlice";
 import { useSelector } from "react-redux";
+import Cookies from "js-cookie";
 
 const DeleteUserForm = () => {
 	const initialState = { password: "" };
@@ -14,6 +15,8 @@ const DeleteUserForm = () => {
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		dispatch(deleteUser({ username, token, data: formData }));
+		Cookies.remove("token");
+		Cookies.remove("username");
 		navigate("/");
 	};
 	return (
