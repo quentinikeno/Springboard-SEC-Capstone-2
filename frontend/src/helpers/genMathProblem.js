@@ -13,35 +13,41 @@ export const findDivisor = (first, second, digits) => {
 	const randIndex = Math.floor(Math.random() * divisors.length);
 	second =
 		Math.random() < 0.5 ? divisors[randIndex] : first / divisors[randIndex];
-	return { first: first, second, answer: first / second };
+	return { first, second, answer: first / second };
 };
 
 export const getMathProblem = (type, digits = 2, allowNegative = false) => {
 	let first = randNum(digits);
 	let second = randNum(digits);
+	let operation;
+	let answer;
 
-	if (type === "add") {
-		const operation = "&plus;";
-		const expression = `${first} ${operation} ${second}`;
-		const answer = first + second;
-		return { first, second, operation, expression, answer };
-	} else if (type === "sub") {
-		if (first - second < 0 && !allowNegative) {
-			[first, second] = [second, first];
-		}
-		const operation = "&minus;";
-		const expression = `${first} ${operation} ${second}`;
-		const answer = first - second;
-		return { first, second, operation, expression, answer };
-	} else if (type === "mult") {
-		const operation = "&times;";
-		const expression = `${first} ${operation} ${second}`;
-		const answer = first * second;
-		return { first, second, operation, expression, answer };
-	} else if (type === "div") {
-		const { first, second, answer } = findDivisor(first, second, digits);
-		const operation = "&divide;";
-		const expression = `${first} ${operation} ${second}`;
-		return { first, second, operation, expression, answer };
+	switch (type) {
+		case "add":
+			operation = "&plus;";
+			answer = first + second;
+			break;
+		case "sub":
+			if (first - second < 0 && !allowNegative) {
+				[first, second] = [second, first];
+			}
+			operation = "&minus;";
+			answer = first - second;
+			break;
+		case "mul":
+			operation = "&times;";
+			answer = first * second;
+			break;
+		case "div":
+			operation = "&divide;";
+			let newDivisor = findDivisor(first, second, digits);
+			second = newDivisor.second;
+			answer = newDivisor.answer;
+			break;
+		default:
+			throw new Error("Type must be 'add', 'sub', 'mul', or 'div'.");
 	}
+
+	const expression = `${first} ${operation} ${second}`;
+	return { first, second, operation, expression, answer };
 };
