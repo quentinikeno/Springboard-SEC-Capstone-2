@@ -1,47 +1,37 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import useFormState from "./hooks/useFormState";
 import useToggleState from "./hooks/useToggleState";
 
-const ProblemBox = ({ problems, level, setLevel, operation }) => {
+const ProblemBox = ({ operation }) => {
 	const initialState = { answer: "" };
 	const [formData, setFormData, handleChange] = useFormState(initialState);
 	const [submittedAnswer, setSubmittedAnswer] = useState(null);
 	const [isHorizontal, toggleIsHorizontal] = useToggleState(true);
+	const { problems } = useSelector((state) => state.problemBoxes);
+	const problem = problems[operation];
 	const {
+		expression,
 		first,
 		second,
-		expression,
-		answer,
 		operation: operationSymbol,
-	} = problems[level[operation] - 1] || {
-		first: null,
-		second: null,
-		expression: null,
-		answer: null,
-	};
+		answer,
+	} = problem;
 
 	const handleSubmit = (event) => {
-		event.preventDefault();
-		if (+formData.answer === answer) {
-			setSubmittedAnswer(() => null);
-			setLevel((level) => {
-				const updatedLevel = { ...level };
-				updatedLevel[operation] = updatedLevel[operation] + 1;
-				return updatedLevel;
-			});
-		} else {
-			setSubmittedAnswer(() => +formData.answer);
-		}
-		setFormData(() => initialState);
+		// event.preventDefault();
+		// if (+formData.answer === answer) {
+		// 	setSubmittedAnswer(() => null);
+		// 	setLevel((level) => {
+		// 		const updatedLevel = { ...level };
+		// 		updatedLevel[operation] = updatedLevel[operation] + 1;
+		// 		return updatedLevel;
+		// 	});
+		// } else {
+		// 	setSubmittedAnswer(() => +formData.answer);
+		// }
+		// setFormData(() => initialState);
 	};
-
-	if (expression === null) {
-		return (
-			<div className="column box">
-				You've completed all of the problems.
-			</div>
-		);
-	}
 
 	return (
 		<div className="column">
