@@ -24,22 +24,22 @@ export const getMathProblem = (type, digits = 2, allowNegative = false) => {
 
 	switch (type) {
 		case "add":
-			operation = "&plus;";
+			operation = "+";
 			answer = first + second;
 			break;
 		case "sub":
 			if (first - second < 0 && !allowNegative) {
 				[first, second] = [second, first];
 			}
-			operation = "&minus;";
+			operation = "-";
 			answer = first - second;
 			break;
 		case "mul":
-			operation = "&times;";
+			operation = "×";
 			answer = first * second;
 			break;
 		case "div":
-			operation = "&divide;";
+			operation = "÷";
 			let newDivisor = findDivisor(first, second, digits);
 			second = newDivisor.second;
 			answer = newDivisor.answer;
