@@ -1,48 +1,17 @@
 import ProblemBox from "./ProblemBox";
+import { useSelector } from "react-redux";
 
-const ProblemBoxes = ({
-	level,
-	setLevel,
-	addProblems,
-	subProblems,
-	mulProblems,
-	divProblems,
-}) => {
+const ProblemBoxes = () => {
+	const { level } = useSelector((state) => state.problemBoxes);
 	return (
 		<>
 			<div className="columns">
-				<ProblemBox
-					level={level}
-					setLevel={setLevel}
-					operation={"add"}
-					problems={addProblems}
-				/>
-				{level["add"] > 5 && (
-					<ProblemBox
-						level={level}
-						setLevel={setLevel}
-						operation={"sub"}
-						problems={subProblems}
-					/>
-				)}
+				<ProblemBox operation={"add"} />
+				{level["add"] > 5 && <ProblemBox operation={"sub"} />}
 			</div>
 			<div className="columns">
-				{level["sub"] > 5 && (
-					<ProblemBox
-						level={level}
-						setLevel={setLevel}
-						operation={"mul"}
-						problems={mulProblems}
-					/>
-				)}
-				{level["mul"] > 5 && (
-					<ProblemBox
-						level={level}
-						setLevel={setLevel}
-						operation={"div"}
-						problems={divProblems}
-					/>
-				)}
+				{level["sub"] > 5 && <ProblemBox operation={"mul"} />}
+				{level["mul"] > 5 && <ProblemBox operation={"div"} />}
 			</div>
 		</>
 	);
