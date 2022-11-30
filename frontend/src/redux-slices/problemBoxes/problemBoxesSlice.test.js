@@ -3,6 +3,7 @@ import {
 	decrementSeconds,
 	incrementLevel,
 	incrementIncorrectGuesses,
+	incrementSolved,
 	getNewProblem,
 } from "./problemBoxesSlice";
 
@@ -44,6 +45,12 @@ describe("test incrementIncorrectGuesses", () => {
 	expect(store.getState().problemBoxes.incorrectGuesses).toBe(0);
 	store.dispatch(incrementIncorrectGuesses());
 	expect(store.getState().problemBoxes.incorrectGuesses).toBe(1);
+});
+
+describe("test incrementSolved", () => {
+	expect(store.getState().problemBoxes.solved).toBe(0);
+	store.dispatch(incrementSolved());
+	expect(store.getState().problemBoxes.solved).toBe(1);
 });
 
 describe("test getNewProblem", () => {

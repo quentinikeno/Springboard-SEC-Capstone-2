@@ -26,6 +26,9 @@ const problemBoxesSlice = createSlice({
 		incrementIncorrectGuesses: (state, action) => {
 			state.incorrectGuesses = state.incorrectGuesses + 1;
 		},
+		incrementSolved: (state, action) => {
+			state.solved = state.solved + 1;
+		},
 		getNewProblem: (state, action) => {
 			state["problems"][action.payload] = getMathProblem(action.payload);
 		},
@@ -35,6 +38,7 @@ export const {
 	decrementSeconds,
 	incrementLevel,
 	incrementIncorrectGuesses,
+	incrementSolved,
 	getNewProblem,
 } = problemBoxesSlice.actions;
 
