@@ -1,7 +1,10 @@
 import { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import ProblemBoxes from "./ProblemBoxes";
-import { decrementSeconds } from "../redux-slices/problemBoxes/problemBoxesSlice";
+import {
+	decrementSeconds,
+	reset,
+} from "../redux-slices/problemBoxes/problemBoxesSlice";
 import { convertToMinutesSeconds } from "../helpers/convertToMinutesSeconds";
 
 const ProblemBoxGame = () => {
@@ -10,6 +13,10 @@ const ProblemBoxGame = () => {
 		(state) => state.problemBoxes
 	);
 	const dispatch = useDispatch();
+
+	const resetGame = () => {
+		dispatch(reset());
+	};
 
 	useEffect(() => {
 		timerId.current = setInterval(() => {
@@ -36,6 +43,9 @@ const ProblemBoxGame = () => {
 					<p>Time's up!</p>
 					<p>Solved: {solved}</p>
 					<p>Incorrrect Guesses: {incorrectGuesses}</p>
+					<button class="button is-primary" onClick={resetGame}>
+						Retry
+					</button>
 				</div>
 			)}
 		</div>
