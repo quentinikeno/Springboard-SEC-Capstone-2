@@ -2,6 +2,7 @@ import { store } from "../../store/store";
 import {
 	decrementSeconds,
 	incrementLevel,
+	incrementIncorrectGuesses,
 	getNewProblem,
 } from "./problemBoxesSlice";
 
@@ -37,6 +38,12 @@ describe("test incrementLevel reducer", () => {
 		store.dispatch(incrementLevel("div"));
 		expect(store.getState().problemBoxes.level.div).toBe(2);
 	});
+});
+
+describe("test incrementIncorrectGuesses", () => {
+	expect(store.getState().problemBoxes.incorrectGuesses).toBe(0);
+	store.dispatch(incrementIncorrectGuesses());
+	expect(store.getState().problemBoxes.incorrectGuesses).toBe(1);
 });
 
 describe("test getNewProblem", () => {
