@@ -9,14 +9,13 @@ const ProblemBox = ({ operation }) => {
 	const [submittedAnswer, setSubmittedAnswer] = useState(null);
 	const [isHorizontal, toggleIsHorizontal] = useToggleState(true);
 	const { problems } = useSelector((state) => state.problemBoxes);
-	const problem = problems[operation];
 	const {
 		expression,
 		first,
 		second,
 		operation: operationSymbol,
 		answer,
-	} = problem;
+	} = problems[operation];
 
 	const handleSubmit = (event) => {
 		// event.preventDefault();
@@ -38,11 +37,11 @@ const ProblemBox = ({ operation }) => {
 			<div className=" box mb-4">
 				<h2 className="is-2">{operation}</h2>
 
-				<div class="field">
-					<div class="label">
+				<div className="field">
+					<div className="label">
 						<label className="label">Display:</label>
 					</div>
-					<div class="field">
+					<div className="field">
 						<div className="control">
 							<label className="checkbox">
 								<input

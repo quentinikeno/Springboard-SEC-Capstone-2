@@ -20,8 +20,11 @@ const problemBoxesSlice = createSlice({
 		decrementSeconds: (state, action) => {
 			state.seconds = state.seconds - 1;
 		},
+		incrementLevel: (state, action) => {
+			state["level"][action.payload] = state["level"][action.payload] + 1;
+		},
 	},
 });
-export const { decrementSeconds } = problemBoxesSlice.actions;
+export const { decrementSeconds, incrementLevel } = problemBoxesSlice.actions;
 
 export default problemBoxesSlice.reducer;
