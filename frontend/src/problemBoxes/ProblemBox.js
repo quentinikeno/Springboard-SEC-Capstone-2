@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import useFormState from "./hooks/useFormState";
-import useToggleState from "./hooks/useToggleState";
+import useFormState from "../hooks/useFormState";
+import useToggleState from "../hooks/useToggleState";
 import {
 	incrementLevel,
 	incrementIncorrectGuesses,
 	incrementSolved,
 	getNewProblem,
-} from "./redux-slices/problemBoxes/problemBoxesSlice";
+} from "../redux-slices/problemBoxes/problemBoxesSlice";
 
 const ProblemBox = ({ operation }) => {
 	const dispatch = useDispatch();

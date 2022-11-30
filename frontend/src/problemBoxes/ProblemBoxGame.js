@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import ProblemBoxes from "./ProblemBoxes";
-import { decrementSeconds } from "./redux-slices/problemBoxes/problemBoxesSlice";
+import { decrementSeconds } from "../redux-slices/problemBoxes/problemBoxesSlice";
 
 const ProblemBoxGame = () => {
 	const timerId = useRef();

@@ -1,4 +1,4 @@
-import ProblemBoxGame from "../ProblemBoxGame";
+import ProblemBoxGame from "../problemBoxes/ProblemBoxGame";
 import AuthRoutes from "./AuthRoutes";
 import ProfileRoutes from "./ProfileRoutes";
 import PrivateRoutes from "./PrivateRoutes";
