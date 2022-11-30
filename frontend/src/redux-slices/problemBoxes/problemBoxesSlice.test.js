@@ -1,5 +1,9 @@
 import { store } from "../../store/store";
-import { decrementSeconds, incrementLevel } from "./problemBoxesSlice";
+import {
+	decrementSeconds,
+	incrementLevel,
+	getNewProblem,
+} from "./problemBoxesSlice";
 
 describe("test decrementSeconds reducer", () => {
 	it("decrements seconds by 1", () => {
@@ -32,5 +36,39 @@ describe("test incrementLevel reducer", () => {
 		expect(store.getState().problemBoxes.level.div).toBe(1);
 		store.dispatch(incrementLevel("div"));
 		expect(store.getState().problemBoxes.level.div).toBe(2);
+	});
+});
+
+describe("test getNewProblem", () => {
+	it("will get a new addition problem", () => {
+		const operation = "add";
+		const firstProb = store.getState().problemBoxes.problems[operation];
+		store.dispatch(getNewProblem(operation));
+		const secondProb = store.getState().problemBoxes.problems[operation];
+		expect(firstProb).not.toEqual(secondProb);
+	});
+
+	it("will get a new subtraction problem", () => {
+		const operation = "sub";
+		const firstProb = store.getState().problemBoxes.problems[operation];
+		store.dispatch(getNewProblem(operation));
+		const secondProb = store.getState().problemBoxes.problems[operation];
+		expect(firstProb).not.toEqual(secondProb);
+	});
+
+	it("will get a new multiplication problem", () => {
+		const operation = "mul";
+		const firstProb = store.getState().problemBoxes.problems[operation];
+		store.dispatch(getNewProblem(operation));
+		const secondProb = store.getState().problemBoxes.problems[operation];
+		expect(firstProb).not.toEqual(secondProb);
+	});
+
+	it("will get a new division problem", () => {
+		const operation = "div";
+		const firstProb = store.getState().problemBoxes.problems[operation];
+		store.dispatch(getNewProblem(operation));
+		const secondProb = store.getState().problemBoxes.problems[operation];
+		expect(firstProb).not.toEqual(secondProb);
 	});
 });
