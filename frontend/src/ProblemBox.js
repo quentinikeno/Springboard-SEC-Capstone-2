@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import useFormState from "./hooks/useFormState";
 import useToggleState from "./hooks/useToggleState";
+import { incrementLevel } from "./redux-slices/problemBoxes/problemBoxesSlice";
 
 const ProblemBox = ({ operation }) => {
+	const dispatch = useDispatch();
 	const initialState = { answer: "" };
 	const [formData, setFormData, handleChange] = useFormState(initialState);
 	const [submittedAnswer, setSubmittedAnswer] = useState(null);
@@ -18,18 +20,14 @@ const ProblemBox = ({ operation }) => {
 	} = problems[operation];
 
 	const handleSubmit = (event) => {
-		// event.preventDefault();
-		// if (+formData.answer === answer) {
-		// 	setSubmittedAnswer(() => null);
-		// 	setLevel((level) => {
-		// 		const updatedLevel = { ...level };
-		// 		updatedLevel[operation] = updatedLevel[operation] + 1;
-		// 		return updatedLevel;
-		// 	});
-		// } else {
-		// 	setSubmittedAnswer(() => +formData.answer);
-		// }
-		// setFormData(() => initialState);
+		event.preventDefault();
+		if (+formData.answer === answer) {
+			setSubmittedAnswer(() => null);
+			dispatch(incrementLevel(operation));
+		} else {
+			setSubmittedAnswer(() => +formData.answer);
+		}
+		setFormData(() => initialState);
 	};
 
 	return (
