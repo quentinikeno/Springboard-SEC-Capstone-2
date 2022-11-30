@@ -6,7 +6,9 @@ import { convertToMinutesSeconds } from "../helpers/convertToMinutesSeconds";
 
 const ProblemBoxGame = () => {
 	const timerId = useRef();
-	const { seconds } = useSelector((state) => state.problemBoxes);
+	const { seconds, solved, incorrectGuesses } = useSelector(
+		(state) => state.problemBoxes
+	);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -24,9 +26,18 @@ const ProblemBoxGame = () => {
 
 	return (
 		<div className="ProblemBoxGame">
-			<h2>{convertToMinutesSeconds(seconds)}</h2>
-
-			{seconds > 0 ? <ProblemBoxes /> : <div>Time's up!.</div>}
+			{seconds > 0 ? (
+				<>
+					<h2>{convertToMinutesSeconds(seconds)}</h2>
+					<ProblemBoxes />
+				</>
+			) : (
+				<div>
+					<p>Time's up!</p>
+					<p>Solved: {solved}</p>
+					<p>Incorrrect Guesses: {incorrectGuesses}</p>
+				</div>
+			)}
 		</div>
 	);
 };
