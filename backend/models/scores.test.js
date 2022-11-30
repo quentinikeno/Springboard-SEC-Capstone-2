@@ -4,14 +4,12 @@ const Scores = require("./scores");
 const Games = require("./games");
 
 const {
-	commonBeforeAll,
 	commonBeforeEach,
 	commonAfterEach,
 	commonAfterAll,
 	addTestGame,
 } = require("../tests/_testCommon");
 
-beforeAll(commonBeforeAll);
 beforeEach(commonBeforeEach);
 afterEach(commonAfterEach);
 afterAll(commonAfterAll);

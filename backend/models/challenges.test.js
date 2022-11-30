@@ -3,14 +3,12 @@
 const Challenges = require("./challenges");
 
 const {
-	commonBeforeAll,
 	commonBeforeEach,
 	commonAfterEach,
 	commonAfterAll,
 	addChallenge,
 } = require("../tests/_testCommon");
 
-beforeAll(commonBeforeAll);
 beforeEach(commonBeforeEach);
 afterEach(commonAfterEach);
 afterAll(commonAfterAll);

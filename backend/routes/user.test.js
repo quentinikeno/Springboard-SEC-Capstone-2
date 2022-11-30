@@ -4,14 +4,12 @@ const request = require("supertest");
 const app = require("../app");
 
 const {
-	commonBeforeAll,
 	commonBeforeEach,
 	commonAfterEach,
 	commonAfterAll,
 	getUserToken,
 } = require("../tests/_testCommon");
 
-beforeAll(commonBeforeAll);
 beforeEach(commonBeforeEach);
 afterEach(commonAfterEach);
 afterAll(commonAfterAll);

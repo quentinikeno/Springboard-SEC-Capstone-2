@@ -3,14 +3,12 @@
 const User = require("./user");
 const Friends = require("./friends");
 const {
-	commonBeforeAll,
 	commonBeforeEach,
 	commonAfterEach,
 	commonAfterAll,
 	requestFriends,
 } = require("../tests/_testCommon");
 
-beforeAll(commonBeforeAll);
 beforeEach(commonBeforeEach);
 afterEach(commonAfterEach);
 afterAll(commonAfterAll);

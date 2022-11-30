@@ -11,8 +11,10 @@ const Challenges = require("../models/challenges");
 
 /** queries and functions to be run before all tests */
 
-async function commonBeforeAll() {
+async function commonBeforeEach() {
 	try {
+		await db.query("BEGIN");
+
 		await db.query("DELETE FROM users");
 		await db.query("DELETE FROM friends");
 		await db.query("DELETE FROM games");
@@ -43,14 +45,6 @@ async function commonBeforeAll() {
 			}),
 			Games.add("testGame"),
 		]);
-	} catch (error) {
-		console.error(error);
-	}
-}
-
-async function commonBeforeEach() {
-	try {
-		await db.query("BEGIN");
 	} catch (error) {
 		console.error(error);
 	}
@@ -173,7 +167,6 @@ async function addChallenge() {
 }
 
 module.exports = {
-	commonBeforeAll,
 	commonBeforeEach,
 	commonAfterEach,
 	commonAfterAll,

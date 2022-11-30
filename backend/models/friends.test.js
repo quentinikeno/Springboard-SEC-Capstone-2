@@ -2,7 +2,6 @@
 
 const Friends = require("./friends");
 const {
-	commonBeforeAll,
 	commonBeforeEach,
 	commonAfterEach,
 	commonAfterAll,
@@ -10,7 +9,6 @@ const {
 	requestFriends,
 } = require("../tests/_testCommon");
 
-beforeAll(commonBeforeAll);
 beforeEach(commonBeforeEach);
 afterEach(commonAfterEach);
 afterAll(commonAfterAll);
