@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import ProblemBoxes from "./ProblemBoxes";
 import { decrementSeconds } from "../redux-slices/problemBoxes/problemBoxesSlice";
+import { convertToMinutesSeconds } from "../helpers/convertToMinutesSeconds";
 
 const ProblemBoxGame = () => {
 	const timerId = useRef();
@@ -20,12 +21,6 @@ const ProblemBoxGame = () => {
 			clearInterval(timerId.current);
 		};
 	}, [seconds]);
-
-	const convertToMinutesSeconds = (seconds) => {
-		const min = Math.floor(seconds / 60);
-		const sec = seconds % 60;
-		return min + ":" + `${sec}`.padStart(2, "0");
-	};
 
 	return (
 		<div className="ProblemBoxGame">
