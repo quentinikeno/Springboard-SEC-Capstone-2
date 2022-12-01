@@ -14,7 +14,7 @@ const ProblemBox = ({ operation }) => {
 	const initialState = { answer: "" };
 	const [formData, setFormData, handleChange] = useFormState(initialState);
 	const [submittedAnswer, setSubmittedAnswer] = useState(null);
-	const [isHorizontal, toggleIsHorizontal] = useToggleState(true);
+	const [isVertical, toggleIsVertical] = useToggleState(true);
 	const { problems } = useSelector((state) => state.problemBoxes);
 	const {
 		expression,
@@ -53,11 +53,9 @@ const ProblemBox = ({ operation }) => {
 								<input
 									className="mr-3"
 									type="checkbox"
-									onClick={() => {
-										toggleIsHorizontal();
-									}}
+									onClick={toggleIsVertical}
 								/>
-								Display problems horizontally.
+								Display problems vertically.
 							</label>
 						</div>
 					</div>
@@ -65,13 +63,11 @@ const ProblemBox = ({ operation }) => {
 
 				<form onSubmit={handleSubmit} className="my-5">
 					<div
-						className={`field ${
-							isHorizontal ? "is-horizontal" : ""
-						}`}
+						className={`field ${isVertical ? "is-horizontal" : ""}`}
 					>
 						<div className="field-label is-normal">
 							<label htmlFor="answer" className="label">
-								{isHorizontal ? (
+								{isVertical ? (
 									<>{expression} = </>
 								) : (
 									<>
@@ -86,7 +82,7 @@ const ProblemBox = ({ operation }) => {
 						</div>
 						<div
 							className={`field-body ${
-								isHorizontal ? "" : "is-justify-content-end"
+								isVertical ? "" : "is-justify-content-end"
 							}`}
 						>
 							<div className="control">
