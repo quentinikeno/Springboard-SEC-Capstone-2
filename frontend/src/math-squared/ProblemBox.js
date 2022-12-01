@@ -15,7 +15,7 @@ const ProblemBox = ({ operation }) => {
 	const [formData, setFormData, handleChange] = useFormState(initialState);
 	const [submittedAnswer, setSubmittedAnswer] = useState(null);
 	const [isVertical, toggleIsVertical] = useToggleState(true);
-	const { problems } = useSelector((state) => state.problemBoxes);
+	const { problems } = useSelector((state) => state.mathSquared);
 	const {
 		expression,
 		first,

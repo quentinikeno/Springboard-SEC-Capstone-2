@@ -10,7 +10,7 @@ import { convertToMinutesSeconds } from "../helpers/convertToMinutesSeconds";
 const ProblemBoxGame = () => {
 	const timerId = useRef();
 	const { seconds, solved, incorrectGuesses } = useSelector(
-		(state) => state.problemBoxes
+		(state) => state.mathSquared
 	);
 	const dispatch = useDispatch();
 

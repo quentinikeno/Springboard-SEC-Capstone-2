@@ -51,7 +51,7 @@ describe("test getMathProblem", () => {
 		expect(result).toEqual({
 			first: expect.any(Number),
 			second: expect.any(Number),
-			operation: "&plus;",
+			operation: "+",
 			expression: `${result.first} ${result.operation} ${result.second}`,
 			answer: result.first + result.second,
 		});
@@ -63,7 +63,7 @@ describe("test getMathProblem", () => {
 		expect(result).toEqual({
 			first: expect.any(Number),
 			second: expect.any(Number),
-			operation: "&minus;",
+			operation: "-",
 			expression: `${result.first} ${result.operation} ${result.second}`,
 			answer: result.first - result.second,
 		});
@@ -76,7 +76,7 @@ describe("test getMathProblem", () => {
 		expect(result).toEqual({
 			first: expect.any(Number),
 			second: expect.any(Number),
-			operation: "&minus;",
+			operation: "-",
 			expression: `${result.first} ${result.operation} ${result.second}`,
 			answer: result.first - result.second,
 		});
@@ -88,7 +88,7 @@ describe("test getMathProblem", () => {
 		expect(result).toEqual({
 			first: expect.any(Number),
 			second: expect.any(Number),
-			operation: "&times;",
+			operation: "×",
 			expression: `${result.first} ${result.operation} ${result.second}`,
 			answer: result.first * result.second,
 		});
@@ -100,7 +100,7 @@ describe("test getMathProblem", () => {
 		expect(result).toEqual({
 			first: expect.any(Number),
 			second: expect.any(Number),
-			operation: "&divide;",
+			operation: "÷",
 			expression: `${result.first} ${result.operation} ${result.second}`,
 			answer: result.first / result.second,
 		});

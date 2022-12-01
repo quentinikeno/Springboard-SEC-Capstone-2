@@ -2,7 +2,7 @@ import ProblemBox from "./ProblemBox";
 import { useSelector } from "react-redux";
 
 const ProblemBoxes = () => {
-	const { level } = useSelector((state) => state.problemBoxes);
+	const { level } = useSelector((state) => state.mathSquared);
 	return (
 		<>
 			<div className="columns">
