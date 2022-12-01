@@ -5,13 +5,15 @@ import {
 	decrementSeconds,
 	reset,
 	getHighScore,
+	postHighScore,
+	patchHighScore,
 } from "../redux-slices/math-squared/mathSquaredSlice";
 import { convertToMinutesSeconds } from "../helpers/convertToMinutesSeconds";
 
 const ProblemBoxGame = () => {
 	const timerId = useRef();
 	const { token } = useSelector((state) => state.user);
-	const { seconds, solved, incorrectGuesses } = useSelector(
+	const { seconds, solved, incorrectGuesses, highScore } = useSelector(
 		(state) => state.mathSquared
 	);
 	const dispatch = useDispatch();
@@ -28,6 +30,27 @@ const ProblemBoxGame = () => {
 		timerId.current = setInterval(() => {
 			if (seconds <= 0) {
 				clearInterval(timerId.current);
+				if (token) {
+					if (highScore) {
+						if (solved > highScore) {
+							dispatch(
+								patchHighScore({
+									gameId: 1,
+									highScore: solved,
+									token,
+								})
+							);
+						}
+					} else {
+						dispatch(
+							postHighScore({
+								gameId: 1,
+								highScore: solved,
+								token,
+							})
+						);
+					}
+				}
 			} else {
 				dispatch(decrementSeconds());
 			}
@@ -35,7 +58,7 @@ const ProblemBoxGame = () => {
 		return () => {
 			clearInterval(timerId.current);
 		};
-	}, [seconds]);
+	}, [seconds, token]);
 
 	return (
 		<div className="ProblemBoxGame">
