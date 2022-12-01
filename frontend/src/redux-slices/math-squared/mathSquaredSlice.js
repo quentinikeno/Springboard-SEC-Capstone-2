@@ -51,6 +51,9 @@ const mathSquaredSlice = createSlice({
 			state["problems"][action.payload] = getMathProblem(action.payload);
 		},
 		reset: (state, action) => initialState,
+		updateHighScore: (state, action) => {
+			state.highScore = action.payload.highScore;
+		},
 	},
 });
 export const {
@@ -60,6 +63,7 @@ export const {
 	incrementSolved,
 	getNewProblem,
 	reset,
+	updateHighScore,
 } = mathSquaredSlice.actions;
 
 export default mathSquaredSlice.reducer;

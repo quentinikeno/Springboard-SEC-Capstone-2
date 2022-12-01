@@ -6,6 +6,7 @@ import {
 	incrementSolved,
 	getNewProblem,
 	reset,
+	updateHighScore,
 } from "./mathSquaredSlice";
 
 describe("test decrementSeconds reducer", () => {
@@ -88,6 +89,14 @@ describe("test getNewProblem", () => {
 	});
 });
 
+describe("test updateHighScore reducer", () => {
+	it("update the highScore to 100", () => {
+		expect(store.getState().mathSquared.highScore).toBe(null);
+		store.dispatch(updateHighScore({ highScore: 100 }));
+		expect(store.getState().mathSquared.highScore).toBe(100);
+	});
+});
+
 describe("test reset reducer", () => {
 	it("resets the state to initialState", () => {
 		expect(store.getState().mathSquared).toEqual({
@@ -101,6 +110,7 @@ describe("test reset reducer", () => {
 			seconds: 119,
 			solved: 1,
 			incorrectGuesses: 1,
+			highScore: 100,
 		});
 		store.dispatch(reset());
 		expect(store.getState().mathSquared).toEqual({
@@ -114,6 +124,7 @@ describe("test reset reducer", () => {
 			seconds: 120,
 			solved: 0,
 			incorrectGuesses: 0,
+			highScore: null,
 		});
 	});
 });
