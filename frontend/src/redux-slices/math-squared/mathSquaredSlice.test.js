@@ -126,7 +126,7 @@ describe("test reset reducer", () => {
 			seconds: 120,
 			solved: 0,
 			incorrectGuesses: 0,
-			highScore: null,
+			highScore: 100,
 			loading: false,
 			error: null,
 		});
