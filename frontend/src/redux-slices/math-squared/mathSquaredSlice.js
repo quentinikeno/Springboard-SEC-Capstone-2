@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { getMathProblem } from "../../helpers/genMathProblem";
+import axios from "axios";
 
 const apiURL = process.env.REACT_APP_API_URL || "http://localhost:5000";
 

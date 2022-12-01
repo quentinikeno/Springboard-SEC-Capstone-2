@@ -4,11 +4,13 @@ import ProblemBoxes from "./ProblemBoxes";
 import {
 	decrementSeconds,
 	reset,
+	getHighScore,
 } from "../redux-slices/math-squared/mathSquaredSlice";
 import { convertToMinutesSeconds } from "../helpers/convertToMinutesSeconds";
 
 const ProblemBoxGame = () => {
 	const timerId = useRef();
+	const { token } = useSelector((state) => state.user);
 	const { seconds, solved, incorrectGuesses } = useSelector(
 		(state) => state.mathSquared
 	);
@@ -17,6 +19,10 @@ const ProblemBoxGame = () => {
 	const resetGame = () => {
 		dispatch(reset());
 	};
+
+	useEffect(() => {
+		if (token) dispatch(getHighScore({ gameId: 1, token }));
+	}, [token]);
 
 	useEffect(() => {
 		timerId.current = setInterval(() => {
