@@ -111,6 +111,7 @@ describe("test reset reducer", () => {
 			solved: 1,
 			incorrectGuesses: 1,
 			highScore: 100,
+			error: null,
 		});
 		store.dispatch(reset());
 		expect(store.getState().mathSquared).toEqual({
@@ -125,6 +126,7 @@ describe("test reset reducer", () => {
 			solved: 0,
 			incorrectGuesses: 0,
 			highScore: null,
+			error: null,
 		});
 	});
 });
