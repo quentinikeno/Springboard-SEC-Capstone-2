@@ -5,6 +5,6 @@ import mathSquaredReducer from "../redux-slices/math-squared/mathSquaredSlice";
 export const store = configureStore({
 	reducer: {
 		user: userReducer,
-		problemBoxes: mathSquaredReducer,
+		mathSquared: mathSquaredReducer,
 	},
 });
