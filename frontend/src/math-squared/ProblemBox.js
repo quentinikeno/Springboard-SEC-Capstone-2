@@ -7,7 +7,7 @@ import {
 	incrementIncorrectGuesses,
 	incrementSolved,
 	getNewProblem,
-} from "../redux-slices/problemBoxes/problemBoxesSlice";
+} from "../redux-slices/math-squared/mathSquaredSlice";
 
 const ProblemBox = ({ operation }) => {
 	const dispatch = useDispatch();

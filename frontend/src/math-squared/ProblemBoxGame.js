@@ -4,7 +4,7 @@ import ProblemBoxes from "./ProblemBoxes";
 import {
 	decrementSeconds,
 	reset,
-} from "../redux-slices/problemBoxes/problemBoxesSlice";
+} from "../redux-slices/math-squared/mathSquaredSlice";
 import { convertToMinutesSeconds } from "../helpers/convertToMinutesSeconds";
 
 const ProblemBoxGame = () => {

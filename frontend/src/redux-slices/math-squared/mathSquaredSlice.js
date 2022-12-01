@@ -15,7 +15,7 @@ const initialState = {
 };
 
 const problemBoxesSlice = createSlice({
-	name: "problemBoxes",
+	name: "mathSquared",
 	initialState,
 	reducers: {
 		decrementSeconds: (state, action) => {

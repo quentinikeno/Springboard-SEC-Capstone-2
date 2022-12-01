@@ -6,8 +6,7 @@ import {
 	incrementSolved,
 	getNewProblem,
 	reset,
-	initialState,
-} from "./problemBoxesSlice";
+} from "./mathSquaredSlice";
 
 describe("test decrementSeconds reducer", () => {
 	it("decrements seconds by 1", () => {
