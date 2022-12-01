@@ -14,7 +14,7 @@ const initialState = {
 	incorrectGuesses: 0,
 };
 
-const problemBoxesSlice = createSlice({
+const mathSquaredSlice = createSlice({
 	name: "mathSquared",
 	initialState,
 	reducers: {
@@ -43,6 +43,6 @@ export const {
 	incrementSolved,
 	getNewProblem,
 	reset,
-} = problemBoxesSlice.actions;
+} = mathSquaredSlice.actions;
 
-export default problemBoxesSlice.reducer;
+export default mathSquaredSlice.reducer;
