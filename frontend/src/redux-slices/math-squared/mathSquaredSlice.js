@@ -36,6 +36,24 @@ export const postHighScore = createAsyncThunk(
 	}
 );
 
+export const patchHighScore = createAsyncThunk(
+	"mathSquared/patchHighScore",
+	async ({ gameId, highScore, token }, { rejectWithValue }) => {
+		try {
+			const resp = await axios.patch(
+				`${apiURL}/scores`,
+				{ gameId, highScore },
+				{
+					headers: { Authorization: `Bearer ${token}` },
+				}
+			);
+			return resp.data;
+		} catch (error) {
+			return rejectWithValue(error.message);
+		}
+	}
+);
+
 const initialState = {
 	problems: {
 		add: getMathProblem("add"),
@@ -101,6 +119,18 @@ const mathSquaredSlice = createSlice({
 				state.loading = true;
 			})
 			.addCase(postHighScore.rejected, (state, action) => {
+				state.error = action.payload;
+				state.loading = false;
+			})
+			.addCase(patchHighScore.fulfilled, (state, action) => {
+				reducers.updateHighScore(state, action);
+				state.loading = false;
+				state.error = null;
+			})
+			.addCase(patchHighScore.pending, (state, action) => {
+				state.loading = true;
+			})
+			.addCase(patchHighScore.rejected, (state, action) => {
 				state.error = action.payload;
 				state.loading = false;
 			});
