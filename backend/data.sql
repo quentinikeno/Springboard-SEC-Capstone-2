@@ -46,3 +46,6 @@ CREATE TABLE "challenges" (
     "game_id" int NOT NULL REFERENCES "games" ("id") ON DELETE CASCADE,
     "score_to_beat" int NOT NULL
 );
+
+INSERT INTO games (name)
+    VALUES ('Math Squared');
