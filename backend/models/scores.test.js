@@ -47,9 +47,11 @@ describe("test get method", () => {
 	});
 
 	it("will throw an error if nothing is found", async () => {
-		async () => {
-			await expect(Scores.get(0, 0)).toThrow();
-		};
+		const scores = await Scores.get(0, 0);
+
+		expect(scores).toEqual({
+			highScore: null,
+		});
 	});
 });
 

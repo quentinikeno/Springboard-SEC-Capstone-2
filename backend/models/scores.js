@@ -51,10 +51,7 @@ class Scores {
 
 			const score = results.rows[0];
 
-			if (!score)
-				throw new NotFoundError404(
-					`Could not find high score for user with ID ${userId} and game with ID ${gameId}.`
-				);
+			if (!score) return { highScore: null };
 
 			return new Scores(score);
 		} catch (error) {
