@@ -8,6 +8,21 @@ const router = new express.Router();
 /** All of these routes must ensure that the user is logged in. */
 router.use(ensureLoggedIn);
 
+/** GET /scores/games/:gameId
+ * Get high score for a logged in user
+ * returns {id, userId, gameId, highScore}
+ * authorization: logged in
+ */
+router.get("/games/:gameId", async (req, res, next) => {
+	try {
+		const score = await Scores.get(res.locals.user.id, req.params.gameId);
+
+		return res.json(score);
+	} catch (error) {
+		return next(error);
+	}
+});
+
 /** POST /scores
  * Add a new high score for a logged in user
  * returns {id, userId, gameId, highScore}

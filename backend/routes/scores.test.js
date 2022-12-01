@@ -15,6 +15,35 @@ beforeEach(commonBeforeEach);
 afterEach(commonAfterEach);
 afterAll(commonAfterAll);
 
+describe("test GET /scores/games/gamesId", () => {
+	it("gets a highscore for a user and game", async () => {
+		const { u1Token, testGameId } = await addScore();
+		const resp = await request(app)
+			.get(`/scores/games/${testGameId}`)
+			.set("authorization", `Bearer ${u1Token}`);
+
+		expect(resp.status).toBe(200);
+		expect(resp.body).toEqual({
+			id: expect.any(Number),
+			userId: expect.any(Number),
+			gameId: testGameId,
+			highScore: 1000,
+		});
+	});
+
+	it("returns null if a highscore for a user and game doesn't exist", async () => {
+		const u1Token = await getUserToken();
+		const resp = await request(app)
+			.get("/scores/games/1")
+			.set("authorization", `Bearer ${u1Token}`);
+
+		expect(resp.status).toBe(200);
+		expect(resp.body).toEqual({
+			highScore: null,
+		});
+	});
+});
+
 describe("test POST /scores", () => {
 	it("adds a new highscore for a user and game", async () => {
 		const { testGameId, score, status } = await addScore();
