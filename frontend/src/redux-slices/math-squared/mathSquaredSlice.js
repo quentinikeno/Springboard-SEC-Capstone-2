@@ -1,5 +1,21 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { getMathProblem } from "../../helpers/genMathProblem";
+
+const apiURL = process.env.REACT_APP_API_URL || "http://localhost:5000";
+
+export const getHighScore = createAsyncThunk(
+	"mathSquared/getHighScore",
+	async ({ gameId, token }, { rejectWithValue }) => {
+		try {
+			const resp = await axios.get(`${apiURL}/scores/games/${gameId}`, {
+				headers: { Authorization: `Bearer ${token}` },
+			});
+			return resp.data;
+		} catch (error) {
+			return rejectWithValue(error.message);
+		}
+	}
+);
 
 const initialState = {
 	problems: {
@@ -12,6 +28,7 @@ const initialState = {
 	seconds: 120,
 	solved: 0,
 	incorrectGuesses: 0,
+	highScore: null,
 };
 
 const mathSquaredSlice = createSlice({
