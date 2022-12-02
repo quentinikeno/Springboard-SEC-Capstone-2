@@ -9,10 +9,12 @@ const LoginUserForm = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
-	const handleSubmit = (event) => {
+	const handleSubmit = async (event) => {
 		event.preventDefault();
-		dispatch(loginUser(formData));
-		navigate("/profile");
+		try {
+			await dispatch(loginUser(formData)).unwrap();
+			navigate("/profile");
+		} catch (error) {}
 	};
 	return (
 		<form onSubmit={handleSubmit}>

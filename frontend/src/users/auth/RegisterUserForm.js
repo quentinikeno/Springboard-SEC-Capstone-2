@@ -9,10 +9,12 @@ const RegisterUserForm = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
-	const handleSubmit = (event) => {
+	const handleSubmit = async (event) => {
 		event.preventDefault();
-		dispatch(registerUser(formData));
-		navigate("/profile");
+		try {
+			dispatch(registerUser(formData)).unwrap();
+			navigate("/profile");
+		} catch (error) {}
 	};
 	return (
 		<form onSubmit={handleSubmit}>
