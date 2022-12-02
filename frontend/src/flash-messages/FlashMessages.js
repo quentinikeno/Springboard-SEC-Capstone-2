@@ -1,19 +1,20 @@
 import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
-import { removeError } from "../redux-slices/user/userSlice";
 import FlashMessage from "./FlashMessage";
+import usePreviousLocation from "../hooks/usePreviousLocation";
 
 const FlashMessages = () => {
 	const location = useLocation();
-	const dispatch = useDispatch();
+	const previousLocation = usePreviousLocation(location);
 	const { error } = useSelector((state) => state.user);
 	const [errors, setErrors] = useState([error]);
 
-	// useEffect(() => {
-	// 	setErrors([]);
-	// }, [error]);
-	// console.log(location);
+	useEffect(() => {
+		if (location !== previousLocation) {
+			setErrors([]);
+		}
+	}, [location]);
 
 	return errors.map((error) => error && <FlashMessage error={error} />);
 };
