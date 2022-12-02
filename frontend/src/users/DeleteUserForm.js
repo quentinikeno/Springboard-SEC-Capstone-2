@@ -12,12 +12,14 @@ const DeleteUserForm = () => {
 	const navigate = useNavigate();
 	const { username, token } = useSelector((state) => state.user);
 
-	const handleSubmit = (event) => {
+	const handleSubmit = async (event) => {
 		event.preventDefault();
-		dispatch(deleteUser({ username, token, data: formData }));
-		Cookies.remove("token");
-		Cookies.remove("username");
-		navigate("/");
+		try {
+			dispatch(deleteUser({ username, token, data: formData })).unwrap();
+			Cookies.remove("token");
+			Cookies.remove("username");
+			navigate("/");
+		} catch (error) {}
 	};
 	return (
 		<>

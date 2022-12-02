@@ -11,10 +11,12 @@ const EditUsernameForm = () => {
 	const navigate = useNavigate();
 	const { username, token } = useSelector((state) => state.user);
 
-	const handleSubmit = (event) => {
+	const handleSubmit = async (event) => {
 		event.preventDefault();
-		dispatch(updateUser({ username, token, data: formData }));
-		navigate("/profile");
+		try {
+			dispatch(updateUser({ username, token, data: formData })).unwrap();
+			navigate("/profile");
+		} catch (error) {}
 	};
 	return (
 		<form onSubmit={handleSubmit}>
