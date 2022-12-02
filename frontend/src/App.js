@@ -41,8 +41,8 @@ function App() {
 				<Loading />
 			) : (
 				<>
-					<FlashMessages />
 					<Navbar />
+					<FlashMessages />
 					<AppRoutes />
 				</>
 			)}
