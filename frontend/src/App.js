@@ -1,6 +1,7 @@
 import AppRoutes from "./routes/AppRoutes";
 import Navbar from "./navbar/Navbar";
 import Loading from "./common/Loading";
+import FlashMessages from "./flash-messages/FlashMessages";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getUser, setCredentials } from "./redux-slices/user/userSlice";
@@ -40,6 +41,7 @@ function App() {
 				<Loading />
 			) : (
 				<>
+					<FlashMessages />
 					<Navbar />
 					<AppRoutes />
 				</>
