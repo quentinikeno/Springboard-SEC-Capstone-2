@@ -22,6 +22,19 @@ const ProblemBoxGame = () => {
 		dispatch(reset());
 	};
 
+	const sendScoreAPI = () => {
+		const data = {
+			gameId: 1,
+			highScore: solved,
+			token,
+		};
+		if (token && highScore && solved > highScore) {
+			dispatch(patchHighScore(data));
+		} else if (token && !highScore) {
+			dispatch(postHighScore(data));
+		}
+	};
+
 	useEffect(() => {
 		if (token) dispatch(getHighScore({ gameId: 1, token }));
 	}, [token]);
@@ -30,27 +43,7 @@ const ProblemBoxGame = () => {
 		timerId.current = setInterval(() => {
 			if (seconds <= 0) {
 				clearInterval(timerId.current);
-				if (token) {
-					if (highScore) {
-						if (solved > highScore) {
-							dispatch(
-								patchHighScore({
-									gameId: 1,
-									highScore: solved,
-									token,
-								})
-							);
-						}
-					} else {
-						dispatch(
-							postHighScore({
-								gameId: 1,
-								highScore: solved,
-								token,
-							})
-						);
-					}
-				}
+				sendScoreAPI();
 			} else {
 				dispatch(decrementSeconds());
 			}
