@@ -13,7 +13,7 @@ export const getHighScore = createAsyncThunk(
 			});
 			return resp.data;
 		} catch (error) {
-			return rejectWithValue(error.message);
+			return rejectWithValue(error.response.data.error.message);
 		}
 	}
 );
@@ -31,7 +31,7 @@ export const postHighScore = createAsyncThunk(
 			);
 			return resp.data;
 		} catch (error) {
-			return rejectWithValue(error.message);
+			return rejectWithValue(error.response.data.error.message);
 		}
 	}
 );
@@ -49,7 +49,7 @@ export const patchHighScore = createAsyncThunk(
 			);
 			return resp.data;
 		} catch (error) {
-			return rejectWithValue(error.message);
+			return rejectWithValue(error.response.data.error.message);
 		}
 	}
 );

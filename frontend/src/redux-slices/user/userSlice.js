@@ -15,7 +15,7 @@ export const registerUser = createAsyncThunk(
 			});
 			return resp.data; // {token, user}
 		} catch (error) {
-			return rejectWithValue(error.message);
+			return rejectWithValue(error.response.data.error.message);
 		}
 	}
 );
@@ -30,7 +30,7 @@ export const loginUser = createAsyncThunk(
 			});
 			return resp.data; // {token, user}
 		} catch (error) {
-			return rejectWithValue(error.message);
+			return rejectWithValue(error.response.data.error.message);
 		}
 	}
 );
@@ -44,7 +44,7 @@ export const getUser = createAsyncThunk(
 			});
 			return { user: resp.data };
 		} catch (error) {
-			return rejectWithValue(error.message);
+			return rejectWithValue(error.response.data.error.message);
 		}
 	}
 );
@@ -58,7 +58,7 @@ export const updateUser = createAsyncThunk(
 			});
 			return { user: resp.data };
 		} catch (error) {
-			return rejectWithValue(error.message);
+			return rejectWithValue(error.response.data.error.message);
 		}
 	}
 );
@@ -73,7 +73,7 @@ export const deleteUser = createAsyncThunk(
 			});
 			return resp.data;
 		} catch (error) {
-			return rejectWithValue(error.message);
+			return rejectWithValue(error.response.data.error.message);
 		}
 	}
 );
