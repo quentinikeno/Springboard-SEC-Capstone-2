@@ -1,37 +1,28 @@
 import { randNum, findDivisor, getMathProblem } from "./genMathProblem";
 
 describe("test randNum", () => {
-	it("should generate a random number up to two digits by default", () => {
-		const num = randNum();
-		expect(num).toEqual(expect.any(Number));
-		expect(num).toBeLessThanOrEqual(100);
-	});
 	it("should generate a random number up to one digit", () => {
-		const num = randNum(1);
+		const num = randNum(9);
 		expect(num).toEqual(expect.any(Number));
-		expect(num).toBeLessThanOrEqual(10);
+		expect(num).toBeLessThanOrEqual(9);
 	});
 	it("should generate a random number up to three digits", () => {
-		const num = randNum(3);
+		const num = randNum(999);
 		expect(num).toEqual(expect.any(Number));
-		expect(num).toBeLessThanOrEqual(1000);
-	});
-	it("should return 1 if 0 passed as param", () => {
-		const num = randNum(0);
-		expect(num).toEqual(1);
+		expect(num).toBeLessThanOrEqual(999);
 	});
 });
 
 describe("test findDivisor", () => {
 	it("should return the first and second numbers as is, along with the answer if the second is a divisor of the first", () => {
-		expect(findDivisor(10, 5, 2)).toEqual({
+		expect(findDivisor(10, 5)).toEqual({
 			first: 10,
 			second: 5,
 			answer: 2,
 		});
 	});
 	it("should generate a random divisor between two numbers", () => {
-		const result = findDivisor(27, 8, 2);
+		const result = findDivisor(27, 8);
 		const { first, second, answer } = result;
 
 		expect(result).toEqual({
@@ -46,7 +37,7 @@ describe("test findDivisor", () => {
 
 describe("test getMathProblem", () => {
 	it("should generate a random addition problem", () => {
-		const result = getMathProblem("add");
+		const result = getMathProblem("add", 5);
 
 		expect(result).toEqual({
 			first: expect.any(Number),
@@ -58,7 +49,7 @@ describe("test getMathProblem", () => {
 	});
 
 	it("should generate a random subtraction problem", () => {
-		const result = getMathProblem("sub");
+		const result = getMathProblem("sub", 5);
 
 		expect(result).toEqual({
 			first: expect.any(Number),
@@ -83,7 +74,7 @@ describe("test getMathProblem", () => {
 	});
 
 	it("should generate a random multiplication problem", () => {
-		const result = getMathProblem("mul");
+		const result = getMathProblem("mul", 5);
 
 		expect(result).toEqual({
 			first: expect.any(Number),
@@ -95,7 +86,7 @@ describe("test getMathProblem", () => {
 	});
 
 	it("should generate a random division problem", () => {
-		const result = getMathProblem("div");
+		const result = getMathProblem("div", 5);
 
 		expect(result).toEqual({
 			first: expect.any(Number),
@@ -108,7 +99,7 @@ describe("test getMathProblem", () => {
 
 	it("should throw an error if the type is not add, sub, mul, or div", () => {
 		const setBadType = () => {
-			getMathProblem("bad");
+			getMathProblem("bad", 5);
 		};
 		expect(setBadType).toThrow(
 			new Error("Type must be 'add', 'sub', 'mul', or 'div'.")

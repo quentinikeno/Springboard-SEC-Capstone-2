@@ -1,7 +1,35 @@
-export const randNum = (digits = 2) =>
-	Math.floor(Math.random() * Math.pow(10, digits)) + 1;
+export const randNum = (max) => Math.floor(Math.random() * max) + 1;
 
-export const findDivisor = (first, second, digits) => {
+export const genNumber = (level, first) => {
+	switch (level) {
+		case 1:
+			return randNum(4);
+		case 2:
+			return randNum(9);
+		case 3:
+			return first ? randNum(9) : randNum(99);
+		case 3:
+			return first ? randNum(9) : randNum(99);
+		case 4:
+			return randNum(99);
+		case 5:
+			return first ? randNum(999) : randNum(9);
+		case 6:
+			return first ? randNum(999) : randNum(99);
+		case 7:
+			return randNum(999);
+		case 8:
+			return first ? randNum(9999) : randNum(9);
+		case 8:
+			return first ? randNum(9999) : randNum(99);
+		case 9:
+			return first ? randNum(9999) : randNum(999);
+		default:
+			return randNum(9999);
+	}
+};
+
+export const findDivisor = (first, second) => {
 	if (first % second === 0) return { first, second, answer: first / second };
 
 	const divisors = [];
@@ -16,9 +44,9 @@ export const findDivisor = (first, second, digits) => {
 	return { first, second, answer: first / second };
 };
 
-export const getMathProblem = (type, digits = 2, allowNegative = false) => {
-	let first = randNum(digits);
-	let second = randNum(digits);
+export const getMathProblem = (type, level, allowNegative = false) => {
+	let first = randNum(level, true);
+	let second = randNum(level, false);
 	let operation;
 	let answer;
 
@@ -40,7 +68,7 @@ export const getMathProblem = (type, digits = 2, allowNegative = false) => {
 			break;
 		case "div":
 			operation = "÷";
-			let newDivisor = findDivisor(first, second, digits);
+			let newDivisor = findDivisor(first, second);
 			second = newDivisor.second;
 			answer = newDivisor.answer;
 			break;
