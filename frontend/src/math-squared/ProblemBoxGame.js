@@ -45,10 +45,11 @@ const ProblemBoxGame = () => {
 					<p>Incorrrect Guesses: {incorrectGuesses}</p>
 					<p>
 						Accuracy:{" "}
-						{Math.round(
-							(100 * solved) / (solved + incorrectGuesses)
-						)}
-						%
+						{solved + incorrectGuesses > 0
+							? `${Math.round(
+									(100 * solved) / (solved + incorrectGuesses)
+							  )}%`
+							: "N/A"}
 					</p>
 					<button class="button is-primary" onClick={resetGame}>
 						Restart from Beginning
