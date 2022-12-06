@@ -1,6 +1,6 @@
 export const randNum = (max) => Math.floor(Math.random() * max) + 1;
 
-export const genNumber = (level, first) => {
+export const genNum = (level, first) => {
 	switch (level) {
 		case 1:
 			return randNum(4);
@@ -44,9 +44,14 @@ export const findDivisor = (first, second) => {
 	return { first, second, answer: first / second };
 };
 
-export const getMathProblem = (type, level, allowNegative = false) => {
-	let first = randNum(level, true);
-	let second = randNum(level, false);
+export const getMathProblem = (
+	type,
+	level,
+	oldExpression,
+	allowNegative = false
+) => {
+	let first = genNum(level, true);
+	let second = genNum(level, false);
 	let operation;
 	let answer;
 
@@ -77,5 +82,9 @@ export const getMathProblem = (type, level, allowNegative = false) => {
 	}
 
 	const expression = `${first} ${operation} ${second}`;
+
+	if (expression === oldExpression)
+		return getMathProblem(type, level, oldExpression, allowNegative);
+
 	return { first, second, operation, expression, answer };
 };
