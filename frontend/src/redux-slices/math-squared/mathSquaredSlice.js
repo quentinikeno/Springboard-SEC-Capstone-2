@@ -81,9 +81,11 @@ const reducers = {
 	},
 	getNewProblem: (state, action) => {
 		const level = state["level"][action.payload];
+		const oldExpression = state["problems"][action.payload]["expression"];
 		state["problems"][action.payload] = getMathProblem(
 			action.payload,
-			level
+			level,
+			oldExpression
 		);
 	},
 	reset: (state, action) => ({
