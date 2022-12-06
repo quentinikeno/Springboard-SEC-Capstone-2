@@ -82,7 +82,16 @@ const reducers = {
 	getNewProblem: (state, action) => {
 		state["problems"][action.payload] = getMathProblem(action.payload);
 	},
-	reset: (state, action) => ({ ...initialState, highScore: state.highScore }),
+	reset: (state, action) => ({
+		...initialState,
+		highScore: state.highScore,
+		problems: {
+			add: getMathProblem("add"),
+			sub: getMathProblem("sub"),
+			mul: getMathProblem("mul"),
+			div: getMathProblem("div"),
+		},
+	}),
 	updateHighScore: (state, action) => {
 		state.highScore = action.payload.highScore;
 	},
