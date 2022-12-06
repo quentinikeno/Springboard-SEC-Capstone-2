@@ -56,10 +56,10 @@ export const patchHighScore = createAsyncThunk(
 
 const initialState = {
 	problems: {
-		add: getMathProblem("add"),
-		sub: getMathProblem("sub"),
-		mul: getMathProblem("mul"),
-		div: getMathProblem("div"),
+		add: getMathProblem("add", 1),
+		sub: getMathProblem("sub", 1),
+		mul: getMathProblem("mul", 1),
+		div: getMathProblem("div", 1),
 	},
 	level: { add: 1, sub: 1, mul: 1, div: 1 },
 	solved: 0,
@@ -80,7 +80,11 @@ const reducers = {
 		state.solved = state.solved + 1;
 	},
 	getNewProblem: (state, action) => {
-		state["problems"][action.payload] = getMathProblem(action.payload);
+		const level = state["level"][action.payload];
+		state["problems"][action.payload] = getMathProblem(
+			action.payload,
+			level
+		);
 	},
 	reset: (state, action) => ({
 		...initialState,
