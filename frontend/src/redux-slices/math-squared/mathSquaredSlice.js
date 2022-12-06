@@ -92,10 +92,10 @@ const reducers = {
 		...initialState,
 		highScore: state.highScore,
 		problems: {
-			add: getMathProblem("add"),
-			sub: getMathProblem("sub"),
-			mul: getMathProblem("mul"),
-			div: getMathProblem("div"),
+			add: getMathProblem("add", 1),
+			sub: getMathProblem("sub", 1),
+			mul: getMathProblem("mul", 1),
+			div: getMathProblem("div", 1),
 		},
 	}),
 	updateHighScore: (state, action) => {
