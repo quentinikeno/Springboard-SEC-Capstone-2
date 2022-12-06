@@ -62,7 +62,6 @@ const initialState = {
 		div: getMathProblem("div"),
 	},
 	level: { add: 1, sub: 1, mul: 1, div: 1 },
-	seconds: 120,
 	solved: 0,
 	incorrectGuesses: 0,
 	highScore: null,
@@ -71,9 +70,6 @@ const initialState = {
 };
 
 const reducers = {
-	decrementSeconds: (state, action) => {
-		state.seconds = state.seconds - 1;
-	},
 	incrementLevel: (state, action) => {
 		state["level"][action.payload] = state["level"][action.payload] + 1;
 	},

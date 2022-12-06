@@ -9,14 +9,6 @@ import {
 	updateHighScore,
 } from "./mathSquaredSlice";
 
-describe("test decrementSeconds reducer", () => {
-	it("decrements seconds by 1", () => {
-		expect(store.getState().mathSquared.seconds).toBe(120);
-		store.dispatch(decrementSeconds());
-		expect(store.getState().mathSquared.seconds).toBe(119);
-	});
-});
-
 describe("test incrementLevel reducer", () => {
 	it("increments level for addtion problems", () => {
 		expect(store.getState().mathSquared.level.add).toBe(1);
@@ -107,7 +99,6 @@ describe("test reset reducer", () => {
 				div: expect.any(Object),
 			},
 			level: { add: 2, sub: 2, mul: 2, div: 2 },
-			seconds: 119,
 			solved: 1,
 			incorrectGuesses: 1,
 			highScore: 100,
@@ -123,7 +114,6 @@ describe("test reset reducer", () => {
 				div: expect.any(Object),
 			},
 			level: { add: 1, sub: 1, mul: 1, div: 1 },
-			seconds: 120,
 			solved: 0,
 			incorrectGuesses: 0,
 			highScore: 100,
