@@ -37,11 +37,7 @@ const Navbar = () => {
 		</>
 	);
 	return (
-		<nav
-			className="navbar my-3"
-			role="navigation"
-			aria-label="main navigation"
-		>
+		<nav className="navbar" role="navigation" aria-label="main navigation">
 			<div className="navbar-brand">
 				<span className="navbar-item is-size-2 has-text-primary">
 					Math Games
