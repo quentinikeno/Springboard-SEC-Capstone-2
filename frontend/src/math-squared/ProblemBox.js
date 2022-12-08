@@ -4,6 +4,7 @@ import useFormState from "../hooks/useFormState";
 import useToggleState from "../hooks/useToggleState";
 import {
 	incrementLevel,
+	decrementLevel,
 	incrementIncorrectGuesses,
 	incrementSolved,
 	getNewProblem,
@@ -32,6 +33,7 @@ const ProblemBox = ({ operation }) => {
 			dispatch(incrementSolved());
 			dispatch(getNewProblem(operation));
 		} else {
+			dispatch(decrementLevel(operation));
 			dispatch(incrementIncorrectGuesses());
 			setSubmittedAnswer(() => +formData.answer);
 		}
