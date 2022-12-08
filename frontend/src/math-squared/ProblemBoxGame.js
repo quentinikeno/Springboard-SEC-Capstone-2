@@ -31,7 +31,7 @@ const ProblemBoxGame = () => {
 		};
 		if (token && highScore && solved > highScore) {
 			dispatch(patchHighScore(data));
-		} else if (token && !highScore) {
+		} else if (token && !highScore && solved > 0) {
 			dispatch(postHighScore(data));
 		}
 	}, [solved, token]);
