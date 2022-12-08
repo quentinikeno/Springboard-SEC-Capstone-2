@@ -50,7 +50,7 @@ const Navbar = () => {
 
 			<a
 				role="button"
-				class={`navbar-burger ${hamburger ? "is-active" : ""}`}
+				className={`navbar-burger ${hamburger ? "is-active" : ""}`}
 				aria-label="menu"
 				aria-expanded="false"
 				data-target="navbarTarget"
