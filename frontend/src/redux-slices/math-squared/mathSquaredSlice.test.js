@@ -2,6 +2,7 @@ import { store } from "../../store/store";
 import {
 	decrementSeconds,
 	incrementLevel,
+	decrementLevel,
 	incrementIncorrectGuesses,
 	incrementSolved,
 	getNewProblem,
@@ -31,6 +32,36 @@ describe("test incrementLevel reducer", () => {
 	it("increments level for division problems", () => {
 		expect(store.getState().mathSquared.level.div).toBe(1);
 		store.dispatch(incrementLevel("div"));
+		expect(store.getState().mathSquared.level.div).toBe(2);
+	});
+});
+
+describe("test decrementLevel reducer", () => {
+	it("decrements level for addtion problems", () => {
+		store.dispatch(incrementLevel("add"));
+		expect(store.getState().mathSquared.level.add).toBe(3);
+		store.dispatch(decrementLevel("add"));
+		expect(store.getState().mathSquared.level.add).toBe(2);
+	});
+
+	it("decrements level for subtraction problems", () => {
+		store.dispatch(incrementLevel("sub"));
+		expect(store.getState().mathSquared.level.sub).toBe(3);
+		store.dispatch(decrementLevel("sub"));
+		expect(store.getState().mathSquared.level.sub).toBe(2);
+	});
+
+	it("decrements level for multiplication problems", () => {
+		store.dispatch(incrementLevel("mul"));
+		expect(store.getState().mathSquared.level.mul).toBe(3);
+		store.dispatch(decrementLevel("mul"));
+		expect(store.getState().mathSquared.level.mul).toBe(2);
+	});
+
+	it("decrements level for division problems", () => {
+		store.dispatch(incrementLevel("div"));
+		expect(store.getState().mathSquared.level.div).toBe(3);
+		store.dispatch(decrementLevel("div"));
 		expect(store.getState().mathSquared.level.div).toBe(2);
 	});
 });

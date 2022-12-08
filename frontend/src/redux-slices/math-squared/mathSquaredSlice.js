@@ -73,6 +73,11 @@ const reducers = {
 	incrementLevel: (state, action) => {
 		state["level"][action.payload] = state["level"][action.payload] + 1;
 	},
+	decrementLevel: (state, action) => {
+		if (state["level"][action.payload] > 1) {
+			state["level"][action.payload] = state["level"][action.payload] - 1;
+		}
+	},
 	incrementIncorrectGuesses: (state, action) => {
 		state.incorrectGuesses = state.incorrectGuesses + 1;
 	},
@@ -150,6 +155,7 @@ const mathSquaredSlice = createSlice({
 export const {
 	decrementSeconds,
 	incrementLevel,
+	decrementLevel,
 	incrementIncorrectGuesses,
 	incrementSolved,
 	getNewProblem,
