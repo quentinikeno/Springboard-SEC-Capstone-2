@@ -39,8 +39,7 @@ const ProblemBoxGame = () => {
 	return (
 		<div className="ProblemBoxGame">
 			<div>
-				<ProblemBoxes />
-				<div>
+				<div className="box">
 					<p>Solved: {solved}</p>
 					<p>Incorrrect Guesses: {incorrectGuesses}</p>
 					<p>
@@ -55,6 +54,7 @@ const ProblemBoxGame = () => {
 						Restart from Beginning
 					</button>
 				</div>
+				<ProblemBoxes />
 			</div>
 		</div>
 	);
