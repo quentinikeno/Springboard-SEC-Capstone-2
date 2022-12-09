@@ -1,7 +1,7 @@
-const PlacholderBox = ({operation}) => {
+const PlaceholderBox = ({iconClass}) => {
   return (
-    <div className="column"><div className="box">operation</div></div>
+    <div className="column"><div className="box"><i class={`fa-solid ${iconClass}`}></i></div></div>
   )
 }
 
-export default PlacholderBox
+export default PlaceholderBox
