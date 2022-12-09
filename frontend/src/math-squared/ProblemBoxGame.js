@@ -37,9 +37,9 @@ const ProblemBoxGame = () => {
 	}, [solved, token]);
 
 	return (
-		<div className="ProblemBoxGame">
+		<div className="ProblemBoxGame ">
 			<div>
-				<div className="box">
+				<div className="box has-text-centered">
 					<p>Solved: {solved}</p>
 					<p>Incorrrect Guesses: {incorrectGuesses}</p>
 					<p>
@@ -50,7 +50,7 @@ const ProblemBoxGame = () => {
 							  )}%`
 							: "N/A"}
 					</p>
-					<button class="button is-primary" onClick={resetGame}>
+					<button class="button is-primary mt-3" onClick={resetGame}>
 						Restart from Beginning
 					</button>
 				</div>
