@@ -37,7 +37,7 @@ const Navbar = () => {
 		</>
 	);
 	return (
-		<nav className="navbar has-background-light" role="navigation" aria-label="main navigation">
+		<nav className="navbar has-background-light mb-3" role="navigation" aria-label="main navigation">
 			<div className="navbar-brand">
 				<span className="navbar-item is-size-2 has-text-primary">
 					Math Squared
