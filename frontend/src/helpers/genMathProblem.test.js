@@ -33,6 +33,19 @@ describe("test findDivisor", () => {
 		expect(first / second).toBe(answer);
 		expect(first % second).toBe(0);
 	});
+
+	it("should generate a random divisor between two numbers", () => {
+		const result = findDivisor(2, 8);
+		const { first, second, answer } = result;
+
+		expect(result).toEqual({
+			first: expect.any(Number),
+			second: expect.any(Number),
+			answer: expect.any(Number),
+		});
+		expect(first / second).toBe(answer);
+		expect(first % second).toBe(0);
+	});
 });
 
 describe("test getMathProblem", () => {
