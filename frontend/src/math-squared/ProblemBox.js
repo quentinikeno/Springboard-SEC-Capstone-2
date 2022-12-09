@@ -70,7 +70,10 @@ const ProblemBox = ({ operation, iconClass }) => {
 						className={`field ${isVertical ? "is-horizontal" : ""}`}
 					>
 						<div className="field-label is-normal">
-							<label htmlFor="answer" className="label">
+							<label
+								htmlFor="answer"
+								className="label has-text-right"
+							>
 								{isVertical ? (
 									<>{expression} = </>
 								) : (
