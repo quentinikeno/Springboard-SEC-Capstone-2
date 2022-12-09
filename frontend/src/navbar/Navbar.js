@@ -40,7 +40,7 @@ const Navbar = () => {
 		<nav className="navbar has-background-light" role="navigation" aria-label="main navigation">
 			<div className="navbar-brand">
 				<span className="navbar-item is-size-2 has-text-primary">
-					Math Games
+					Math Squared
 				</span>
 			</div>
 
