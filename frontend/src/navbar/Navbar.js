@@ -18,26 +18,26 @@ const Navbar = () => {
 
 	const loginAndSignup = (
 		<>
-			<NavLink className="navbar-item" to="/auth/login">
+			<NavLink className="navbar-item has-background-light" to="/auth/login">
 				Login
 			</NavLink>
-			<NavLink className="navbar-item" to="/auth/register">
+			<NavLink className="navbar-item has-background-light" to="/auth/register">
 				Sign Up
 			</NavLink>
 		</>
 	);
 	const profileAndSignout = (
 		<>
-			<NavLink className="navbar-item" to="/profile">
+			<NavLink className="navbar-item has-background-light" to="/profile">
 				{currentUser}'s Profile
 			</NavLink>
-			<Link className="navbar-item" to="/" onClick={handleLogOut}>
+			<Link className="navbar-item has-background-light" to="/" onClick={handleLogOut}>
 				Sign Out
 			</Link>
 		</>
 	);
 	return (
-		<nav className="navbar" role="navigation" aria-label="main navigation">
+		<nav className="navbar has-background-light" role="navigation" aria-label="main navigation">
 			<div className="navbar-brand">
 				<span className="navbar-item is-size-2 has-text-primary">
 					Math Games
@@ -62,7 +62,7 @@ const Navbar = () => {
 				className={`navbar-menu ${hamburger ? "is-active" : ""}`}
 			>
 				<div className="navbar-start">
-					<NavLink className="navbar-item" to="/">
+					<NavLink className="navbar-item has-background-light" to="/">
 						Home
 					</NavLink>
 				</div>
