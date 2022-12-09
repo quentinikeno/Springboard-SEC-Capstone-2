@@ -32,9 +32,9 @@ export const genNum = (level, first) => {
 export const findDivisor = (first, second) => {
 	if (first % second === 0) return { first, second, answer: first / second };
 
-	const divisors = [];
+	const divisors = [1];
 
-	for (let i = 1; i < first / 2; i++) {
+	for (let i = 2; i < first / 2; i++) {
 		if (first % i === 0) divisors.push(i);
 	}
 
