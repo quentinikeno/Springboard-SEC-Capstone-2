@@ -18,8 +18,6 @@ const Home = () => {
 				</div>
 			</section>
 
-			<hr />
-
 			<div className="columns is-desktop">
 				<section className="my-6 column">
 					<p>
