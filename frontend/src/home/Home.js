@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 const Home = () => {
 	return (
 		<div className="has-text-centered">
-			<section className="hero">
-				<div className="hero-body">
+			<section className="hero is-medium has-background-grey">
+				<div className="hero-body ">
 					<div className="container">
-						<h1 className="title">Math Squared</h1>
-						<p className="subtitle">Practice your artihmetic!</p>
+						<h1 className="title has-text-white-ter">Math Squared</h1>
+						<p className="subtitle has-text-white-ter">Practice your artihmetic!</p>
 
 						<Link to="/game">
 							<div className="button is-primary is-large">
