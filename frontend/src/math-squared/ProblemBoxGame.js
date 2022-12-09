@@ -41,8 +41,8 @@ const ProblemBoxGame = () => {
 		<div className="ProblemBoxGame">
 			<div>
 				<div id="stats" className="box has-text-centered mx-auto px-6">
-					<h1 className="title mb-3">Your Progress <i class="fa-solid fa-bars-progress"></i></h1>
-					<p>Solved:  <span className="has-text-success">{solved}</span> <i class="fa-solid fa-check"></i></p>
+					<h1 className="title mb-3">Your Progress <i className="fa-solid fa-bars-progress"></i></h1>
+					<p>Solved:  <span className="has-text-success">{solved}</span> <i className="fa-solid fa-check"></i></p>
 					<p>Incorrrect Guesses: <span className="has-text-danger">{incorrectGuesses}</span></p>
 					<p>
 						Accuracy:{" "} 
@@ -52,8 +52,8 @@ const ProblemBoxGame = () => {
 							  )}%`
 							: "N/A"}
 					</p>
-					<button class="button is-primary mt-3 is-fullwidth" onClick={resetGame}>
-						Restart from Beginning <i class="fa-solid fa-arrow-rotate-left ml-3"></i>
+					<button className="button is-primary mt-3 is-fullwidth" onClick={resetGame}>
+						Restart from Beginning <i className="fa-solid fa-arrow-rotate-left ml-3"></i>
 					</button>
 				</div>
 				<ProblemBoxes />
