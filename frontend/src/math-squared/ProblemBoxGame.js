@@ -7,6 +7,7 @@ import {
 	postHighScore,
 	patchHighScore,
 } from "../redux-slices/math-squared/mathSquaredSlice";
+import './ProblemBoxGame.css'
 
 const ProblemBoxGame = () => {
 	const { token } = useSelector((state) => state.user);
@@ -37,21 +38,22 @@ const ProblemBoxGame = () => {
 	}, [solved, token]);
 
 	return (
-		<div className="ProblemBoxGame ">
+		<div className="ProblemBoxGame">
 			<div>
-				<div className="box has-text-centered">
-					<p>Solved: {solved}</p>
-					<p>Incorrrect Guesses: {incorrectGuesses}</p>
+				<div id="stats" className="box has-text-centered mx-auto px-6">
+					<h1 className="title mb-3">Your Progress <i class="fa-solid fa-bars-progress"></i></h1>
+					<p>Solved:  <span className="has-text-success">{solved}</span> <i class="fa-solid fa-check"></i></p>
+					<p>Incorrrect Guesses: <span className="has-text-danger">{incorrectGuesses}</span></p>
 					<p>
-						Accuracy:{" "}
+						Accuracy:{" "} 
 						{solved + incorrectGuesses > 0
 							? `${Math.round(
 									(100 * solved) / (solved + incorrectGuesses)
 							  )}%`
 							: "N/A"}
 					</p>
-					<button class="button is-primary mt-3" onClick={resetGame}>
-						Restart from Beginning
+					<button class="button is-primary mt-3 is-fullwidth" onClick={resetGame}>
+						Restart from Beginning <i class="fa-solid fa-arrow-rotate-left ml-3"></i>
 					</button>
 				</div>
 				<ProblemBoxes />
