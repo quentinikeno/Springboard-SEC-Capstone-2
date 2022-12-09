@@ -59,7 +59,7 @@ const Navbar = () => {
 
 			<div
 				id="navbarTarget"
-				className={`navbar-menu ${hamburger ? "is-active" : ""}`}
+				className={`navbar-menu has-background-light ${hamburger ? "is-active" : ""}`}
 			>
 				<div className="navbar-start">
 					<NavLink className="navbar-item has-background-light" to="/">
