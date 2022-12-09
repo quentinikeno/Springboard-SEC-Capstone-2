@@ -34,6 +34,7 @@ const Home = () => {
 				</section>
 				<section className="my-6 column">
 					<p>Login/Sign Up to save your score.</p>
+					<i class="fa-solid fa-user-plus fa-lg"></i>
 					<div className="buttons is-justify-content-center my-4">
 						<Link to="/auth/login">
 							<div className="button is-info mr-3">Login</div>
