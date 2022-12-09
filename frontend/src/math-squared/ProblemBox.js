@@ -10,7 +10,7 @@ import {
 	getNewProblem,
 } from "../redux-slices/math-squared/mathSquaredSlice";
 
-const ProblemBox = ({ operation }) => {
+const ProblemBox = ({ operation, iconClass }) => {
 	const dispatch = useDispatch();
 	const initialState = { answer: "" };
 	const [formData, setFormData, handleChange] = useFormState(initialState);
@@ -42,8 +42,10 @@ const ProblemBox = ({ operation }) => {
 
 	return (
 		<div className="column">
-			<div className=" box mb-4">
-				<h2 className="is-2">{operation}</h2>
+			<div className="box mb-4">
+				<h2 className="is-2 has-text-centered mb-3">
+					<i className={`fa-solid ${iconClass} fa-xl`}></i>
+				</h2>
 
 				<div className="field">
 					<div className="label">
