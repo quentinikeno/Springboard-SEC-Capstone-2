@@ -6,8 +6,12 @@ const Home = () => {
 			<section className="hero is-medium has-background-grey">
 				<div className="hero-body ">
 					<div className="container">
-						<h1 className="title has-text-white-ter">Math Squared</h1>
-						<p className="subtitle has-text-white-ter">Practice your artihmetic!</p>
+						<h1 className="title has-text-white-ter">
+							Math Squared
+						</h1>
+						<p className="subtitle has-text-white-ter">
+							Practice your artihmetic!
+						</p>
 
 						<Link to="/game">
 							<div className="button is-primary is-large">
@@ -37,7 +41,7 @@ const Home = () => {
 					<i className="fa-solid fa-user-plus fa-lg"></i>
 					<div className="buttons is-justify-content-center my-4">
 						<Link to="/auth/login">
-							<div className="button is-info mr-3">Login</div>
+							<div className="button is-primary mr-3">Login</div>
 						</Link>
 						<Link to="/auth/register">
 							<div className="button is-link">Register</div>

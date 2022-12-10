@@ -18,11 +18,17 @@ const Navbar = () => {
 
 	const loginAndSignup = (
 		<>
-			<NavLink className="navbar-item has-background-light" to="/auth/login">
-				Login
+			<NavLink
+				className="navbar-item has-background-light"
+				to="/auth/login"
+			>
+				<button className="button is-primary">Login</button>
 			</NavLink>
-			<NavLink className="navbar-item has-background-light" to="/auth/register">
-				Sign Up
+			<NavLink
+				className="navbar-item has-background-light"
+				to="/auth/register"
+			>
+				<button className="button is-link">Sign Up</button>
 			</NavLink>
 		</>
 	);
@@ -31,13 +37,21 @@ const Navbar = () => {
 			<NavLink className="navbar-item has-background-light" to="/profile">
 				{currentUser}'s Profile
 			</NavLink>
-			<Link className="navbar-item has-background-light" to="/" onClick={handleLogOut}>
-				Sign Out
+			<Link
+				className="navbar-item has-background-light"
+				to="/"
+				onClick={handleLogOut}
+			>
+				<button className="button is-link">Sign Out</button>
 			</Link>
 		</>
 	);
 	return (
-		<nav className="navbar has-background-light mb-3" role="navigation" aria-label="main navigation">
+		<nav
+			className="navbar has-background-light mb-3"
+			role="navigation"
+			aria-label="main navigation"
+		>
 			<div className="navbar-brand">
 				<span className="navbar-item is-size-2 has-text-primary">
 					Math Squared
@@ -59,10 +73,15 @@ const Navbar = () => {
 
 			<div
 				id="navbarTarget"
-				className={`navbar-menu has-background-light ${hamburger ? "is-active" : ""}`}
+				className={`navbar-menu has-background-light ${
+					hamburger ? "is-active" : ""
+				}`}
 			>
 				<div className="navbar-start">
-					<NavLink className="navbar-item has-background-light" to="/">
+					<NavLink
+						className="navbar-item has-background-light"
+						to="/"
+					>
 						Home
 					</NavLink>
 				</div>
