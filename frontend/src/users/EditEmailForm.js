@@ -21,31 +21,36 @@ const EditEmailForm = () => {
 		} catch (error) {}
 	};
 	return (
-		<form onSubmit={handleSubmit}>
-			<div className="field">
-				<label htmlFor="email" className="label">
-					New Email
-				</label>
-				<div className="control">
-					<input
-						type="text"
-						className="input"
-						onChange={handleChange}
-						id="email"
-						name="email"
-						value={formData.email}
-						required
-					/>
+		<div className="columns is-desktop">
+			<form
+				onSubmit={handleSubmit}
+				className="column box is-half mx-auto mt-5"
+			>
+				<div className="field">
+					<label htmlFor="email" className="label">
+						New Email
+					</label>
+					<div className="control">
+						<input
+							type="text"
+							className="input"
+							onChange={handleChange}
+							id="email"
+							name="email"
+							value={formData.email}
+							required
+						/>
+					</div>
 				</div>
-			</div>
-			<div className="field is-grouped">
-				<div className="control">
-					<button type="submit" className="button is-link">
-						Change email
-					</button>
+				<div className="field is-grouped">
+					<div className="control">
+						<button type="submit" className="button is-link">
+							Change email
+						</button>
+					</div>
 				</div>
-			</div>
-		</form>
+			</form>
+		</div>
 	);
 };
 
