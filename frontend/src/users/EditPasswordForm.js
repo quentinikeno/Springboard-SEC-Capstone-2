@@ -21,47 +21,52 @@ const EditPasswordForm = () => {
 		} catch (error) {}
 	};
 	return (
-		<form onSubmit={handleSubmit}>
-			<div className="field">
-				<label htmlFor="oldPassword" className="label">
-					Current Password
-				</label>
-				<div className="control">
-					<input
-						type="password"
-						className="input"
-						onChange={handleChange}
-						id="oldPassword"
-						name="oldPassword"
-						value={formData.oldPassword}
-						required
-					/>
+		<div className="columns is-desktop">
+			<form
+				onSubmit={handleSubmit}
+				className="column box is-half mx-auto mt-5"
+			>
+				<div className="field">
+					<label htmlFor="oldPassword" className="label">
+						Current Password
+					</label>
+					<div className="control">
+						<input
+							type="password"
+							className="input"
+							onChange={handleChange}
+							id="oldPassword"
+							name="oldPassword"
+							value={formData.oldPassword}
+							required
+						/>
+					</div>
 				</div>
-			</div>
-			<div className="field">
-				<label htmlFor="newPassword" className="label">
-					New Password
-				</label>
-				<div className="control">
-					<input
-						type="password"
-						className="input"
-						onChange={handleChange}
-						id="newPassword"
-						name="newPassword"
-						value={formData.newPassword}
-						required
-					/>
+				<div className="field">
+					<label htmlFor="newPassword" className="label">
+						New Password
+					</label>
+					<div className="control">
+						<input
+							type="password"
+							className="input"
+							onChange={handleChange}
+							id="newPassword"
+							name="newPassword"
+							value={formData.newPassword}
+							required
+						/>
+					</div>
 				</div>
-			</div>
-			<div className="field is-grouped">
-				<div className="control">
-					<button type="submit" className="button is-link">
-						Change password
-					</button>
+				<div className="field is-grouped">
+					<div className="control">
+						<button type="submit" className="button is-link">
+							Change password
+						</button>
+					</div>
 				</div>
-			</div>
-		</form>
+			</form>
+		</div>
 	);
 };
 
