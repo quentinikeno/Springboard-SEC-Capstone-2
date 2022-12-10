@@ -14,7 +14,9 @@ const EditPasswordForm = () => {
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 		try {
-			dispatch(updateUser({ username, token, data: formData })).unwrap();
+			await dispatch(
+				updateUser({ username, token, data: formData })
+			).unwrap();
 			navigate("/profile");
 		} catch (error) {}
 	};
