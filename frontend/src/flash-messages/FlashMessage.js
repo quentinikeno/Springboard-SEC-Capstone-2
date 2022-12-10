@@ -1,10 +1,5 @@
 const FlashMessage = ({ error }) => {
-	return (
-		<div className="notification is-danger">
-			<button className="delete"></button>
-			{error}
-		</div>
-	);
+	return <div className="notification is-danger">{error}</div>;
 };
 
 export default FlashMessage;
