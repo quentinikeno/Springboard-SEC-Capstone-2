@@ -111,7 +111,7 @@ const ProblemBox = ({ operation, iconClass }) => {
 						</p>
 					)}
 					<div className="control my-3">
-						<button className="button is-primary">Submit</button>
+						<button className="button is-success">Submit</button>
 					</div>
 				</form>
 			</div>
