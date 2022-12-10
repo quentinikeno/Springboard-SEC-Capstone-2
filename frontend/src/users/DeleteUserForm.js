@@ -15,7 +15,9 @@ const DeleteUserForm = () => {
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 		try {
-			dispatch(deleteUser({ username, token, data: formData })).unwrap();
+			await dispatch(
+				deleteUser({ username, token, data: formData })
+			).unwrap();
 			Cookies.remove("token");
 			Cookies.remove("username");
 			navigate("/");
