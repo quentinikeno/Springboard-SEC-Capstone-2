@@ -44,7 +44,7 @@ const Home = () => {
 							<div className="button is-primary mr-3">Login</div>
 						</Link>
 						<Link to="/auth/register">
-							<div className="button is-link">Register</div>
+							<div className="button is-link">Sign Up</div>
 						</Link>
 					</div>
 				</section>
