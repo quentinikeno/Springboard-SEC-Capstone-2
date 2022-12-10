@@ -23,35 +23,40 @@ const DeleteUserForm = () => {
 	};
 	return (
 		<>
-			<h2>
+			<h2 className="is-size-4 has-text-centered">
 				Please provide your password and click the button below to
 				delete your account.
 			</h2>
-			<form onSubmit={handleSubmit}>
-				<div className="field">
-					<label htmlFor="password" className="label">
-						Password
-					</label>
-					<div className="control">
-						<input
-							type="password"
-							className="input"
-							onChange={handleChange}
-							id="password"
-							name="password"
-							value={formData.password}
-							required
-						/>
+			<div className="columns is-desktop">
+				<form
+					onSubmit={handleSubmit}
+					className="column box is-half mx-auto mt-5"
+				>
+					<div className="field">
+						<label htmlFor="password" className="label">
+							Password
+						</label>
+						<div className="control">
+							<input
+								type="password"
+								className="input"
+								onChange={handleChange}
+								id="password"
+								name="password"
+								value={formData.password}
+								required
+							/>
+						</div>
 					</div>
-				</div>
-				<div className="field is-grouped">
-					<div className="control">
-						<button type="submit" className="button is-danger">
-							Delete account
-						</button>
+					<div className="field is-grouped">
+						<div className="control">
+							<button type="submit" className="button is-danger">
+								Delete account
+							</button>
+						</div>
 					</div>
-				</div>
-			</form>
+				</form>
+			</div>
 		</>
 	);
 };
