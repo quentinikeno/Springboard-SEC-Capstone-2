@@ -21,31 +21,36 @@ const EditUsernameForm = () => {
 		} catch (error) {}
 	};
 	return (
-		<form onSubmit={handleSubmit}>
-			<div className="field">
-				<label htmlFor="username" className="label">
-					New Username
-				</label>
-				<div className="control">
-					<input
-						type="text"
-						className="input"
-						onChange={handleChange}
-						id="username"
-						name="username"
-						value={formData.username}
-						required
-					/>
+		<div className="columns is-desktop">
+			<form
+				onSubmit={handleSubmit}
+				className="column is-half box mt-5 mx-auto"
+			>
+				<div className="field">
+					<label htmlFor="username" className="label">
+						New Username
+					</label>
+					<div className="control">
+						<input
+							type="text"
+							className="input"
+							onChange={handleChange}
+							id="username"
+							name="username"
+							value={formData.username}
+							required
+						/>
+					</div>
 				</div>
-			</div>
-			<div className="field is-grouped">
-				<div className="control">
-					<button type="submit" className="button is-link">
-						Change Username
-					</button>
+				<div className="field is-grouped">
+					<div className="control">
+						<button type="submit" className="button is-link">
+							Change Username
+						</button>
+					</div>
 				</div>
-			</div>
-		</form>
+			</form>
+		</div>
 	);
 };
 
