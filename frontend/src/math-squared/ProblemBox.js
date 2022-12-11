@@ -90,7 +90,7 @@ const ProblemBox = ({ operation, iconClass }) => {
 							</label>
 						</div>
 						<div
-							className={`field-body ${
+							className={`field-body mr-5 ${
 								isVertical ? "" : "is-justify-content-end"
 							}`}
 						>
