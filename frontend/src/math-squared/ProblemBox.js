@@ -112,8 +112,10 @@ const ProblemBox = ({ operation, iconClass }) => {
 							{submittedAnswer} is incorrect. Please try again.
 						</p>
 					)}
-					<div className="control my-3">
-						<button className="button is-success">Submit</button>
+					<div className="control my-5">
+						<button className="button is-success is-fullwidth">
+							Submit
+						</button>
 					</div>
 				</form>
 			</div>
