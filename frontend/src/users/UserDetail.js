@@ -15,22 +15,27 @@ const UserDetail = () => {
 	}, [highScore]);
 
 	return (
-		<div className="has-text-centered box">
-			<div className="icon icon-circle " id="user-icon-div">
-				<i className="fa-solid fa-user fa-2xl"></i>
-			</div>
-			<h1 className="title my-5">{username}</h1>
-			<p className="subtitle mb-5">
-				<span className="icon">
-					<i className="fa-solid fa-calendar"></i>
-				</span>{" "}
-				Joined: {joinAt}
-			</p>
-			<div className="icon icon-circle ">
-				<i className="fa-solid fa-trophy fa-2xl"></i>
-			</div>
-			<h2 className="is-size-5 my-3">All Time High Score:</h2>
-			<p>{highScore}</p>
+		<div className="has-text-centered">
+			<section className="box">
+				<div className="icon icon-circle " id="user-icon-div">
+					<i className="fa-solid fa-user fa-2xl"></i>
+				</div>
+				<h1 className="title my-5">{username}</h1>
+				<p className="subtitle mb-5">
+					<span className="icon">
+						<i className="fa-solid fa-calendar"></i>
+					</span>{" "}
+					Joined: {joinAt}
+				</p>
+			</section>
+
+			<section className="box">
+				<div className="icon icon-circle ">
+					<i className="fa-solid fa-trophy fa-2xl"></i>
+				</div>
+				<h2 className="is-size-5 my-3">All Time High Score:</h2>
+				<p>{highScore}</p>
+			</section>
 		</div>
 	);
 };
