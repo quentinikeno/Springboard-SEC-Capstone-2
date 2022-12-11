@@ -1,6 +1,6 @@
 const Loading = () => {
 	return (
-		<div>
+		<div className="my-6">
 			Loading...{" "}
 			<progress className="progress is-small is-primary" max="100">
 				15%
