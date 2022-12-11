@@ -24,6 +24,7 @@ const Home = () => {
 
 			<div className="columns is-desktop">
 				<section className="my-6 column">
+					<h2 className="title is-size-2">About the Game:</h2>
 					<p>
 						Solve addtion, subtraction, multiplication, and division
 						problems that get harder as you progress. You'll start
@@ -37,7 +38,9 @@ const Home = () => {
 					</p>
 				</section>
 				<section className="my-6 column">
-					<p>Login/Sign Up to save your score.</p>
+					<h3 className="title is-size-3">
+						Login/Sign Up to save your score.
+					</h3>
 					<i className="fa-solid fa-user-plus fa-lg"></i>
 					<div className="buttons is-justify-content-center my-4">
 						<Link to="/auth/login">
