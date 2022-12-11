@@ -49,7 +49,9 @@ const ProblemBox = ({ operation, iconClass }) => {
 
 				<div className="field">
 					<div className="label">
-						<label className="label">Display:</label>
+						<label className="label is-sr-only">
+							Display vertical:
+						</label>
 					</div>
 					<div className="field">
 						<div className="control">
@@ -82,7 +84,7 @@ const ProblemBox = ({ operation, iconClass }) => {
 										<div>
 											{operationSymbol} {second}
 										</div>
-										<hr />
+										<hr className="has-background-grey-lighter" />
 									</>
 								)}
 							</label>
