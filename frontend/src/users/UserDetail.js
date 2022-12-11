@@ -1,12 +1,32 @@
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { getHighScore } from "../redux-slices/math-squared/mathSquaredSlice";
+import "./UserDetail.css";
 
 const UserDetail = () => {
-	const { username, id, joinAt } = useSelector((state) => state.user);
+	const { username, joinAt, token } = useSelector((state) => state.user);
+	const { highScore } = useSelector((state) => state.mathSquared);
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		if (!highScore) {
+			dispatch(getHighScore({ gameId: 1, token }));
+		}
+	}, [highScore]);
+
 	return (
-		<>
-			<h1>{username}</h1>
-			<p>Joined: {joinAt}</p>
-		</>
+		<div className="has-text-centered">
+			<div className="icon" id="user-icon-div">
+				<i className="fa-solid fa-user fa-2xl"></i>
+			</div>
+			<h1 className="title my-5">{username}</h1>
+			<p className="subtitle mb-5">Joined: {joinAt}</p>
+			<div className="icon">
+				<i className="fa-solid fa-trophy fa-2xl"></i>
+			</div>
+			<h2 className="is-size-5 my-3">All Time High Score:</h2>
+			<p>{highScore}</p>
+		</div>
 	);
 };
 
