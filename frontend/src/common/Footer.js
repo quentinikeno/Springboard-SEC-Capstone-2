@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { selectCurrentUser } from "../redux-slices/user/userSlice";
 import { useSelector } from "react-redux";
+import "./Footer.css";
 
 const Footer = () => {
 	const currentUser = useSelector(selectCurrentUser);
@@ -25,11 +26,11 @@ const Footer = () => {
 	return (
 		<footer className="footer mt-6 has-background-grey-lighter">
 			<div className="container content mx-auto columns is-desktop">
-				<div className="column ">
-					<strong>Math Squared</strong>
+				<div className="column">
+					<h4 className="title ml-5">Math Squared</h4>
 				</div>
 				<div className="column">
-					<strong>Navigation</strong>
+					<h4 className="title ml-5">Navigation</h4>
 					<ul className="list">
 						<li className="list-item">
 							<Link to="/">Home</Link>
@@ -40,7 +41,7 @@ const Footer = () => {
 					</ul>
 				</div>
 				<div className="column">
-					<strong>Account</strong>
+					<h4 className="title ml-5">Account</h4>
 					<ul className="list">
 						{currentUser ? profile : loginAndSignup}
 					</ul>
