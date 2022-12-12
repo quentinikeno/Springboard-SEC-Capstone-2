@@ -1,6 +1,7 @@
 import AppRoutes from "./routes/AppRoutes";
 import Navbar from "./navbar/Navbar";
 import Loading from "./common/Loading";
+import Footer from "./common/Footer";
 import FlashMessages from "./flash-messages/FlashMessages";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -36,16 +37,19 @@ function App() {
 	}, []);
 
 	return (
-		<div className="App container">
-			{loading ? (
-				<Loading />
-			) : (
-				<>
-					<Navbar />
-					<FlashMessages />
-					<AppRoutes />
-				</>
-			)}
+		<div className="App">
+			<div className="container">
+				{loading ? (
+					<Loading />
+				) : (
+					<>
+						<Navbar />
+						<FlashMessages />
+						<AppRoutes />
+					</>
+				)}
+			</div>
+			<Footer />
 		</div>
 	);
 }
