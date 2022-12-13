@@ -22,13 +22,13 @@ const Navbar = () => {
 				className="navbar-item has-background-light"
 				to="/auth/login"
 			>
-				<button className="button is-primary">Login</button>
+				Login
 			</NavLink>
 			<NavLink
 				className="navbar-item has-background-light"
 				to="/auth/register"
 			>
-				<button className="button is-link">Sign Up</button>
+				Sign Up
 			</NavLink>
 		</>
 	);
