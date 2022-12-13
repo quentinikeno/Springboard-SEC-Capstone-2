@@ -21,7 +21,7 @@ const EditUsernameForm = () => {
 		} catch (error) {}
 	};
 	return (
-		<div className="columns is-desktop">
+		<div className="columns is-desktop mb-6">
 			<form
 				onSubmit={handleSubmit}
 				className="column is-half box mt-5 mx-auto"

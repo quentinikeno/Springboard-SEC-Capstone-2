@@ -20,7 +20,7 @@ const RegisterUserForm = () => {
 		<div className="columns is-desktop">
 			<form
 				onSubmit={handleSubmit}
-				className="column is-half box mx-auto mt-5"
+				className="column is-half box mx-auto my-6"
 			>
 				<div className="field ">
 					<label htmlFor="username" className="label">

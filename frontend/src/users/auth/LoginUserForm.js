@@ -20,7 +20,7 @@ const LoginUserForm = () => {
 		<div className="columns is-desktop">
 			<form
 				onSubmit={handleSubmit}
-				className="box column is-half mx-auto mt-5"
+				className="box column is-half mx-auto my-6"
 			>
 				<div className="field">
 					<label htmlFor="username" className="label">

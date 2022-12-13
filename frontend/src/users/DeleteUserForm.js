@@ -29,7 +29,7 @@ const DeleteUserForm = () => {
 				Please provide your password and click the button below to
 				delete your account.
 			</h2>
-			<div className="columns is-desktop">
+			<div className="columns is-desktop mb-6">
 				<form
 					onSubmit={handleSubmit}
 					className="column box is-half mx-auto mt-5"

@@ -7,7 +7,7 @@ import {
 	postHighScore,
 	patchHighScore,
 } from "../redux-slices/math-squared/mathSquaredSlice";
-import './ProblemBoxGame.css'
+import "./ProblemBoxGame.css";
 
 const ProblemBoxGame = () => {
 	const { token } = useSelector((state) => state.user);
@@ -38,22 +38,38 @@ const ProblemBoxGame = () => {
 	}, [solved, token]);
 
 	return (
-		<div className="ProblemBoxGame">
+		<div className="ProblemBoxGame mt-3 mb-6">
 			<div>
 				<div id="stats" className="box has-text-centered mx-auto px-6">
-					<h1 className="title mb-3">Your Progress <i className="fa-solid fa-bars-progress"></i></h1>
-					<p>Solved:  <span className="has-text-success">{solved}</span> <i className="fa-solid fa-check"></i></p>
-					<p>Incorrrect Guesses: <span className="has-text-danger">{incorrectGuesses}</span></p>
+					<h1 className="title mb-3">
+						Your Progress{" "}
+						<i className="fa-solid fa-bars-progress"></i>
+					</h1>
 					<p>
-						Accuracy:{" "} 
+						Solved:{" "}
+						<span className="has-text-success">{solved}</span>{" "}
+						<i className="fa-solid fa-check"></i>
+					</p>
+					<p>
+						Incorrrect Guesses:{" "}
+						<span className="has-text-danger">
+							{incorrectGuesses}
+						</span>
+					</p>
+					<p>
+						Accuracy:{" "}
 						{solved + incorrectGuesses > 0
 							? `${Math.round(
 									(100 * solved) / (solved + incorrectGuesses)
 							  )}%`
 							: "N/A"}
 					</p>
-					<button className="button is-primary mt-3 is-fullwidth" onClick={resetGame}>
-						Restart from Beginning <i className="fa-solid fa-arrow-rotate-left ml-3"></i>
+					<button
+						className="button is-primary mt-3 is-fullwidth"
+						onClick={resetGame}
+					>
+						Restart from Beginning{" "}
+						<i className="fa-solid fa-arrow-rotate-left ml-3"></i>
 					</button>
 				</div>
 				<ProblemBoxes />

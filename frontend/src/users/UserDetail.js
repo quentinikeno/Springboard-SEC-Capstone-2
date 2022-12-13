@@ -15,7 +15,7 @@ const UserDetail = () => {
 	}, [highScore]);
 
 	return (
-		<div className="has-text-centered">
+		<div className="has-text-centered mb-6">
 			<section className="box">
 				<div className="icon icon-circle " id="user-icon-div">
 					<i className="fa-solid fa-user fa-2xl"></i>

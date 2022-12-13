@@ -21,7 +21,7 @@ const EditEmailForm = () => {
 		} catch (error) {}
 	};
 	return (
-		<div className="columns is-desktop">
+		<div className="columns is-desktop mb-6">
 			<form
 				onSubmit={handleSubmit}
 				className="column box is-half mx-auto mt-5"
