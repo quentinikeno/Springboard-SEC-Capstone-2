@@ -34,7 +34,7 @@ function App() {
 			dispatch(getUser({ token, username }));
 			dispatch(setCredentials({ token }));
 		}
-	}, []);
+	}, [dispatch]);
 
 	return (
 		<div className="App is-flex is-flex-direction-column">

@@ -22,7 +22,7 @@ const ProblemBoxGame = () => {
 
 	useEffect(() => {
 		if (token) dispatch(getHighScore({ gameId: 1, token }));
-	}, [token]);
+	}, [token, dispatch]);
 
 	useEffect(() => {
 		const data = {
@@ -35,7 +35,7 @@ const ProblemBoxGame = () => {
 		} else if (token && !highScore && solved > 0) {
 			dispatch(postHighScore(data));
 		}
-	}, [solved, token]);
+	}, [solved, token, dispatch]);
 
 	return (
 		<div className="ProblemBoxGame mt-3 mb-6">
