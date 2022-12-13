@@ -38,7 +38,7 @@ function App() {
 
 	return (
 		<div className="App is-flex is-flex-direction-column">
-			<div className="container">
+			<main className="container">
 				{loading ? (
 					<Loading />
 				) : (
@@ -48,7 +48,7 @@ function App() {
 						<AppRoutes />
 					</>
 				)}
-			</div>
+			</main>
 			<Footer />
 		</div>
 	);
