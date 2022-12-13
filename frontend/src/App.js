@@ -37,7 +37,7 @@ function App() {
 	}, []);
 
 	return (
-		<div className="App">
+		<div className="App is-flex is-flex-direction-column">
 			<div className="container">
 				{loading ? (
 					<Loading />
