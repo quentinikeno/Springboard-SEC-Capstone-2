@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { logOut } from "../redux-slices/user/userSlice";
 import useToggleState from "../hooks/useToggleState";
 import Cookies from "js-cookie";
+import "./Navbar.css";
 
 const Navbar = () => {
 	const currentUser = useSelector(selectCurrentUser);
