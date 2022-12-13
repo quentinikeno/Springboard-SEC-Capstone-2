@@ -24,7 +24,7 @@ const Footer = () => {
 	);
 
 	return (
-		<footer className="footer mt-6 has-background-grey-lighter">
+		<footer className="footer mt-auto has-background-grey-lighter">
 			<div className="container content mx-auto columns is-desktop">
 				<div className="column">
 					<h4 className="title ml-5">Math Squared</h4>
