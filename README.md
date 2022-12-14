@@ -40,7 +40,7 @@ Try the app yourself using this [link](https://mathsquared.surge.sh/).
 
 First clone or download this repository.
 
-## Setting Up the Backend
+### Setting Up the Backend
 
 Change directories into the "backend" folder and then install the dependencies with npm.
 
