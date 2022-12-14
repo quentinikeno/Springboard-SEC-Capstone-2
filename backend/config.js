@@ -8,7 +8,8 @@ const CONNECTION_STRING = process.env.CONNECTION_STRING || "";
 const DB_URI =
 	process.env.NODE_ENV === "test"
 		? `postgresql://${CONNECTION_STRING}/math_games_test`
-		: `postgresql://${CONNECTION_STRING}/math_games`;
+		: proccess.env.DATABASE_URL ||
+		  `postgresql://${CONNECTION_STRING}/math_games`;
 
 const SECRET_KEY = process.env.SECRET_KEY || "secret";
 
