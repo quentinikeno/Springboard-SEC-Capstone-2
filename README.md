@@ -6,6 +6,10 @@ This is a full-stack app for people to practice arithmatic, with addition, subtr
 
 Users can optionally create an account to save their high score.
 
+## Deployed App
+
+Try the app yourself using this [link](https://mathsquared.surge.sh/).
+
 ## Technologies Used
 
 ### Backend
