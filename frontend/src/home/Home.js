@@ -1,6 +1,39 @@
 import { Link } from "react-router-dom";
+import { selectCurrentUser } from "../redux-slices/user/userSlice";
+import { useSelector } from "react-redux";
 
 const Home = () => {
+	const currentUser = useSelector(selectCurrentUser);
+
+	const loginSection = (
+		<>
+			<h2 className="title is-size-2">
+				Login/Sign Up to Save Your Score.
+			</h2>
+			<i className="fa-solid fa-user-plus fa-xl"></i>
+			<div className="buttons is-justify-content-center my-4">
+				<Link to="/auth/login">
+					<div className="button is-primary mr-3">Login</div>
+				</Link>
+				<Link to="/auth/register">
+					<div className="button is-link">Sign Up</div>
+				</Link>
+			</div>
+		</>
+	);
+
+	const scoreSection = (
+		<>
+			<h2 className="title is-size-2">View Your High Score!</h2>
+			<i className="fa-solid fa-user fa-xl"></i>
+			<div className="buttons is-justify-content-center my-4">
+				<Link to="/profile">
+					<div className="button is-primary">Your High Score</div>
+				</Link>
+			</div>
+		</>
+	);
+
 	return (
 		<div className="has-text-centered">
 			<section className="hero is-medium has-background-grey-lighter box">
@@ -34,18 +67,7 @@ const Home = () => {
 					</p>
 				</section>
 				<section className="my-6 column">
-					<h3 className="title is-size-3">
-						Login/Sign Up to Save Your Score.
-					</h3>
-					<i className="fa-solid fa-user-plus fa-xl"></i>
-					<div className="buttons is-justify-content-center my-4">
-						<Link to="/auth/login">
-							<div className="button is-primary mr-3">Login</div>
-						</Link>
-						<Link to="/auth/register">
-							<div className="button is-link">Sign Up</div>
-						</Link>
-					</div>
+					{currentUser ? scoreSection : loginSection}
 				</section>
 			</div>
 		</div>
