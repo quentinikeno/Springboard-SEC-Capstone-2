@@ -6,8 +6,6 @@ This is a full-stack app for people to practice arithmatic, with addition, subtr
 
 Users can optionally create an account to save their high score.
 
-## Deployment
-
 ## Technologies Used
 
 ### Backend
@@ -82,3 +80,29 @@ npm run dev
 ```
 
 Now the app should be running in your favorite browser.
+
+## Tests
+
+Tests for the frontend or the backend can be run using Jest and SuperTest.
+
+### Testing Backend
+
+Change directories into the "backend" folder and run the `npm test` script.
+
+```
+cd backend
+npm test
+```
+
+### Testing Frontend
+
+Change directories into the "frontend" folder and run the `npm test` script.
+
+```
+cd frontend
+npm test
+```
+
+## Author
+
+Quentin Ikeno
